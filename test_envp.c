@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_envp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 19:36:54 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/06 19:38:55 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/09 15:46:10 by sehjung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ int	main(int argc, char **argv, char **envp)
 		printf("%s\n", ptr);
 		ptr = envp[++i];
 	}
+	
 	return (0);
 }
