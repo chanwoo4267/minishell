@@ -1,31 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_envp.c                                        :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
+/*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/06 19:36:54 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/09 15:46:10 by sehjung          ###   ########.fr       */
+/*   Created: 2023/01/09 20:11:11 by chanwopa          #+#    #+#             */
+/*   Updated: 2023/01/09 21:06:50 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <unistd.h>
-#include <sys/wait.h>
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-int	main(int argc, char **argv, char **envp)
+typedef struct s_info
 {
-	char	*ptr;
-	int		i;
+	char	**envp;
+	int		fd[3];
+}	t_info;
 
-	i = 0;
-	ptr = envp[i];
-	while (ptr)
-	{
-		printf("%s\n", ptr);
-		ptr = envp[++i];
-	}
-	
-	return (0);
-}
+#endif
