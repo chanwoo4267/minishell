@@ -10,26 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parsing.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-
-#define FAIL 0
-#define SUCCESS 1
-
-typedef enum e_type
-{
-	COMMAND,
-	PIPE,
-	REDIR_IN,
-	REDIR_OUT,
-	REDIR_APPEND,
-	REDIR_HEREDOC,
-}	t_type;
+#include "execution_test.h"
 
 int	redirection(t_list	*redirection)
 {

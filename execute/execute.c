@@ -10,11 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parsing.h"
-#include "../minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include "execution_test.h"
 
 #define FAIL 0
 #define SUCCESS 1
