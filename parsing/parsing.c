@@ -6,61 +6,63 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 17:46:51 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/11 17:49:51 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/11 19:45:29 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+//#include "../minishell.h"
 #include "parsing.h"
 
-t_token	*new_token(char *command, t_type type)
+void	parse_command(char *str, t_list c_list)
 {
-	t_token	*new_token;
-
-	new_token = malloc(sizeof(t_token));
-	new_token->content = ft_strdup(command);
-	new_token->type = type;
-	return (new_token);
+	
 }
 
-t_commandlist	*parsing(char *str, t_commandlist *lst)
+void	parse_redirect(char *str, t_list *d_list)
+{
+	if (str[0] == '>')
+	{
+		if (str[1] == '>' && ft_strlen(str) == 2)
+			ft_lstadd_back(&d_list, ft_lstnew(new_token(str, REDIR_APPEND)));
+		else if (str[1] == '\0')
+			ft_lstadd_back(&d_list, ft_lstnew(new_token(str, REDIR_OUT)));
+	}
+	else if (str[0] == '<')
+	{
+		if (str[1] == '<' && ft_strlen(str) == 2)
+			ft_lstadd_back(&d_list, ft_lstnew(new_token(str, REDIR_HEREDOC)));
+		else if (str[1] == '\0')
+			ft_lstadd_back(&d_list, ft_lstnew(new_token(str, REDIR_IN)));
+	}	
+}
+
+void	parsing(char *str, t_commandlist *lst)
 {
 	int		i;
 	int		j;
-	char	**d_str;
+	char	**split_str;
 
 	i = 0;
 	j = 0;
-	d_str = ft_split(str, ' ');
-
-	while (d_str[i])
+	split_str = ft_split(str, ' ');
+	while (split_str[i])
 	{
-		if (d_str[i][0] == '>')
-		{
-			if (d_str[i][1] == '>')
-				ft_lstadd_back(&lst[j].redirection, ft_lstnew(new_token(d_str[++i], REDIR_APPEND)));
-			else
-				ft_lstadd_back(&lst[j].redirection, ft_lstnew(new_token(d_str[++i], REDIR_OUT)));
-		}
-		else if (d_str[i][0] == '<')
-		{
-			if (d_str[i][1] == '<')
-				ft_lstadd_back(&lst[j].redirection, ft_lstnew(new_token(d_str[++i], REDIR_HEREDOC)));
-			else
-				ft_lstadd_back(&lst[j].redirection, ft_lstnew(new_token(d_str[++i], REDIR_IN)));
-		}
-		else if (d_str[i][0] == '|')
+		if (split_str[i][0] == '>' || split_str[i][0] == '<')
+			parse_redirect(split_str[i], lst[j].redirection);
+		else if (split_str[i][0] == '|')
 		{
 			ft_lstadd_back(&lst[j].command, NULL);
 			ft_lstadd_back(&lst[j].redirection, NULL);
 			j++;
 		}
 		else
-			ft_lstadd_back(&lst[j].command, ft_lstnew(new_token(d_str[i], COMMAND)));
+			ft_lstadd_back(&lst[j].command, ft_lstnew(new_token(split_str[i], COMMAND))); // 나누기
 		i++;
 	}
-	free(d_str);
+	i = 0;
+	while (split_str[i])
+		free(split_str[i++]);
+	free(split_str);
 	ft_lstadd_back(&lst[j].command, NULL);
 	ft_lstadd_back(&lst[j].redirection, NULL);
-	return (lst);
 }

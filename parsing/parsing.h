@@ -6,24 +6,20 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:49:44 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/11 17:48:04 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/11 19:02:54 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
-# define T_NULL 0
-# define T_WORD 1
-# define T_PIPE 2
-# define T_REDIRECT 3
-# define T_DOUBLE_QUOTES 4
-# define T_SINGLE_QUOTES 5
-
 #define FAIL 0
 #define SUCCESS 1
 
 #include "libft/libft.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <readline/readline.h>
 
 typedef enum e_type
 {
@@ -52,6 +48,10 @@ typedef struct s_commandlist
 	t_list	*command;
 	t_list	*redirection;
 }	t_commandlist;
+
+void	parsing(char *str, t_commandlist *lst);
+t_token	*new_token(char *command, t_type type);
+
 
 // typedef struct s_token t_token;
 // typedef struct s_list t_list;
