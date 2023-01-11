@@ -6,20 +6,26 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 17:26:33 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/10 17:26:33 by chanwopa         ###   ########.fr       */
+/*   Updated: 2023/01/11 23:02:51 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTION_TEST_H
 # define EXECUTION_TEST_H
 
-#include "../libft/libft.h"
-#include "../get_next_line/get_next_line.h"
+# include "../libft/libft.h"
+# include "get_next_line.h"
+# include <stdio.h>
+# include <sys/wait.h>
+# include <sys/signal.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 
-#define FAIL 0
-#define SUCCESS 1
-#define NO 0
-#define YES 1
+# define FAIL 0
+# define SUCCESS 1
+# define NO 0
+# define YES 1
 
 typedef enum e_type
 {
@@ -58,5 +64,26 @@ typedef struct s_globalstatus
 }	t_globalstatus;
 
 t_globalstatus	g_status;
+
+/* functions */
+int		execute(t_commandlist *commandlist, t_info *info);
+int		execute_subshell(t_commandlist commandlist, t_info *info);
+int		execute_pipe(t_commandlist *commandlist, t_info *info);
+int		reset_redirection(t_info *info);
+
+char	**list_to_strs(t_list *command);
+void	print_error(void);
+
+int		execute_command(t_list *command, t_info *info);
+char	*set_env_path(char **env);
+char	*get_absolute_cmd(char *cmd, char *path);
+int		execute_command_subshell(t_list *command, char **envp);
+int		execute_given_path(char **cmd, char **envp);
+
+int		redirection(t_list	*redirection);
+void	redirect_input(char *filename);
+void	redirect_output(char *filename);
+void	redirect_append(char *filename);
+void	redirect_heredoc(char *delimiter);
 
 #endif

@@ -5,17 +5,17 @@ NAME = minishell
 LIBFT = ../libft/libft.a
 LIBFT_DIR = ../libft/
 
-SRCS = execution_test.c execution.c redirection.c
-OBJS = $(SRCS:.c=.o)
+SRCS = execution_test.c execute.c execute_command.c execute_redir.c execute_utils.c
+SRCS_OBJS = $(SRCS:.c=.o)
 
 GNL_NAME = get_next_line.c get_next_line_utils.c
-GNL_DIRS = ../get_next_line/
-GNL_SRCS = $(addprefix $(GNL_DIRS), $(GNL_NAME))
-GNL_OBJS = $(GNL_SRCS:.c=.o)
+GNL_OBJS = $(GNL_NAME:.c=.o)
+
+OBJS = $(SRCS_OBJS) $(GNL_OBJS)
 
 all : $(NAME)
 
-$(NAME) : $(OBJS) $(GNL_OBJS)
+$(NAME) : $(OBJS)
 	make bonus -C $(LIBFT_DIR)
 	$(CC) $(CFLAGS) $(LIBFT) -o $(NAME) $^
 
@@ -24,7 +24,7 @@ $(NAME) : $(OBJS) $(GNL_OBJS)
 
 clean :
 	make clean -C $(LIBFT_DIR)
-	rm -f $(GNL_OBJS) $(OBJS)
+	rm -f $(OBJS)
 
 fclean : clean
 	make fclean -C $(LIBFT_DIR)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirection.c                                      :+:      :+:    :+:   */
+/*   execute_redir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:07:50 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/09 20:19:22 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/11 23:03:36 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	redirection(t_list	*redirection)
 		}
 		redirection = redirection->next;
 	}
+	return (0);
 }
 
 void	redirect_input(char *filename)
@@ -106,6 +107,6 @@ void	redirect_heredoc(char *delimiter)
 		line = get_next_line(STDIN_FILENO);
 	}
 	close(fd);
-	redir_input("/minishell/heredoc_temp");
+	redirect_input("/minishell/heredoc_temp");
 	unlink("/minishell/heredoc_temp");
 }
