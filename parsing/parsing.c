@@ -6,12 +6,12 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 17:46:51 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/11 17:48:06 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/11 17:49:51 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include "../parsing.h"
+#include "parsing.h"
 
 t_token	*new_token(char *command, t_type type)
 {
