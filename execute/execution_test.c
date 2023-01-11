@@ -30,6 +30,7 @@ void	init_structs(t_commandlist **test_command, t_info **info, char **envp)
 	(*info)->fd[0] = STDIN_FILENO;
 	(*info)->fd[1] = STDOUT_FILENO;
 	(*info)->fd[2] = STDERR_FILENO;
+	(*info)->issubshell = 0;
 }
 
 int	main(int argc, char **argv, char **envp)

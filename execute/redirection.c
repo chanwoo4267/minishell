@@ -93,7 +93,7 @@ void	redirect_heredoc(char *delimiter)
 		return ;
 	}
 	line = get_next_line(STDIN_FILENO);
-	while (line != NULL)
+	while (!line)
 	{
 		if (ft_strncmp(delimiter, line, ft_strlen(delimiter)) == 0
 			&& line[ft_strlen(delimiter)] == '\n')

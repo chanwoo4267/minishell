@@ -12,9 +12,6 @@
 
 #include "execution_test.h"
 
-#define FAIL 0
-#define SUCCESS 1
-
 int	execute(t_commandlist **commandlist, t_info *info)
 {
 	t_list	*list;
@@ -36,6 +33,8 @@ int	execute_subshell(t_commandlist *commandlist, t_info *info)
 		if (execute_builtin(commandlist->command, info) == FAIL)
 			execute_command(commandlist->command, info);
 	}
+	if (info->issubshell == YES)
+		exit(g_status.global_exit_status);
 	if (commandlist->redirection)
 		reset_redirection(commandlist->redirection);
 }
