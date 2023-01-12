@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:38:29 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/11 22:08:00 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/12 17:04:44 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	**list_to_strs(t_list *command)
 
 	count = 0;
 	ptr = command;
-	while (!ptr)
+	while (ptr)
 	{
 		count++;
 		ptr = ptr->next;

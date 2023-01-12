@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 17:26:33 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/11 23:02:51 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/12 17:27:54 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ char	**list_to_strs(t_list *command);
 void	print_error(void);
 
 int		execute_command(t_list *command, t_info *info);
-char	*set_env_path(char **env);
-char	*get_absolute_cmd(char *cmd, char *path);
+char	*get_env_path(char **env);
+char	*get_absolute_cmd(char *name, char *path);
 int		execute_command_subshell(t_list *command, char **envp);
 int		execute_given_path(char **cmd, char **envp);
 
@@ -85,5 +85,8 @@ void	redirect_input(char *filename);
 void	redirect_output(char *filename);
 void	redirect_append(char *filename);
 void	redirect_heredoc(char *delimiter);
+
+/* test functions */
+void	print_data(t_commandlist *commandlist);
 
 #endif
