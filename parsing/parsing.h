@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:49:44 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/11 19:02:54 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/12 19:25:17 by sehjung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #define FAIL 0
 #define SUCCESS 1
 
-#include "libft/libft.h"
+#include "../libft/libft.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <readline/readline.h>
@@ -49,9 +49,10 @@ typedef struct s_commandlist
 	t_list	*redirection;
 }	t_commandlist;
 
-void	parsing(char *str, t_commandlist *lst);
+t_commandlist	*parsing(char *str);
 t_token	*new_token(char *command, t_type type);
-
+void	remove_special_char(char **str);
+int	count_pipe(char *str);
 
 // typedef struct s_token t_token;
 // typedef struct s_list t_list;

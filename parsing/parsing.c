@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 17:46:51 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/11 19:45:29 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/12 19:24:57 by sehjung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,33 +36,47 @@ void	parse_redirect(char *str, t_list *d_list)
 	}	
 }
 
-void	parsing(char *str, t_commandlist *lst)
+t_commandlist	*init_list(char **str, t_commandlist *lst)
 {
-	int		i;
-	int		j;
-	char	**split_str;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
-	split_str = ft_split(str, ' ');
-	while (split_str[i])
+	while (str[i])
 	{
-		if (split_str[i][0] == '>' || split_str[i][0] == '<')
-			parse_redirect(split_str[i], lst[j].redirection);
-		else if (split_str[i][0] == '|')
+		if (str[i][0] == '>' || str[i][0] == '<')
+			parse_redirect(str[i], lst[j].redirection);
+		else if (str[i][0] == '|')
 		{
 			ft_lstadd_back(&lst[j].command, NULL);
 			ft_lstadd_back(&lst[j].redirection, NULL);
 			j++;
 		}
 		else
-			ft_lstadd_back(&lst[j].command, ft_lstnew(new_token(split_str[i], COMMAND))); // 나누기
+			ft_lstadd_back(&lst[j].command, ft_lstnew(new_token(str[i], COMMAND))); // 나누기
 		i++;
 	}
-	i = 0;
-	while (split_str[i])
-		free(split_str[i++]);
-	free(split_str);
+	while (str[i])
+		free(str[i++]);
+	free(str);
 	ft_lstadd_back(&lst[j].command, NULL);
 	ft_lstadd_back(&lst[j].redirection, NULL);
+	return (lst);
+}
+
+t_commandlist	*parsing(char *str)
+{
+	int		i;
+	int		cnt;
+	char	**split_str;
+	t_commandlist *lst;
+
+	i = 0;
+	cnt = count_pipe(str);
+	lst = malloc(sizeof(t_commandlist *) * cnt + 1);
+	split_str = ft_split(str, ' ');
+	remove_special_char(split_str);
+	init_list(split_str, lst);
+	return (lst);
 }

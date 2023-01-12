@@ -1,39 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_main.c                                        :+:      :+:    :+:   */
+/*   parsing_exception.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/11 18:48:08 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/12 19:23:13 by sehjung          ###   ########.fr       */
+/*   Created: 2023/01/12 17:41:49 by sehjung           #+#    #+#             */
+/*   Updated: 2023/01/12 19:11:06 by sehjung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-int main(int argc, char **argv, char **envp)
+static void	str_moveup(char **str, int i)
 {
-	char *str;
-	t_commandlist *lst;
-	t_list *c_lst;
-	t_list *r_lst;
-
-	while (1)
+	while (str[i])
 	{
-		str = readline("$>");
-		lst = parsing(str);
-		c_lst = lst[0].command;
-		r_lst = lst[0].redirection;
-		while (c_lst)
+		str[i] = str[i + 1];
+		i++;
+	}
+}
+
+void	remove_special_char(char **str)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (str[i])
+	{
+		j = 0;
+		while (str[i][j])
 		{
-			printf("%s\n", ((t_token*)c_lst->content)->content);
-			c_lst = c_lst->next;
+			if (str[i][j] == ';' || str[i][j] == '\\' || str[i][j] == '&')
+			{
+				while (str[i][j])
+				{
+					str[i][j] = str[i][j + 1];
+					j++;
+				}
+				j = 0;
+				continue ;
+			}
+			j++;
 		}
-		while (r_lst)
-		{
-			printf("%s\n", ((t_token*)r_lst->content)->content);
-			r_lst = r_lst->next;
-		}
+		if (!str[i][0])
+			str_moveup(str, i);
+		i++;
 	}
 }
