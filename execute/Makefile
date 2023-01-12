@@ -25,6 +25,7 @@ $(NAME) : $(OBJS)
 clean :
 	make clean -C $(LIBFT_DIR)
 	rm -f $(OBJS)
+	rm -f *.txt
 
 fclean : clean
 	make fclean -C $(LIBFT_DIR)

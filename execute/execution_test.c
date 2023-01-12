@@ -6,11 +6,13 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 17:26:01 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/11 23:06:54 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/12 17:21:46 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution_test.h"
+
+#define COMMAND_NUM 1
 
 t_token	*new_token(char *command, t_type type)
 {
@@ -27,7 +29,7 @@ void	init_structs(t_commandlist *test_command, t_info *info, char **envp)
 	int	i;
 
 	i = 0;
-	while (i < 3)
+	while (i < COMMAND_NUM + 1)
 	{
 		test_command[i].command = NULL;
 		test_command[i].redirection = NULL;
@@ -67,7 +69,7 @@ void	print_data(t_commandlist *commandlist)
 		printf("---command %d end---\n", i);
 		i++;
 	}
-	((t_token *)(commandlist[1].command->content))->content = "hello world";
+	//((t_token *)(commandlist[1].command->content))->content = "hello world";
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -77,7 +79,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	test_command = malloc(sizeof(t_commandlist) * 3);
+	test_command = malloc(sizeof(t_commandlist) * (COMMAND_NUM + 1));
 	init_structs(test_command, &info, envp);
 	/* ls -al > a.txt | echo -n < b.txt > c.txt */
 	/*
