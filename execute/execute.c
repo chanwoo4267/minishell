@@ -6,16 +6,17 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 16:29:21 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/12 17:05:45 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/13 12:59:14 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution_test.h"
 
+/*	parsing 부분에서 잘못된 input은 전부 걸러준다고 생각함.				*/
+/*	이는 정상적으로 구성된 리스트로 구성됬고, 끝에 두 포인터가 NULL이며,	*/
+/*	적어도 하나 이상의 command가 들어있다는 것을 보장함					*/
 int	execute(t_commandlist *commandlist, t_info *info)
 {
-	if (!commandlist || !commandlist[0].command)
-		print_error();
 	if (!commandlist[1].command)
 		execute_subshell(commandlist[0], info);
 	else
@@ -27,11 +28,8 @@ int	execute_subshell(t_commandlist commandlist, t_info *info)
 {
 	if (commandlist.redirection)
 		redirection(commandlist.redirection);
-	if (commandlist.command != NULL)
-	{
-		//if (execute_builtin(commandlist.command, info) == FAIL)
+	//if (execute_builtin(commandlist.command, info) == FAIL)
 		execute_command(commandlist.command, info);
-	}
 	if (info->issubshell == YES)
 		exit(g_status.global_exit_status);
 	if (commandlist.redirection)

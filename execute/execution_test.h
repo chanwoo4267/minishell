@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 17:26:33 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/12 17:27:54 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/13 12:53:51 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int		reset_redirection(t_info *info);
 
 char	**list_to_strs(t_list *command);
 void	print_error(void);
+int		get_commands_count(t_commandlist *commandlist);
 
 int		execute_command(t_list *command, t_info *info);
 char	*get_env_path(char **env);

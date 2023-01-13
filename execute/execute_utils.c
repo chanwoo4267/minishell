@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:38:29 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/12 17:04:44 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/13 12:53:29 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,16 @@
 void	print_error(void)
 {
 	printf("error occured\n");
+}
+
+int	get_commands_count(t_commandlist *commandlist)
+{
+	int	count;
+
+	count = 0;
+	while (commandlist[count].command != NULL)
+		count++;
+	return (count + 1);
 }
 
 char	**list_to_strs(t_list *command)
