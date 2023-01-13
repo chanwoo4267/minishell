@@ -6,15 +6,18 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 16:29:21 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/13 18:52:17 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/14 03:05:27 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution_test.h"
-
-/*	parsing 부분에서 잘못된 input은 전부 걸러준다고 생각함.				*/
-/*	이는 정상적으로 구성된 리스트로 구성됬고, 끝에 두 포인터가 NULL이며,	*/
-/*	적어도 하나 이상의 command가 들어있다는 것을 보장함					*/
+/*
+	parsing 부분에서 잘못된 input은 전부 걸러준다고 생각함.
+	이는 정상적으로 구성된 리스트로 구성됬고, 끝에 두 포인터가 NULL이며,
+	적어도 하나 이상의 command가 들어있다는 것을 보장함
+	command 개수에 따라 바로 execute_subshell 하거나, (단일 command)
+	pipelining 후 각 command당 fork 후 execute_subshell 하게됨
+*/
 int	execute(t_commandlist *commandlist, t_info *info)
 {
 	int	command_count;
@@ -23,20 +26,25 @@ int	execute(t_commandlist *commandlist, t_info *info)
 	if (command_count < 1)
 		print_error("execute", "parsed input invalid");
 	else if (command_count == 1)
-		execute_subshell(commandlist[0], info);
-	/*
+		execute_subshell(commandlist[0], info, 0);
 	else
 		execute_pipe(commandlist, info, command_count);
-	*/
 	return (0);
 }
 
-int	execute_subshell(t_commandlist commandlist, t_info *info)
+/*
+	redirection이 없을경우 redirection = NULL일것
+	있을경우 redirection을 수행
+	built-in, 아니면 execute_command 로 command를 실행
+	현재 프로세스가 subshell일경우 exit로 종료
+	메인 프로세스일 경우 STDIN, STDOUT을 다시 원래대로 되돌려준다.
+*/
+int	execute_subshell(t_commandlist commandlist, t_info *info, int cmd_idx)
 {
 	if (commandlist.redirection)
-		redirection(commandlist.redirection);
+		redirection(commandlist.redirection, cmd_idx);
 	//if (execute_builtin(commandlist.command, info) == FAIL)
-		execute_command(commandlist.command, info);
+	execute_command(commandlist.command, info);
 	if (info->issubshell == YES)
 		exit(g_status.global_exit_status);
 	if (commandlist.redirection)

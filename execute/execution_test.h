@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 17:26:33 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/13 19:54:50 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/14 02:20:41 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@
 # define SUCCESS 1
 # define NO 0
 # define YES 1
-/* heredoc에서 open을 시도할 최대 횟수 */
-# define OPEN_TRY_MAX 10000
 /*** define list end ***/
 
 /*** struct list start ***/
@@ -44,6 +42,7 @@ typedef enum e_type
 	ASSIGN_SHELL_VAR,
 }	t_type;
 
+/* issubshell must be set NO when initializing main function */
 typedef struct s_info
 {
 	char	**envp;
@@ -75,7 +74,7 @@ t_global	g_status;
 /*** function list start ***/
 /* execute.c */
 int		execute(t_commandlist *commandlist, t_info *info);
-int		execute_subshell(t_commandlist commandlist, t_info *info);
+int		execute_subshell(t_commandlist commandlist, t_info *info, int cmd_idx);
 int		execute_pipe(t_commandlist *commandlist, t_info *info, int cmd_count);
 int		reset_redirection(t_info *info);
 
@@ -89,9 +88,7 @@ int		execute_command(t_list *command, t_info *info);
 int		execute_command_subshell(t_list *command_list, char **envp);
 
 /* execute_redir.c */
-int		redirection(t_list	*redirection);
-void	redirect_file(char *filename, t_type type);
-void	redirect_heredoc(char *delimiter);
+int		redirection(t_list	*redirection, int cmd_idx);
 
 /* execute_builtin.c */
 int		execute_builtin(t_list *command, t_info *info);
@@ -101,6 +98,7 @@ int		execute_pipe(t_commandlist *commandlist, t_info *info, int cmd_count);
 
 /* execute_test.c */
 void	print_data(t_commandlist *commandlist);
+void	print_message(char *message);
 /*** function list end ***/
 
 #endif

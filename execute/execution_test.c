@@ -6,13 +6,13 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 17:26:01 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/13 19:56:37 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/14 02:51:56 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution_test.h"
 
-#define COMMAND_NUM 1
+#define COMMAND_NUM 2
 
 t_token	*new_token(char *command, t_type type)
 {
@@ -39,7 +39,7 @@ void	init_structs(t_commandlist *test_command, t_info *info, char **envp)
 	(info)->fd[0] = STDIN_FILENO;
 	(info)->fd[1] = STDOUT_FILENO;
 	(info)->fd[2] = STDERR_FILENO;
-	(info)->issubshell = 0;
+	(info)->issubshell = NO;
 }
 
 void	print_data(t_commandlist *commandlist)
@@ -69,7 +69,12 @@ void	print_data(t_commandlist *commandlist)
 		printf("---command %d end---\n", i);
 		i++;
 	}
-	//((t_token *)(commandlist[1].command->content))->content = "hello world";
+}
+
+void	print_message(char *message)
+{
+	write(2, message, ft_strlen(message));
+	write(2, "\n", 1);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -81,23 +86,16 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	test_command = malloc(sizeof(t_commandlist) * (COMMAND_NUM + 1));
 	init_structs(test_command, &info, envp);
-	/* ls -al > a.txt | echo -n < b.txt > c.txt */
-	/*
-	ft_lstadd_back(&test_command[0].command, ft_lstnew(new_token("ls", COMMAND)));
-	ft_lstadd_back(&test_command[0].command, ft_lstnew(new_token("-al", COMMAND)));
+	/* command */
+	ft_lstadd_back(&test_command[0].command, ft_lstnew(new_token("cat", COMMAND)));
+	ft_lstadd_back(&test_command[0].redirection, ft_lstnew(new_token("a", REDIR_HEREDOC)));
 	ft_lstadd_back(&test_command[0].redirection, ft_lstnew(new_token("a.txt", REDIR_OUT)));
-	ft_lstadd_back(&test_command[1].command, ft_lstnew(new_token("echo", COMMAND)));
-	ft_lstadd_back(&test_command[1].command, ft_lstnew(new_token("-n", COMMAND)));
-	ft_lstadd_back(&test_command[1].redirection, ft_lstnew(new_token("b.txt", REDIR_IN)));
-	ft_lstadd_back(&test_command[1].redirection, ft_lstnew(new_token("c.txt", REDIR_OUT)));
+	ft_lstadd_back(&test_command[1].command, ft_lstnew(new_token("cat", COMMAND)));
+	ft_lstadd_back(&test_command[1].redirection, ft_lstnew(new_token("b", REDIR_HEREDOC)));
+	ft_lstadd_back(&test_command[1].redirection, ft_lstnew(new_token("b.txt", REDIR_OUT)));
 	test_command[2].command = NULL;
 	test_command[2].redirection = NULL;
-	*/
-	ft_lstadd_back(&test_command[0].command, ft_lstnew(new_token("ls", COMMAND)));
-	ft_lstadd_back(&test_command[0].command, ft_lstnew(new_token("-al", COMMAND)));
-	ft_lstadd_back(&test_command[0].redirection, ft_lstnew(new_token("a.txt", REDIR_HEREDOC)));
-	test_command[1].command = NULL;
-	test_command[1].redirection = NULL;
+	/* command end */
 	//print_data(test_command);
 	execute(test_command, &info);
 }
