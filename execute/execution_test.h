@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 17:26:33 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/13 12:53:51 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/13 19:54:50 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,28 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 
+/*** define list start ***/
 # define FAIL 0
 # define SUCCESS 1
 # define NO 0
 # define YES 1
+/* heredoc에서 open을 시도할 최대 횟수 */
+# define OPEN_TRY_MAX 10000
+/*** define list end ***/
 
+/*** struct list start ***/
+/* REDIR_IN, REDIR_OUT 을 0,1로 설정해서 redirection에 이용함 */
 typedef enum e_type
 {
-	COMMAND,
-	PIPE,
 	REDIR_IN,
 	REDIR_OUT,
 	REDIR_APPEND,
 	REDIR_HEREDOC,
+	COMMAND,
+	PIPE,
+	ASSIGN_SHELL_VAR,
 }	t_type;
 
-/* 환경변수, STD FD 저장, 현재 프로세스가 subshell인지 아닌지 판단하는 플래그 */
 typedef struct s_info
 {
 	char	**envp;
@@ -48,7 +54,7 @@ typedef struct s_info
 typedef struct s_token
 {
 	char	*content;
-	int		type;
+	t_type	type;
 }	t_token;
 
 typedef struct s_commandlist
@@ -58,36 +64,43 @@ typedef struct s_commandlist
 }	t_commandlist;
 
 /* 가장 최근 프로세스의 종료 상태를 저장하기 위한 전역변수 */
-typedef struct s_globalstatus
+typedef struct s_global
 {
 	int	global_exit_status;
-}	t_globalstatus;
+}	t_global;
+/*** struct list end ***/
 
-t_globalstatus	g_status;
+t_global	g_status;
 
-/* functions */
+/*** function list start ***/
+/* execute.c */
 int		execute(t_commandlist *commandlist, t_info *info);
 int		execute_subshell(t_commandlist commandlist, t_info *info);
-int		execute_pipe(t_commandlist *commandlist, t_info *info);
+int		execute_pipe(t_commandlist *commandlist, t_info *info, int cmd_count);
 int		reset_redirection(t_info *info);
 
+/* execute_utils.c */
 char	**list_to_strs(t_list *command);
-void	print_error(void);
+void	print_error(char *location, char *message);
 int		get_commands_count(t_commandlist *commandlist);
 
+/* execute_command.c */
 int		execute_command(t_list *command, t_info *info);
-char	*get_env_path(char **env);
-char	*get_absolute_cmd(char *name, char *path);
-int		execute_command_subshell(t_list *command, char **envp);
-int		execute_given_path(char **cmd, char **envp);
+int		execute_command_subshell(t_list *command_list, char **envp);
 
+/* execute_redir.c */
 int		redirection(t_list	*redirection);
-void	redirect_input(char *filename);
-void	redirect_output(char *filename);
-void	redirect_append(char *filename);
+void	redirect_file(char *filename, t_type type);
 void	redirect_heredoc(char *delimiter);
 
-/* test functions */
+/* execute_builtin.c */
+int		execute_builtin(t_list *command, t_info *info);
+
+/* execute_pipe.c */
+int		execute_pipe(t_commandlist *commandlist, t_info *info, int cmd_count);
+
+/* execute_test.c */
 void	print_data(t_commandlist *commandlist);
+/*** function list end ***/
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 17:26:01 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/12 17:21:46 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/13 19:56:37 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	main(int argc, char **argv, char **envp)
 	*/
 	ft_lstadd_back(&test_command[0].command, ft_lstnew(new_token("ls", COMMAND)));
 	ft_lstadd_back(&test_command[0].command, ft_lstnew(new_token("-al", COMMAND)));
-	ft_lstadd_back(&test_command[0].redirection, ft_lstnew(new_token("a.txt", REDIR_OUT)));
+	ft_lstadd_back(&test_command[0].redirection, ft_lstnew(new_token("a.txt", REDIR_HEREDOC)));
 	test_command[1].command = NULL;
 	test_command[1].redirection = NULL;
 	//print_data(test_command);

@@ -6,15 +6,15 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:38:29 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/13 12:53:29 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/13 18:45:30 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution_test.h"
 
-void	print_error(void)
+void	print_error(char *location, char *message)
 {
-	printf("error occured\n");
+	printf("Error occured in : %s\nMessage : %s\n", location, message);
 }
 
 int	get_commands_count(t_commandlist *commandlist)
@@ -24,7 +24,7 @@ int	get_commands_count(t_commandlist *commandlist)
 	count = 0;
 	while (commandlist[count].command != NULL)
 		count++;
-	return (count + 1);
+	return (count);
 }
 
 char	**list_to_strs(t_list *command)
