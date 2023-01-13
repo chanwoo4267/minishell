@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:07:50 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/14 06:17:55 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/14 07:01:49 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,33 +73,35 @@ char	*get_heredoc_filename(int *fd, int cmd_idx)
 void	redirect_heredoc(char *delimiter, int cmd_idx)
 {
 	int		fd;
+	int		temp_fd;
 	char	*line;
 	char	*filename;
-	size_t	cmp_len;
+
+	/* test - if dup2 stdin to normal and restor */
+	temp_fd = -1;
+	dup2(STDIN_FILENO, temp_fd);
+	dup2(g_status.g_info->fd[0], STDIN_FILENO);
 
 	filename = get_heredoc_filename(&fd, cmd_idx);
 	if (!filename)
 		print_error("redirect_heredoc", "filename error");
-	print_message(filename); //test
-	line = readline(NULL);
+	line = get_next_line(STDIN_FILENO);
 	while (line)
 	{
-		cmp_len = ft_strlen(delimiter);
-		if (ft_strlen(line) > cmp_len)
-			cmp_len = ft_strlen(line);
-		if (ft_strncmp(delimiter, line, cmp_len) == 0)
+		if (ft_strncmp(delimiter, line, ft_strlen(delimiter)) == 0 && line[ft_strlen(delimiter)] == '\n')
 		{
 			free(line);
 			break ;
 		}
 		write(fd, line, ft_strlen(line));
-		print_message(line); //test
+		print_message(line);
 		free(line);
-		line = readline(NULL);
+		line = get_next_line(STDIN_FILENO);
 	}
 	close(fd);
+	dup2(temp_fd, STDIN_FILENO);
 	redirect_file(filename, REDIR_IN);
-	unlink(filename);
+	//unlink(filename);
 	free(filename);
 }
 

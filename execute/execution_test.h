@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 17:26:33 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/14 05:27:03 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/14 06:50:54 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define EXECUTION_TEST_H
 
 # include "../libft/libft.h"
+# include "get_next_line.h"
 # include <stdio.h>
 # include <sys/wait.h>
 # include <sys/signal.h>
@@ -66,7 +67,8 @@ typedef struct s_commandlist
 /* 가장 최근 프로세스의 종료 상태를 저장하기 위한 전역변수 */
 typedef struct s_global
 {
-	int	global_exit_status;
+	int		global_exit_status;
+	t_info	*g_info;
 }	t_global;
 /*** struct list end ***/
 

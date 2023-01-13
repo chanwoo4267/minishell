@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 17:26:01 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/14 05:24:19 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/14 07:03:24 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ void	init_structs(t_commandlist *test_command, t_info *info, char **envp)
 		i++;
 	}
 	(info)->envp = envp;
-	(info)->fd[0] = STDIN_FILENO;
-	(info)->fd[1] = STDOUT_FILENO;
-	(info)->fd[2] = STDERR_FILENO;
+	(info)->fd[0] = dup(STDIN_FILENO);
+	(info)->fd[1] = dup(STDOUT_FILENO);
+	(info)->fd[2] = dup(STDERR_FILENO);
 	(info)->issubshell = NO;
 }
 
@@ -80,6 +80,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	test_command = malloc(sizeof(t_commandlist) * (COMMAND_NUM + 1));
 	init_structs(test_command, &info, envp);
+	g_status.g_info = &info;
 	/* command */
 	ft_lstadd_back(&test_command[0].command, ft_lstnew(new_token("cat", COMMAND)));
 	ft_lstadd_back(&test_command[0].redirection, ft_lstnew(new_token("a", REDIR_HEREDOC)));
