@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 12:57:13 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/14 03:00:48 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/14 05:39:56 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,11 @@ static void	init_pipes(int cmd_count, pid_t **pids, int ***pipes)
 
 /*	
 	pipes : (cmd_count - 1) 크기의 int[2] array
-	cmd_count == 4 이라고 가정했을 때, pids는 
+	cmd_count == 2 이라고 가정했을 때, pids는 
 	0번째 프로세스는 pids[0][1]을 STDOUT으로 설정
-	1번째 프로세스는 pids[0][0]을 STDIN으로 설정, pids[1][1]을 STDOUT으로 설정
-	2번째 프로세스는 pids[1][0]을 STDIN으로 설정, pids[2][1]을 STDOUT으로 설정
-	3번째 프로세스는 pids[2][0]을 STDIN으로 설정
+	1번째 프로세스는 pids[0][0]을 STDIN으로 설정
 */
-static void	set_pipeline(int child_index, int cmd_count, int **pipes)
+static void	set_pipeline(int child_index, int cmd_count, int ***pipes)
 {
 	int	i;
 
@@ -80,18 +78,16 @@ static void	set_pipeline(int child_index, int cmd_count, int **pipes)
 	{
 		if (i == child_index - 1)
 		{
-			if (pipes[i][0] != STDIN_FILENO)
-				if (dup2(pipes[i][0], STDIN_FILENO) != STDIN_FILENO)
+			if ((*pipes)[i][0] != STDIN_FILENO)
+				if (dup2((*pipes)[i][0], STDIN_FILENO) != STDIN_FILENO)
 					print_error("set_pipeline", "dup2 error on stdin");
 		}
 		else if (i == child_index)
 		{
-			if (pipes[i][1] != STDOUT_FILENO)
-				if (dup2(pipes[i][1], STDOUT_FILENO) != STDOUT_FILENO)
+			if ((*pipes)[i][1] != STDOUT_FILENO)
+				if (dup2((*pipes)[i][1], STDOUT_FILENO) != STDOUT_FILENO)
 					print_error("set_pipeline", "dup2 error on stdout");
 		}
-		close(pipes[i][0]);
-		close(pipes[i][1]);
 	}
 }
 
@@ -114,7 +110,7 @@ static void	build_pipeline(int cmd_count, pid_t **pids, int ***pipes)
 			print_error("build_pipeline", "fork error");
 		else if ((*pids)[i] == 0) /* 자식 프로세스는 pipeline 설정하고 바로 종료 */
 		{
-			set_pipeline(i, cmd_count, *pipes);
+			set_pipeline(i, cmd_count, pipes);
 			return ;
 		}
 		waitpid((*pids)[i], &status, 0);

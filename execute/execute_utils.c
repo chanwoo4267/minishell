@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:38:29 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/13 18:45:30 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/14 05:27:04 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 void	print_error(char *location, char *message)
 {
 	printf("Error occured in : %s\nMessage : %s\n", location, message);
+}
+
+void	print_message(char *message)
+{
+	write(2, message, ft_strlen(message));
+	write(2, "\n", 1);
 }
 
 int	get_commands_count(t_commandlist *commandlist)

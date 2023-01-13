@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 17:26:01 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/14 02:51:56 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/14 05:24:19 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,6 @@ void	print_data(t_commandlist *commandlist)
 		printf("---command %d end---\n", i);
 		i++;
 	}
-}
-
-void	print_message(char *message)
-{
-	write(2, message, ft_strlen(message));
-	write(2, "\n", 1);
 }
 
 int	main(int argc, char **argv, char **envp)

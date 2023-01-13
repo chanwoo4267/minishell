@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 17:26:33 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/14 02:20:41 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/14 05:27:03 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 # define EXECUTION_TEST_H
 
 # include "../libft/libft.h"
-# include "get_next_line.h"
 # include <stdio.h>
 # include <sys/wait.h>
 # include <sys/signal.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 /*** define list start ***/
 # define FAIL 0
@@ -81,6 +82,7 @@ int		reset_redirection(t_info *info);
 /* execute_utils.c */
 char	**list_to_strs(t_list *command);
 void	print_error(char *location, char *message);
+void	print_message(char *message);
 int		get_commands_count(t_commandlist *commandlist);
 
 /* execute_command.c */
@@ -98,7 +100,6 @@ int		execute_pipe(t_commandlist *commandlist, t_info *info, int cmd_count);
 
 /* execute_test.c */
 void	print_data(t_commandlist *commandlist);
-void	print_message(char *message);
 /*** function list end ***/
 
 #endif

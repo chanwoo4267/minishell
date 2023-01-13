@@ -1,8 +1,8 @@
 {
     "files.associations": {
-        "get_next_line.h": "c",
         "libft.h": "c",
         "execution_test.h": "c",
-        "readline.h": "c"
+        "readline.h": "c",
+        "history.h": "c"
     }
 }
