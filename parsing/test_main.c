@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 18:48:08 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/13 17:45:52 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/15 17:48:26 by sehjung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ int main(int argc, char **argv, char **envp)
 		r_lst = lst[0].redirection;
 		while (c_lst)
 		{
-			printf("%s\n", ((t_token*)c_lst->content)->content);
+			printf("%s, TYPE : %d\n", ((t_token*)c_lst->content)->content, ((t_token*)c_lst->content)->type);
 			c_lst = c_lst->next;
 		}
 		while (r_lst)
 		{
-			printf("%s\n", ((t_token*)r_lst->content)->content);
+			printf("%s, TYPE : %d\n", ((t_token*)r_lst->content)->content, ((t_token*)r_lst->content)->type);
 			r_lst = r_lst->next;
 		}
 	}

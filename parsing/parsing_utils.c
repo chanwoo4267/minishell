@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 19:02:14 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/13 17:45:38 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/15 16:42:36 by sehjung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,25 @@ void	free_list(t_commandlist *lst)
 	
 }
 
+char	*ft_strjoin_char(char *s1, char s2)
+{
+	char	*ret;
+	size_t	s1_len;
+
+	if (!s1 && !s2)
+		return (0);
+	else if (!s1)
+		return (ft_strdup(&s2));
+	s1_len = ft_strlen(s1);
+	ret = malloc(sizeof(char) * (s1_len + 2));
+	if (!ret)
+		return (0);
+	ft_strlcpy(ret, s1, s1_len + 1);
+	ft_strlcpy(ret + s1_len, &s2, 2);
+	free(s1);
+	return (ret);
+}
+
 t_token	*new_token(char *command, t_type type)
 {
 	t_token	*new_token;
@@ -30,20 +49,4 @@ t_token	*new_token(char *command, t_type type)
 	new_token->content = ft_strdup(command);
 	new_token->type = type;
 	return (new_token);
-}
-
-int	count_pipe(char *str)
-{
-	int	i;
-	int cnt;
-
-	i = 0;
-	cnt = 0;
-	while (str[i])
-	{
-		if (str[i] == '|')
-			cnt++;
-		i++;
-	}
-	return (cnt);
 }

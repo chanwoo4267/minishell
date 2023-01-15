@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:49:44 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/13 16:30:21 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/15 17:16:23 by sehjung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ t_token	*new_token(char *command, t_type type);
 void	remove_special_char(char **str);
 int	count_pipe(char *str);
 void	free_list(t_commandlist *lst);
+char	*ft_strjoin_char(char *s1, char s2);
+char	*exception_line(char *line);
+
 
 // typedef struct s_token t_token;
 // typedef struct s_list t_list;
