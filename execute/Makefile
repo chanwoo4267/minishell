@@ -5,7 +5,9 @@ NAME = minishell
 LIBFT = ../libft/libft.a
 LIBFT_DIR = ../libft/
 
-SRCS = execution_test.c execute.c execute_command.c execute_redir.c execute_utils.c execute_pipe.c get_next_line.c get_next_line_utils.c
+SRCS = execution_test.c execute.c execute_command.c execute_redir.c execute_utils.c \
+		execute_pipe.c get_next_line.c get_next_line_utils.c execute_builtin.c \
+		builtin_cd.c
 SRCS_OBJS = $(SRCS:.c=.o)
 
 LDFLAGS = -lreadline -lhistory -L$(READ_DIR)
@@ -26,7 +28,6 @@ $(NAME) : rl $(OBJS)
 clean :
 	rm -f $(OBJS)
 	rm -rf rlsrc
-	rm -rf readline/bin readline/share
 	rm -f *.txt heredoc_tmp*
 
 fclean : clean

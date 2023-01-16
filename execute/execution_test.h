@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 17:26:33 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/14 06:50:54 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/16 16:38:17 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,12 @@ int		execute_pipe(t_commandlist *commandlist, t_info *info, int cmd_count);
 
 /* execute_test.c */
 void	print_data(t_commandlist *commandlist);
+
+/* execute_builtin.c */
+int		execute_builtin(t_list *command, t_info *info);
+
+/* builtin */
+void	builtin_cd(t_list *command, t_info *info);
 /*** function list end ***/
 
 #endif

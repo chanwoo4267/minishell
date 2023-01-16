@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 17:26:01 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/14 07:03:24 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/16 16:55:28 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,22 @@ int	main(int argc, char **argv, char **envp)
 	init_structs(test_command, &info, envp);
 	g_status.g_info = &info;
 	/* command */
+	char *s;
+	s = getcwd(NULL, 0);
+	printf("%s\n", s);
+	ft_lstadd_back(&test_command[0].command, ft_lstnew(new_token("cd", COMMAND)));
+	ft_lstadd_back(&test_command[0].command, ft_lstnew(new_token("readline", COMMAND)));
+	test_command[1].command = NULL;
+	test_command[1].redirection = NULL;
+	/* command end */
+	//print_data(test_command);
+	execute(test_command, &info);
+	s = getcwd(NULL, 0);
+	printf("%s\n", s);
+}
+
+
+/* command "cat << a > a.txt | cat << b > b.txt"
 	ft_lstadd_back(&test_command[0].command, ft_lstnew(new_token("cat", COMMAND)));
 	ft_lstadd_back(&test_command[0].redirection, ft_lstnew(new_token("a", REDIR_HEREDOC)));
 	ft_lstadd_back(&test_command[0].redirection, ft_lstnew(new_token("a.txt", REDIR_OUT)));
@@ -90,7 +106,4 @@ int	main(int argc, char **argv, char **envp)
 	ft_lstadd_back(&test_command[1].redirection, ft_lstnew(new_token("b.txt", REDIR_OUT)));
 	test_command[2].command = NULL;
 	test_command[2].redirection = NULL;
-	/* command end */
-	//print_data(test_command);
-	execute(test_command, &info);
-}
+*/
