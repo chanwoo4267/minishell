@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 19:02:14 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/15 16:42:36 by sehjung          ###   ########.fr       */
+/*   Updated: 2023/01/16 19:20:55 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "parsing.h"
-
-void	del_token(void *token)
-{
-	
-}
-
-void	free_list(t_commandlist *lst)
-{
-	
-}
 
 char	*ft_strjoin_char(char *s1, char s2)
 {

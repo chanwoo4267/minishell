@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:49:44 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/15 17:16:23 by sehjung          ###   ########.fr       */
+/*   Updated: 2023/01/16 19:27:00 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	count_pipe(char *str);
 void	free_list(t_commandlist *lst);
 char	*ft_strjoin_char(char *s1, char s2);
 char	*exception_line(char *line);
+void	ascii_change(char **str);
 
 
 // typedef struct s_token t_token;
