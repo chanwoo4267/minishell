@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 12:57:13 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/14 05:39:56 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/17 19:42:38 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ int	execute_pipe(t_commandlist *commandlist, t_info *info, int cmd_count)
 		if (pids[i] == 0)
 		{
 			info->issubshell = YES;
-			execute_subshell(commandlist[i], info, i);
+			execute_subshell(commandlist[i], info);
 		}
 	}
 	i = -1;

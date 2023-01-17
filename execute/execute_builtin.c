@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 12:40:22 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/17 13:11:59 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/17 17:46:03 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ int	execute_builtin(t_list *command, t_info *info)
 	else if (bi == BUILTIN_CD)
 		builtin_cd(command, info);
 	else if (bi == BUILTIN_ECHO)
-		builtin_echo(command, info);
+		builtin_echo(command);
 	else if (bi == BUILTIN_PWD)
-		builtin_pwd(command, info);
+		builtin_pwd(command);
 	else if (bi == BUILTIN_EXPORT)
 		builtin_export(command, info);
 	else if (bi == BUILTIN_UNSET)
@@ -66,6 +66,6 @@ int	execute_builtin(t_list *command, t_info *info)
 	else if (bi == BUILTIN_ENV)
 		builtin_env(command, info);
 	else
-		builtin_exit(command, info);
+		builtin_exit(command);
 	return (YES);
 }

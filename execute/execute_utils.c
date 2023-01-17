@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:38:29 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/17 12:40:58 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/17 16:50:50 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,20 @@ char	**list_to_strs(t_list *command)
 	}
 	strs[i] = NULL;
 	return (strs);
+}
+
+void	free_strs(char **strs)
+{
+	int	i;
+
+	if (strs)
+	{
+		i = 0;
+		while (strs[i])
+		{
+			free(strs[i]);
+			i++;
+		}
+		free(strs);
+	}
 }

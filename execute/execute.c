@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 16:29:21 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/17 13:04:48 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/17 20:05:22 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ int	execute(t_commandlist *commandlist, t_info *info)
 	command_count = get_commands_count(commandlist);
 	if (command_count < 1)
 		print_error("execute", "parsed input invalid");
-	else if (command_count == 1)
-		execute_subshell(commandlist[0], info, 0);
+	redirect_heredoc(commandlist, command_count);
+	if (command_count == 1)
+		execute_subshell(commandlist[0], info);
 	else
 		execute_pipe(commandlist, info, command_count);
 	return (0);
@@ -39,10 +40,10 @@ int	execute(t_commandlist *commandlist, t_info *info)
 	현재 프로세스가 subshell일경우 exit로 종료
 	메인 프로세스일 경우 STDIN, STDOUT을 다시 원래대로 되돌려준다.
 */
-int	execute_subshell(t_commandlist commandlist, t_info *info, int cmd_idx)
+int	execute_subshell(t_commandlist commandlist, t_info *info)
 {
 	if (commandlist.redirection)
-		redirection(commandlist.redirection, cmd_idx);
+		redirection(commandlist.redirection);
 	if (execute_builtin(commandlist.command, info) == NO)
 		execute_command(commandlist.command, info);
 	if (info->issubshell == YES)

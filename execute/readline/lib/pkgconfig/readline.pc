@@ -1,4 +1,4 @@
-prefix=/Users/chanwoo4267/desktop/git/minishell/execute/readline
+prefix=/Users/chanwopa/Desktop/42cursus/minishell/execute/readline
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

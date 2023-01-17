@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 18:40:11 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/13 18:48:51 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/17 20:05:16 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ int	execute_command_subshell(t_list *command_list, char **envp)
 	char	*cmd;
 
 	argv = list_to_strs(command_list);
+	if (!argv)
+		print_error("execute_command_subshell", "list_to_strs error");
 	env = envp;
 	if (ft_strchr(argv[0], '/'))
 		cmd = argv[0];
@@ -113,12 +115,21 @@ int	execute_command_subshell(t_list *command_list, char **envp)
 	{
 		path = get_env_path(env);
 		if (!path)
+		{
+			free_strs(argv);
 			print_error("execute_command_subshell", "can't PATH= in envp");
+		}
 		cmd = get_cmd_from_path(argv[0], path);
 	}
 	if (!cmd)
+	{
+		free_strs(argv);
 		print_error("execute_command_subshell", "can't access to command");
+	}
 	if (execve(cmd, argv, envp) < 0)
+	{
+		free_strs(argv);
 		print_error("execute_command_subshell", "execve error");
+	}
 	return (0);
 }

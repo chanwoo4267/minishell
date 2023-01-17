@@ -1,41 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_echo.c                                     :+:      :+:    :+:   */
+/*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/17 12:35:54 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/17 17:44:21 by chanwopa         ###   ########seoul.kr  */
+/*   Created: 2023/01/17 15:52:49 by chanwopa          #+#    #+#             */
+/*   Updated: 2023/01/17 17:25:44 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution_test.h"
 
-void	builtin_echo(t_list *list)
+void	builtin_unset(t_list *list, t_info *info)
 {
-	int		i;
 	char	**command;
+	int		i;
 
 	command = list_to_strs(list);
 	if (!command)
-		print_error("builtin_echo", "list_to_strs error");
-	g_status.global_exit_status = 0;
-	if (!command[1])
+		print_error("builtin_unset", "list_to_strs error");
+	if (command[1])
 	{
-		printf("\n");
-		free_strs(command);
-		return ;
-	}
-	if (ft_strncmp(command[1], "-n", ft_strlen(command[1])) == 0)
-		i = 2;
-	else
 		i = 1;
-	while (command[i] != NULL && command[i + 1] != NULL)
-		printf("%s ", command[i++]);
-	if (command[i] != NULL)
-		printf("%s", command[i]);
-	if (command[1] && ft_strncmp(command[1], "-n", ft_strlen(command[1])) != 0)
-		printf("\n");
+		while (command[i])
+		{
+			if (!ft_strchr(command[i], '='))
+				delete_envp(command[i], info);
+			i++;
+		}
+	}
 	free_strs(command);
 }

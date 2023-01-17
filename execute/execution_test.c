@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 17:26:01 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/16 16:55:28 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/17 20:05:09 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,6 @@ t_token	*new_token(char *command, t_type type)
 	new_token->content = ft_strdup(command);
 	new_token->type = type;
 	return (new_token);
-}
-
-void	init_structs(t_commandlist *test_command, t_info *info, char **envp)
-{
-	int	i;
-
-	i = 0;
-	while (i < COMMAND_NUM + 1)
-	{
-		test_command[i].command = NULL;
-		test_command[i].redirection = NULL;
-		i++;
-	}
-	(info)->envp = envp;
-	(info)->fd[0] = dup(STDIN_FILENO);
-	(info)->fd[1] = dup(STDOUT_FILENO);
-	(info)->fd[2] = dup(STDERR_FILENO);
-	(info)->issubshell = NO;
 }
 
 void	print_data(t_commandlist *commandlist)
@@ -71,6 +53,62 @@ void	print_data(t_commandlist *commandlist)
 	}
 }
 
+void	print_envp(char **envp)
+{
+	int	i;
+
+	i = 0;
+	if (envp)
+	{
+		printf("---envp start---\n");
+		while (envp[i])
+		{
+			printf("%s\n", envp[i]);
+			i++;
+		}
+		printf("---envp end---\n");
+	}
+}
+
+char	**set_envp(char **envp)
+{
+	char	**new_envp;
+	int		i;
+
+	if (!envp)
+		print_error("set_envp", "no envp");
+	i = 0;
+	while (envp[i])
+		i++;
+	new_envp = malloc(sizeof(char *) * (i + 1));
+	i = 0;
+	while (envp[i])
+	{
+		new_envp[i] = ft_strdup(envp[i]);
+		i++;
+	}
+	new_envp[i] = NULL;
+	return (new_envp);
+}
+
+void	init_structs(t_commandlist *test_command, t_info *info, char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (i < COMMAND_NUM + 1)
+	{
+		test_command[i].command = NULL;
+		test_command[i].redirection = NULL;
+		i++;
+	}
+	(info)->envp = set_envp(envp);
+	(info)->fd[0] = dup(STDIN_FILENO);
+	(info)->fd[1] = dup(STDOUT_FILENO);
+	(info)->fd[2] = dup(STDERR_FILENO);
+	(info)->issubshell = NO;
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_commandlist	*test_command;
@@ -80,20 +118,17 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	test_command = malloc(sizeof(t_commandlist) * (COMMAND_NUM + 1));
 	init_structs(test_command, &info, envp);
-	g_status.g_info = &info;
 	/* command */
-	char *s;
-	s = getcwd(NULL, 0);
-	printf("%s\n", s);
-	ft_lstadd_back(&test_command[0].command, ft_lstnew(new_token("cd", COMMAND)));
-	ft_lstadd_back(&test_command[0].command, ft_lstnew(new_token("readline", COMMAND)));
-	test_command[1].command = NULL;
-	test_command[1].redirection = NULL;
+	ft_lstadd_back(&test_command[0].command, ft_lstnew(new_token("cat", COMMAND)));
+	ft_lstadd_back(&test_command[0].redirection, ft_lstnew(new_token("a", REDIR_HEREDOC)));
+	ft_lstadd_back(&test_command[0].redirection, ft_lstnew(new_token("a.txt", REDIR_OUT)));
+	ft_lstadd_back(&test_command[1].command, ft_lstnew(new_token("cat", COMMAND)));
+	ft_lstadd_back(&test_command[1].redirection, ft_lstnew(new_token("b", REDIR_HEREDOC)));
+	ft_lstadd_back(&test_command[1].redirection, ft_lstnew(new_token("b.txt", REDIR_OUT)));
+	test_command[2].command = NULL;
+	test_command[2].redirection = NULL;
 	/* command end */
-	//print_data(test_command);
 	execute(test_command, &info);
-	s = getcwd(NULL, 0);
-	printf("%s\n", s);
 }
 
 

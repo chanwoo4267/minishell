@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 17:26:33 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/17 13:07:15 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/17 20:02:38 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ typedef struct s_commandlist
 typedef struct s_global
 {
 	int		global_exit_status;
-	t_info	*g_info;
 }	t_global;
 /*** struct list end ***/
 
@@ -77,7 +76,7 @@ t_global	g_status;
 /*** function list start ***/
 /* execute.c */
 int		execute(t_commandlist *commandlist, t_info *info);
-int		execute_subshell(t_commandlist commandlist, t_info *info, int cmd_idx);
+int		execute_subshell(t_commandlist commandlist, t_info *info);
 int		execute_pipe(t_commandlist *commandlist, t_info *info, int cmd_count);
 int		reset_redirection(t_info *info);
 
@@ -86,13 +85,20 @@ char	**list_to_strs(t_list *command);
 void	print_error(char *location, char *message);
 void	print_message(char *message);
 int		get_commands_count(t_commandlist *commandlist);
+void	free_strs(char **strs);
+
+/* envp_utils.c */
+void	change_envp(char *new, t_info *info);
+void	add_envp(char *new, t_info *info);
+void	delete_envp(char *del, t_info *info);
 
 /* execute_command.c */
 int		execute_command(t_list *command, t_info *info);
 int		execute_command_subshell(t_list *command_list, char **envp);
 
 /* execute_redir.c */
-int		redirection(t_list	*redirection, int cmd_idx);
+void	redirect_heredoc(t_commandlist *commandlist, int cmd_count);
+int		redirection(t_list	*redirection);
 
 /* execute_builtin.c */
 int		execute_builtin(t_list *command, t_info *info);
@@ -102,14 +108,20 @@ int		execute_pipe(t_commandlist *commandlist, t_info *info, int cmd_count);
 
 /* execute_test.c */
 void	print_data(t_commandlist *commandlist);
+void	print_envp(char **envp);
 
 /* execute_builtin.c */
 int		execute_builtin(t_list *command, t_info *info);
 
 /* builtin */
 void	builtin_cd(t_list *command, t_info *info);
-void	builtin_echo(t_list *list, t_info *info);
-void	builtin_pwd(t_list *list, t_info *info);
+void	builtin_echo(t_list *list);
+void	builtin_pwd(t_list *list);
+void	builtin_export(t_list *list, t_info *info);
+void	builtin_exit(t_list *list);
+void	builtin_unset(t_list *list, t_info *info);
+void	builtin_env(t_list *list, t_info *info);
+
 /*** function list end ***/
 
 #endif
