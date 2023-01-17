@@ -6,7 +6,7 @@ LIBFT = ../libft/libft.a
 LIBFT_DIR = ../libft/
 
 SRCS = execution_test.c execute.c execute_command.c execute_redir.c execute_utils.c \
-		execute_pipe.c get_next_line.c get_next_line_utils.c execute_builtin.c \
+		execute_pipe.c execute_builtin.c \
 		builtin_cd.c builtin_echo.c builtin_env.c builtin_exit.c builtin_export.c builtin_pwd.c builtin_unset.c envp_utils.c
 SRCS_OBJS = $(SRCS:.c=.o)
 

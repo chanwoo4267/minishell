@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 17:26:33 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/17 20:02:38 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/17 20:14:38 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define EXECUTION_TEST_H
 
 # include "../libft/libft.h"
-# include "get_next_line.h"
 # include <stdio.h>
 # include <sys/wait.h>
 # include <sys/signal.h>
