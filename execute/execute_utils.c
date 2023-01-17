@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:38:29 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/14 05:27:04 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/17 12:40:58 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ char	**list_to_strs(t_list *command)
 		ptr = ptr->next;
 	}
 	strs = malloc(sizeof(char *) * (count + 1));
+	if (!strs)
+		return (NULL);
 	i = -1;
 	ptr = command;
 	while (++i < count)

@@ -39,6 +39,7 @@ SRCS		= ft_strlen.c		\
 				ft_putstr_fd.c	\
 				ft_putendl_fd.c	\
 				ft_putnbr_fd.c	\
+				ft_isnumeric.c	\
 
 SRCS_BONUS	= ft_lstnew_bonus.c		\
 				ft_lstsize_bonus.c		\

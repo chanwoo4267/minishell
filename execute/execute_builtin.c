@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 12:40:22 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/16 16:56:33 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/17 13:11:59 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,20 @@ int	execute_builtin(t_list *command, t_info *info)
 	token = (t_token *)command->content;
 	bi = identify_builtin(token->content);
 	if (bi == NOT_BUILTIN)
-		return (NOT_BUILTIN);
-	/* 함수 포인터 사용으로 간결하게 짤 수 있을듯? */
+		return (NO);
 	else if (bi == BUILTIN_CD)
 		builtin_cd(command, info);
-	return (1);
+	else if (bi == BUILTIN_ECHO)
+		builtin_echo(command, info);
+	else if (bi == BUILTIN_PWD)
+		builtin_pwd(command, info);
+	else if (bi == BUILTIN_EXPORT)
+		builtin_export(command, info);
+	else if (bi == BUILTIN_UNSET)
+		builtin_unset(command, info);
+	else if (bi == BUILTIN_ENV)
+		builtin_env(command, info);
+	else
+		builtin_exit(command, info);
+	return (YES);
 }
