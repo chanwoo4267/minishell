@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 16:29:21 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/17 20:05:22 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/17 21:29:33 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,13 @@ int	execute_subshell(t_commandlist commandlist, t_info *info)
 	if (commandlist.redirection)
 		redirection(commandlist.redirection);
 	if (execute_builtin(commandlist.command, info) == NO)
+	{
 		execute_command(commandlist.command, info);
+	}
 	if (info->issubshell == YES)
+	{
 		exit(g_status.global_exit_status);
+	}
 	if (commandlist.redirection)
 		reset_redirection(info);
 	return (0);

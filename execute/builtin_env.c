@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:52:55 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/17 16:54:28 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/17 20:49:21 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	builtin_env(t_list *list, t_info *info)
 	command = list_to_strs(list);
 	if (!command)
 		print_error("builtin_env", "list_to_strs error");
-	if (!command[1])
+	if (command[1])
 	{
 		free_strs(command);
 		print_error("builtin_env", "env with argument");

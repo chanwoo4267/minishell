@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:38:29 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/17 16:50:50 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/17 20:46:57 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,11 @@
 
 void	print_error(char *location, char *message)
 {
-	printf("Error occured in : %s\nMessage : %s\n", location, message);
+	write(2, "Error in : ", 11);
+	write(2, location, ft_strlen(location));
+	write(2, "\nMsg: ", 6);
+	write(2, message, ft_strlen(message));
+	exit(1);
 }
 
 void	print_message(char *message)

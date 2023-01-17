@@ -6,13 +6,13 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 17:26:01 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/17 20:05:09 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/17 21:41:07 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution_test.h"
 
-#define COMMAND_NUM 2
+int	command_n;
 
 t_token	*new_token(char *command, t_type type)
 {
@@ -96,7 +96,7 @@ void	init_structs(t_commandlist *test_command, t_info *info, char **envp)
 	int	i;
 
 	i = 0;
-	while (i < COMMAND_NUM + 1)
+	while (i < command_n + 1)
 	{
 		test_command[i].command = NULL;
 		test_command[i].redirection = NULL;
@@ -114,19 +114,16 @@ int	main(int argc, char **argv, char **envp)
 	t_commandlist	*test_command;
 	t_info			info;
 
+	command_n = 3;
 	(void)argc;
 	(void)argv;
-	test_command = malloc(sizeof(t_commandlist) * (COMMAND_NUM + 1));
+	test_command = malloc(sizeof(t_commandlist) * (command_n + 1));
 	init_structs(test_command, &info, envp);
 	/* command */
-	ft_lstadd_back(&test_command[0].command, ft_lstnew(new_token("cat", COMMAND)));
-	ft_lstadd_back(&test_command[0].redirection, ft_lstnew(new_token("a", REDIR_HEREDOC)));
-	ft_lstadd_back(&test_command[0].redirection, ft_lstnew(new_token("a.txt", REDIR_OUT)));
+	ft_lstadd_back(&test_command[0].command, ft_lstnew(new_token("env", COMMAND)));
 	ft_lstadd_back(&test_command[1].command, ft_lstnew(new_token("cat", COMMAND)));
-	ft_lstadd_back(&test_command[1].redirection, ft_lstnew(new_token("b", REDIR_HEREDOC)));
-	ft_lstadd_back(&test_command[1].redirection, ft_lstnew(new_token("b.txt", REDIR_OUT)));
-	test_command[2].command = NULL;
-	test_command[2].redirection = NULL;
+	ft_lstadd_back(&test_command[1].redirection, ft_lstnew(new_token("a.txt", REDIR_OUT)));
+	ft_lstadd_back(&test_command[2].command, ft_lstnew(new_token("pwd", COMMAND)));
 	/* command end */
 	execute(test_command, &info);
 }
@@ -139,6 +136,12 @@ int	main(int argc, char **argv, char **envp)
 	ft_lstadd_back(&test_command[1].command, ft_lstnew(new_token("cat", COMMAND)));
 	ft_lstadd_back(&test_command[1].redirection, ft_lstnew(new_token("b", REDIR_HEREDOC)));
 	ft_lstadd_back(&test_command[1].redirection, ft_lstnew(new_token("b.txt", REDIR_OUT)));
-	test_command[2].command = NULL;
-	test_command[2].redirection = NULL;
+
+	ft_lstadd_back(&test_command[0].command, ft_lstnew(new_token("env", COMMAND)));
+	ft_lstadd_back(&test_command[1].command, ft_lstnew(new_token("cat", COMMAND)));
+
+	ft_lstadd_back(&test_command[0].command, ft_lstnew(new_token("env", COMMAND)));
+	ft_lstadd_back(&test_command[1].command, ft_lstnew(new_token("cat", COMMAND)));
+	ft_lstadd_back(&test_command[1].redirection, ft_lstnew(new_token("a.txt", REDIR_OUT)));
+	ft_lstadd_back(&test_command[2].command, ft_lstnew(new_token("pwd", COMMAND)));
 */

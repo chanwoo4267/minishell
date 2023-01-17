@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 17:26:33 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/17 20:14:38 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/17 21:25:44 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int		execute_command_subshell(t_list *command_list, char **envp);
 
 /* execute_redir.c */
 void	redirect_heredoc(t_commandlist *commandlist, int cmd_count);
-int		redirection(t_list	*redirection);
+void	redirection(t_list *redirection);
 
 /* execute_builtin.c */
 int		execute_builtin(t_list *command, t_info *info);

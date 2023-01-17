@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:06:26 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/17 17:45:42 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/17 21:42:45 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	builtin_pwd(t_list *list)
 	command = list_to_strs(list);
 	if (!command)
 		print_error("builtin_pwd", "list_to_strs error");
-	if (!command[1])
+	if (command[1])
 	{
 		free_strs(command);
-		print_error("builtin_pwd", "no argument with pwd");
+		print_error("builtin_pwd", "argument with pwd");
 		return ;
 	}
 	pwd = getcwd(NULL, 0);

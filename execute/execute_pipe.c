@@ -6,16 +6,11 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 12:57:13 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/17 19:42:38 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/17 21:40:50 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution_test.h"
-
-/*
-	각 프로세스는 항상 실행되어야 함. 중간의 pipelined process가 예기치못하게 종료되어도
-	뒤의 프로세스 역시 실행되어야 함. 따라서 메인 프로세스에서 exit_status는 항상
-	마지막 프로세스의 exit status만 얻어서 이를 저장하면 된다.
 
 static int	wait_piped_pids(pid_t *pids, int cmd_count)
 {
@@ -42,7 +37,6 @@ static int	wait_piped_pids(pid_t *pids, int cmd_count)
 		return (WTERMSIG(status));
 	return (EXIT_FAILURE);
 }
-*/
 
 static void	init_pipes(int cmd_count, pid_t **pids, int ***pipes)
 {
@@ -81,12 +75,14 @@ static void	set_pipeline(int child_index, int cmd_count, int ***pipes)
 			if ((*pipes)[i][0] != STDIN_FILENO)
 				if (dup2((*pipes)[i][0], STDIN_FILENO) != STDIN_FILENO)
 					print_error("set_pipeline", "dup2 error on stdin");
+			close((*pipes)[i][1]);
 		}
 		else if (i == child_index)
 		{
 			if ((*pipes)[i][1] != STDOUT_FILENO)
 				if (dup2((*pipes)[i][1], STDOUT_FILENO) != STDOUT_FILENO)
 					print_error("set_pipeline", "dup2 error on stdout");
+			close((*pipes)[i][0]);
 		}
 	}
 }
@@ -94,7 +90,6 @@ static void	set_pipeline(int child_index, int cmd_count, int ***pipes)
 static void	build_pipeline(int cmd_count, pid_t **pids, int ***pipes)
 {
 	int	i;
-	int	status;
 
 	i = -1;
 	while (++i < cmd_count - 1)
@@ -113,18 +108,9 @@ static void	build_pipeline(int cmd_count, pid_t **pids, int ***pipes)
 			set_pipeline(i, cmd_count, pipes);
 			return ;
 		}
-		waitpid((*pids)[i], &status, 0);
 	}
 }
 
-/*
-	build_pipeline에서 fork()된 자식 프로세스는 set_pipeline 함수를 실행하여
-	자신의 fd를 설정한 뒤, 곧바로 break하여 빠져나온다.
-	따라서, index 0번부터 순회하다가 자신의 pid를 발견한다면 (pid == 0)
-	해당하는 index의 command를 가지고 execute_subshell을 실행한다.
-	이때 info->issubshell = YES 로 설정했으므로 자식프로세스는
-	execute_subshell을 빠져나오지 못하고 exit한다.
-*/
 int	execute_pipe(t_commandlist *commandlist, t_info *info, int cmd_count)
 {
 	pid_t	*pids;
@@ -149,7 +135,7 @@ int	execute_pipe(t_commandlist *commandlist, t_info *info, int cmd_count)
 		close(pipes[i][1]);
 		free(pipes[i]);
 	}
-	//g_status.global_exit_status = wait_piped_pids(pids, cmd_count);
+	g_status.global_exit_status = wait_piped_pids(pids, cmd_count);
 	free(pipes);
 	free(pids);
 	return (0);

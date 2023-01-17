@@ -6,15 +6,12 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:07:50 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/17 20:08:58 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/17 21:44:31 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution_test.h"
 
-/*
-	REDIR_IN, REDIR_OUT 은 각각 0,1로 STDIN_FILENO, STDOUT_FILENO와 일치함 - 헤더참조
-*/
 void	redirect_file(char *filename, t_type type)
 {
 	int	fd;
@@ -41,7 +38,7 @@ void	redirect_file(char *filename, t_type type)
 	}
 }
 
-int	redirection(t_list	*redirection)
+void	redirection(t_list	*redirection)
 {
 	t_token	*token;
 	t_list	*list;
@@ -60,7 +57,6 @@ int	redirection(t_list	*redirection)
 		}
 		list = list->next;
 	}
-	return (0);
 }
 
 char	*get_heredoc_filename(int *fd)
@@ -138,3 +134,69 @@ void	redirect_heredoc(t_commandlist *commandlist, int cmd_count)
 		}
 	}
 }
+/* legacy files 
+static void	redir_input(char *filename)
+{
+	int	fd;
+
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		print_error("redir", "open error");
+	else if (fd != STDIN_FILENO)
+	{
+		if (dup2(fd, STDIN_FILENO) != STDIN_FILENO)
+			print_error("redir", "dup2 error");
+		close(fd);
+	}
+}
+
+static void	redir_output(char *filename)
+{
+	int	fd;
+
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd < 0)
+		print_error("redir", "open error");
+	else if (fd != STDOUT_FILENO)
+	{
+		if (dup2(fd, STDOUT_FILENO) != STDOUT_FILENO)
+			print_error("redir", "dup2 error");
+		close(fd);
+	}
+}
+
+static void	redir_append(char *filename)
+{
+	int	fd;
+
+	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (fd < 0)
+		print_error("redir", "open error");
+	else if (fd != STDOUT_FILENO)
+	{
+		if (dup2(fd, STDOUT_FILENO) != STDOUT_FILENO)
+			print_error("redir", "dup2 error");
+		close(fd);
+	}
+}
+
+void	redirection(t_list *redirection)
+{
+	t_list	*list;
+	t_token	*token;
+
+	list = redirection;
+	while (list)
+	{
+		token = (t_token *)list->content;
+		if (token->type == REDIR_IN)
+			redir_input(token->content);
+		else if (token->type == REDIR_OUT)
+			redir_output(token->content);
+		else if (token->type == REDIR_APPEND)
+			redir_append(token->content);
+		else
+			print_error("redirection", "token error");
+		list = list->next;
+	}
+}*/
