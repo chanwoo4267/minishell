@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 17:26:01 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/17 21:41:07 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/19 23:18:54 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,16 +114,18 @@ int	main(int argc, char **argv, char **envp)
 	t_commandlist	*test_command;
 	t_info			info;
 
-	command_n = 3;
+	command_n = 1;
 	(void)argc;
 	(void)argv;
 	test_command = malloc(sizeof(t_commandlist) * (command_n + 1));
 	init_structs(test_command, &info, envp);
 	/* command */
-	ft_lstadd_back(&test_command[0].command, ft_lstnew(new_token("env", COMMAND)));
-	ft_lstadd_back(&test_command[1].command, ft_lstnew(new_token("cat", COMMAND)));
-	ft_lstadd_back(&test_command[1].redirection, ft_lstnew(new_token("a.txt", REDIR_OUT)));
-	ft_lstadd_back(&test_command[2].command, ft_lstnew(new_token("pwd", COMMAND)));
+	ft_lstadd_back(&test_command[0].command, ft_lstnew(new_token("echo", COMMAND)));
+	ft_lstadd_back(&test_command[0].command, ft_lstnew(new_token("-nnnnn", COMMAND)));
+	ft_lstadd_back(&test_command[0].command, ft_lstnew(new_token("-nnn", COMMAND)));
+	ft_lstadd_back(&test_command[0].command, ft_lstnew(new_token("-n-n-n-n", COMMAND)));
+	ft_lstadd_back(&test_command[0].command, ft_lstnew(new_token("-nnnnn", COMMAND)));
+	ft_lstadd_back(&test_command[0].command, ft_lstnew(new_token("--nnn", COMMAND)));
 	/* command end */
 	execute(test_command, &info);
 }
