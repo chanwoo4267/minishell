@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 16:37:09 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/17 16:56:11 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/20 18:57:33 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,18 @@ void	builtin_cd(t_list *list, t_info *info)
 	char	**command;
 
 	command = list_to_strs(list);
-	if (!command)
-		print_error("builtin_cd", "list_to_strs error");
-	if (!command[1])
+	if (!command || !command[1])
 	{
 		free_strs(command);
-		print_error("builtin_cd", "no_directory");
+		error_return("builtin_cd, no valid directory income");
 	}
 	else
 	{
 		old_cwd = getcwd(NULL, 0);
 		if (chdir(command[1]) == -1)
 		{
-			free_strs(command);
-			print_error("builtin_cd", "cannot cd to dir");
+			g_status.global_exit_status = 1;
+			error_return("builtin_cd, chdir fail");
 		}
 		else
 			cd_change_envp(old_cwd, info);

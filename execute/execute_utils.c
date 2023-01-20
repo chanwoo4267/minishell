@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:38:29 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/17 20:46:57 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/20 18:50:47 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,21 @@ void	print_error(char *location, char *message)
 	write(2, location, ft_strlen(location));
 	write(2, "\nMsg: ", 6);
 	write(2, message, ft_strlen(message));
+	exit(1);
+}
+
+void	error_return(char *message)
+{
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	if (message)
+		ft_putendl_fd(message, STDERR_FILENO);
+}
+
+void	error_exit(char *message)
+{
+	ft_putstr_fd("minishell: ", 2);
+	if (message)
+		ft_putendl_fd(message, 2);
 	exit(1);
 }
 

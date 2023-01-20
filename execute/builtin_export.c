@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:11:51 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/17 16:58:03 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/20 19:11:31 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,25 @@ static void	export_change_envp(char *command, t_info *info)
 	add_envp(command, info);
 }
 
+static void	export_all_inputs(char **command, t_info *info)
+{
+	int		i;
+	char	*equal_loc;
+
+	i = 0;
+	while (command[++i])
+	{
+		equal_loc = ft_strchr(command[i], '=');
+		if (equal_loc == command[i] || ft_isdigit(command[i][0]))
+		{
+			error_return("builtin_export, invalid argument to export");
+			return ;
+		}
+		else
+			export_change_envp(command[i], info);
+	}
+}
+
 void	builtin_export(t_list *list, t_info *info)
 {
 	char	**command;
@@ -65,23 +84,13 @@ void	builtin_export(t_list *list, t_info *info)
 
 	command = list_to_strs(list);
 	if (!command)
-		print_error("builtin_export", "list_to_strs error");
+	{
+		error_return("builtin_export, list_to_strs error");
+		return ;
+	}
 	if (!command[1])
 		print_export_envp(info);
 	else
-	{
-		i = 0;
-		while (command[++i])
-		{
-			equal_loc = ft_strchr(command[i], '=');
-			if (equal_loc == command[i] || ft_isdigit(command[i][0]))
-			{
-				free_strs(command);
-				print_error("builtin_export", "invalid argument to export");
-			}
-			else
-				export_change_envp(command[i], info);
-		}
-	}
+		export_all_inputs(command, info);
 	free_strs(command);
 }

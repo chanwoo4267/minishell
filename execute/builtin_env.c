@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:52:55 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/17 20:49:21 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/20 19:03:27 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,21 @@ void	builtin_env(t_list *list, t_info *info)
 	int		i;
 
 	command = list_to_strs(list);
-	if (!command)
-		print_error("builtin_env", "list_to_strs error");
-	if (command[1])
+	if (!command || command[1])
 	{
-		free_strs(command);
-		print_error("builtin_env", "env with argument");
+		g_status.global_exit_status = 1;
+		error_return("builtin_env, invalid argument");
 	}
 	else
 	{
-		i = 0;
-		while (info->envp[i])
+		i = -1;
+		while (info->envp[++i])
 		{
 			if (ft_strchr(info->envp[i], '='))
+			{
+				g_status.global_exit_status = 0;
 				printf("%s\n", info->envp[i]);
-			i++;
+			}
 		}
 	}
 	free_strs(command);

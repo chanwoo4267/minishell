@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 17:26:33 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/17 21:25:44 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/20 19:14:24 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <errno.h>
 
 /*** define list start ***/
 # define FAIL 0
@@ -85,6 +86,8 @@ void	print_error(char *location, char *message);
 void	print_message(char *message);
 int		get_commands_count(t_commandlist *commandlist);
 void	free_strs(char **strs);
+void	error_return(char *message);
+void	error_exit(char *message);
 
 /* envp_utils.c */
 void	change_envp(char *new, t_info *info);
