@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 16:40:05 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/17 17:47:36 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/21 15:04:49 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,17 @@ static void	free_deprecated_envp(char **envp)
 	}
 }
 
-void	change_envp(char *new, t_info *info)
+int	change_envp(char *new, t_info *info)
 {
 	int		i;
 	char	*equal_loc;
 
 	equal_loc = ft_strchr(new, '=');
 	if (!equal_loc)
-		print_error("change_envp", "no eqaul symbol");
+	{
+		error_return("change_envp, no equal symbol", 1);
+		return (1);
+	}
 	i = 0;
 	while (info->envp[i])
 	{
@@ -46,6 +49,7 @@ void	change_envp(char *new, t_info *info)
 		}
 		i++;
 	}
+	return (0);
 }
 
 void	add_envp(char *new, t_info *info)
@@ -58,7 +62,7 @@ void	add_envp(char *new, t_info *info)
 		i++;
 	new_envp = malloc(sizeof(char *) * (i + 2));
 	if (!new_envp)
-		print_error("add_envp", "malloc error");
+		error_exit("add_envp, malloc error", 1);
 	i = 0;
 	while (info->envp[i])
 	{
@@ -84,7 +88,7 @@ void	delete_envp(char *del, t_info *info)
 		i++;
 	new_envp = malloc(sizeof(char *) * i);
 	if (!new_envp)
-		print_error("delete_envp", "malloc error");
+		error_exit("delete_envp, malloc error", 1);
 	i = 0;
 	while (info->envp[++i])
 	{

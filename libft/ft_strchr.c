@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
+/*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 19:58:02 by sehjung           #+#    #+#             */
-/*   Updated: 2022/07/13 15:29:51 by sehjung          ###   ########.fr       */
+/*   Updated: 2023/01/21 13:57:43 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*ft_strchr(const char *s, int c)
 
 	i = 0;
 	temp = (unsigned char) c;
+	if (!s)
+		return (NULL);
 	while (s[i])
 	{
 		if (s[i] == temp)

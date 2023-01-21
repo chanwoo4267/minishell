@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:06:26 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/20 19:12:16 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/21 13:41:55 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	builtin_pwd(t_list *list)
 	if (!command || command[1])
 	{
 		free_strs(command);
-		error_return("builtin_pwd, invalid argument");
+		error_return("builtin_pwd, invalid argument", 1);
 		return ;
 	}
 	pwd = getcwd(NULL, 0);

@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:35:54 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/20 19:05:30 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/21 13:41:12 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,9 @@ void	builtin_echo(t_list *list)
 	int		option;
 	char	**command;
 
-	g_status.global_exit_status = 0;
 	command = list_to_strs(list);
 	if (!command)
-		error_return("builtin_echo, list_to_strs error");
+		error_return("builtin_echo, list_to_strs error", 1);
 	else
 	{
 		if (!command[1])

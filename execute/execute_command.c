@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 18:40:11 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/17 21:13:13 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/21 15:24:14 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static char	*merge_command_path(char *command, char *path, size_t path_len)
 	command_len = ft_strlen(command);
 	cmd = malloc(sizeof(char) * (command_len + path_len + 2));
 	if (cmd == NULL)
-		print_error("merge_command_path", "malloc error");
+		error_exit("merge_command_path, malloc error", 1);
 	ft_memcpy(cmd, path, path_len);
 	cmd[path_len] = '/';
 	ft_memcpy(cmd + path_len + 1, command, command_len);
@@ -51,6 +51,8 @@ static char	*get_cmd_from_path(char *command, char *path)
 	char	*ptr;
 	char	*cmd;
 
+	if (!path || !command)
+		return (NULL);
 	while (*path)
 	{
 		ptr = path;
@@ -72,33 +74,36 @@ static char	*get_cmd_from_path(char *command, char *path)
 	return (NULL);
 }
 
-int	execute_command(t_list *command, t_info *info)
+void	execute_command(t_list *command, t_info *info)
 {
 	pid_t	pid;
 	int		status;
 
 	pid = fork();
 	if (pid < 0)
-		print_error("execute_command", "fork error");
+	{
+		error_return("execute_command, fork error", 1);
+		return ;
+	}
 	else if (pid == 0)
 	{
 		info->issubshell = YES;
 		execute_command_subshell(command, info->envp);
 	}
 	if (waitpid(pid, &status, 0) < 0)
-		print_error("execute_command", "waitpid error");
-	/* 자식 프로세스가 정상적으로 종료됬다면, 자식 프로세스의 종료 코드를 저장 */
+	{
+		error_return("execute_command, waitpid error", 1);
+		return ;
+	}
 	if (WIFEXITED(status))
 		g_status.global_exit_status = WEXITSTATUS(status);
-	/* 자식 프로세스가 비정상적으로 종료됬다면, 시그널 번호를 저장 */
 	else if (WIFSIGNALED(status))
 		g_status.global_exit_status = WTERMSIG(status);
 	else
 		g_status.global_exit_status = EXIT_FAILURE;
-	return (0);
 }
 
-int	execute_command_subshell(t_list *command_list, char **envp)
+void	execute_command_subshell(t_list *command_list, char **envp)
 {
 	char	**argv;
 	char	**env;
@@ -108,28 +113,21 @@ int	execute_command_subshell(t_list *command_list, char **envp)
 	argv = list_to_strs(command_list);
 	if (!argv)
 		print_error("execute_command_subshell", "list_to_strs error");
-	env = envp;
-	if (ft_strchr(argv[0], '/'))
-		cmd = argv[0];
 	else
 	{
-		path = get_env_path(env);
-		if (!path)
+		env = envp;
+		if (ft_strchr(argv[0], '/'))
+			cmd = argv[0];
+		else
 		{
-			free_strs(argv);
-			print_error("execute_command_subshell", "can't PATH= in envp");
+			path = get_env_path(env);
+			if (path)
+				cmd = get_cmd_from_path(argv[0], path);
 		}
-		cmd = get_cmd_from_path(argv[0], path);
 	}
-	if (!cmd)
-	{
-		free_strs(argv);
-		print_error("execute_command_subshell", "can't access to command");
-	}
-	if (execve(cmd, argv, envp) < 0)
-	{
-		free_strs(argv);
-		print_error("execute_command_subshell", "execve error");
-	}
-	return (0);
+	if (!path || !cmd || execve(cmd, argv, envp) < 0)
+		error_return("execute_command_subshell, execve or cmd path error", 1);
+	free_strs(argv);
+	if (cmd)
+		free(cmd);
 }

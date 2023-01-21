@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 17:26:33 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/20 19:14:24 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/21 15:15:45 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,17 +86,17 @@ void	print_error(char *location, char *message);
 void	print_message(char *message);
 int		get_commands_count(t_commandlist *commandlist);
 void	free_strs(char **strs);
-void	error_return(char *message);
-void	error_exit(char *message);
+void	error_return(char *message, int error_code);
+void	error_exit(char *message, int error_code);
 
 /* envp_utils.c */
-void	change_envp(char *new, t_info *info);
+int		change_envp(char *new, t_info *info);
 void	add_envp(char *new, t_info *info);
 void	delete_envp(char *del, t_info *info);
 
 /* execute_command.c */
-int		execute_command(t_list *command, t_info *info);
-int		execute_command_subshell(t_list *command_list, char **envp);
+void	execute_command(t_list *command, t_info *info);
+void	execute_command_subshell(t_list *command_list, char **envp);
 
 /* execute_redir.c */
 void	redirect_heredoc(t_commandlist *commandlist, int cmd_count);

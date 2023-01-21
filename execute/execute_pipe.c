@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 12:57:13 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/17 21:40:50 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/21 15:01:53 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,16 @@ static void	init_pipes(int cmd_count, pid_t **pids, int ***pipes)
 	(*pids) = malloc(sizeof(pid_t) * cmd_count);
 	(*pipes) = malloc(sizeof(int *) * (cmd_count - 1));
 	if (!(*pids) || !(*pipes))
-		print_error("init_pipes", "malloc error");
+		error_exit("init_pipes, malloc error", 1);
 	i = -1;
 	while (++i < cmd_count - 1)
 	{
 		(*pipes)[i] = malloc(sizeof(int) * 2);
 		if (!((*pipes)[i]))
-			print_error("init_pipes", "submalloc error");
+			error_exit("init_pipes, malloc error", 1);
 	}
 	if (ft_memset(*pids, 255, sizeof(pid_t) * cmd_count) != *pids)
-		print_error("init_pipes", "memset error");
+		error_exit("init_pipes, memset error", 1);
 }
 
 /*	
