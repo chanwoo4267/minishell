@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:38:29 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/21 15:41:19 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/21 20:27:22 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ int	get_commands_count(t_commandlist *commandlist)
 	int	count;
 
 	count = 0;
-	while (commandlist[count].command != NULL)
+	while (commandlist[count].command != NULL || \
+			commandlist[count].redirection != NULL)
 		count++;
 	return (count);
 }
