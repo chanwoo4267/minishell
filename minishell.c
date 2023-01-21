@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 15:26:04 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/21 20:49:24 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/21 21:31:52 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void	free_lists(t_list *list)
 
 static void	free_commands(t_commandlist *commandlist)
 {
-	int				i;
+	int	i;
 
 	if (!commandlist)
 		return ;
@@ -97,7 +97,7 @@ static void	remove_heredoc_tempfiles(void)
 	while (++i <= 16)
 	{
 		itoa = ft_itoa(i);
-		str = ft_strjoin("heredoc_tmp", itoa);
+		str = ft_strjoin(".heredoc_tmp", itoa);
 		if (!itoa || !str)
 			error_exit("remove_heredoc_tempfiles, malloc error", 2);
 		unlink(str);
@@ -141,7 +141,7 @@ void	test(void)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_info			info;
+	t_info	info;
 
 	//atexit(test);
 	(void)argc;

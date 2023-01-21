@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:07:50 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/21 19:29:45 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/21 21:31:57 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*get_heredoc_filename(int *fd)
 	while (++i)
 	{
 		num = ft_itoa(i);
-		filename = ft_strjoin("heredoc_tmp", num);
+		filename = ft_strjoin(".heredoc_tmp", num);
 		if (num)
 			free(num);
 		if (!filename)
