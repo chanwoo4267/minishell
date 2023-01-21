@@ -6,11 +6,48 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 19:02:14 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/16 19:20:55 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/21 21:17:17 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "parsing.h"
+#include "parsing.h"
+
+void	free_parsing_str(char *str, char **split_str)
+{
+	int	i;
+
+	i = 0;
+	while (split_str[i])
+		free(split_str[i++]);
+	free(split_str);
+	free(str);
+}
+
+int	count_pipe(char *str)
+{
+	int	cnt;
+	int	i;
+
+	cnt = 0;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '|')
+			cnt++;
+		i++;
+	}
+	return (cnt);
+}
+
+int	check_whitespace(char c)
+{
+	if (c == '\t' || c == '\n' || c == '\v')
+		return (1);
+	else if (c == '\f' || c == '\r' || c == ' ')
+		return (1);
+	else
+		return (0);
+}
 
 char	*ft_strjoin_char(char *s1, char s2)
 {
@@ -35,7 +72,7 @@ t_token	*new_token(char *command, t_type type)
 {
 	t_token	*new_token;
 
-	new_token = ft_calloc(sizeof(t_token), 1);
+	new_token = malloc(sizeof(t_token));
 	new_token->content = ft_strdup(command);
 	new_token->type = type;
 	return (new_token);

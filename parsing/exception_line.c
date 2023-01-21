@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exception_line.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 17:16:53 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/15 17:35:09 by sehjung          ###   ########.fr       */
+/*   Updated: 2023/01/21 21:18:27 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static char	*redirect_space(char *str, char *line, char c)
 		str = ft_strjoin_char(str, '>');
 		line++;
 		if (*line != '>' && *line != ' ')
-			str = ft_strjoin_char(str, ' ');	
+			str = ft_strjoin_char(str, ' ');
 	}
 	else if (c == '<')
 	{
@@ -57,7 +57,7 @@ static char	*redirect_space(char *str, char *line, char c)
 		str = ft_strjoin_char(str, '<');
 		line++;
 		if (*line != '<' && *line != ' ')
-			str = ft_strjoin_char(str, ' ');	
+			str = ft_strjoin_char(str, ' ');
 	}
 	return (str);
 }
@@ -65,7 +65,7 @@ static char	*redirect_space(char *str, char *line, char c)
 static char	*get_pipe(char *str, char *line, int quote, int *pipe)
 {
 	if (*pipe == 1)
-		exit(1); // double pipe error
+		return (NULL);
 	line--;
 	if (*line != ' ')
 		str = ft_strjoin_char(str, ' ');
@@ -80,10 +80,10 @@ static char	*get_pipe(char *str, char *line, int quote, int *pipe)
 static char	*none_pipe(char *str, char *line, int quote, int *pipe)
 {
 	if ((*line == ';' || *line == '\\') && quote == 0)
-		exit(1); // error
+		return (NULL);
 	else if (*line == ' ' && quote != 0)
 		str = ft_strjoin_char(str, -10);
-	else if (*line == ' ' && quote == 0)
+	else if (check_whitespace(*line) && quote == 0)
 	{
 		line--;
 		if (*line == ' ')
@@ -119,6 +119,6 @@ char	*exception_line(char *line)
 		line++;
 	}
 	if (quote)
-		exit(1) ; // single or double quote error
+		return (NULL);
 	return (str);
 }
