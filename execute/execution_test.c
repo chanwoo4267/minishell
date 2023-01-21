@@ -6,11 +6,11 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 17:26:01 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/19 23:18:54 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/21 15:41:26 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution_test.h"
+#include "../minishell.h"
 
 int	command_n;
 

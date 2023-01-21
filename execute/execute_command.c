@@ -6,11 +6,11 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 18:40:11 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/21 15:24:14 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/21 17:56:12 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution_test.h"
+#include "../minishell.h"
 
 static char	*get_env_path(char **env)
 {
@@ -110,10 +110,11 @@ void	execute_command_subshell(t_list *command_list, char **envp)
 	char	*path;
 	char	*cmd;
 
+	path = NULL;
+	cmd = NULL;
 	argv = list_to_strs(command_list);
-	if (!argv)
-		print_error("execute_command_subshell", "list_to_strs error");
-	else
+	sig_fork();
+	if (argv)
 	{
 		env = envp;
 		if (ft_strchr(argv[0], '/'))
@@ -125,7 +126,7 @@ void	execute_command_subshell(t_list *command_list, char **envp)
 				cmd = get_cmd_from_path(argv[0], path);
 		}
 	}
-	if (!path || !cmd || execve(cmd, argv, envp) < 0)
+	if (!argv || !path || !cmd || execve(cmd, argv, envp) < 0)
 		error_return("execute_command_subshell, execve or cmd path error", 1);
 	free_strs(argv);
 	if (cmd)

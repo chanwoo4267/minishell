@@ -6,11 +6,11 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:52:49 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/21 15:02:53 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/21 15:41:00 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution_test.h"
+#include "../minishell.h"
 
 void	builtin_unset(t_list *list, t_info *info)
 {

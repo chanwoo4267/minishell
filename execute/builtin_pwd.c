@@ -6,11 +6,11 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:06:26 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/21 13:41:55 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/21 15:40:57 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution_test.h"
+#include "../minishell.h"
 
 void	builtin_pwd(t_list *list)
 {

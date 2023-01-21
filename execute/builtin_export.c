@@ -6,11 +6,11 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:11:51 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/21 13:54:45 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/21 15:59:56 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution_test.h"
+#include "../minishell.h"
 
 static void	print_export_envp(t_info *info)
 {
@@ -79,8 +79,6 @@ static void	export_all_inputs(char **command, t_info *info)
 void	builtin_export(t_list *list, t_info *info)
 {
 	char	**command;
-	char	*equal_loc;
-	int		i;
 
 	command = list_to_strs(list);
 	if (!command)

@@ -6,11 +6,11 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 12:57:13 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/21 15:01:53 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/21 18:25:32 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution_test.h"
+#include "../minishell.h"
 
 static int	wait_piped_pids(pid_t *pids, int cmd_count)
 {
@@ -84,6 +84,11 @@ static void	set_pipeline(int child_index, int cmd_count, int ***pipes)
 					print_error("set_pipeline", "dup2 error on stdout");
 			close((*pipes)[i][0]);
 		}
+		else
+		{
+			close((*pipes)[i][0]);
+			close((*pipes)[i][1]);
+		}
 	}
 }
 
@@ -135,8 +140,8 @@ int	execute_pipe(t_commandlist *commandlist, t_info *info, int cmd_count)
 		close(pipes[i][1]);
 		free(pipes[i]);
 	}
-	g_status.global_exit_status = wait_piped_pids(pids, cmd_count);
 	free(pipes);
+	g_status.global_exit_status = wait_piped_pids(pids, cmd_count);
 	free(pids);
 	return (0);
 }

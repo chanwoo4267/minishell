@@ -6,11 +6,11 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:52:55 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/21 13:41:34 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/21 15:40:44 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution_test.h"
+#include "../minishell.h"
 
 void	builtin_env(t_list *list, t_info *info)
 {

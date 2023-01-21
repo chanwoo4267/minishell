@@ -6,11 +6,11 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 16:29:21 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/17 21:29:33 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/21 15:41:23 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution_test.h"
+#include "../minishell.h"
 /*
 	parsing 부분에서 잘못된 input은 전부 걸러준다고 생각함.
 	이는 정상적으로 구성된 리스트로 구성됬고, 끝에 두 포인터가 NULL이며,

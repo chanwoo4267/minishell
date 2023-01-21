@@ -6,11 +6,11 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 12:40:22 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/17 17:46:03 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/21 15:41:07 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution_test.h"
+#include "../minishell.h"
 
 typedef enum e_builtin
 {
