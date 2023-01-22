@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:52:55 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/21 15:40:44 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/23 05:38:14 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ void	builtin_env(t_list *list, t_info *info)
 	int		i;
 
 	command = list_to_strs(list);
-	if (!command || command[1])
-	{
-		error_return("builtin_env, invalid argument", 1);
-	}
+	if (!command)
+		system_error("malloc error", NULL, 1);
+	if (command[1])
+		print_error(command[0], command[1], \
+					"pwd with option or argument", NO);
 	else
 	{
 		i = -1;

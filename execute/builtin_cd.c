@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 16:37:09 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/21 15:40:34 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/23 05:56:55 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,7 @@ static void	cd_change_envp(char *old_cwd, t_info *info)
 	char	*new_pwd;
 
 	str = ft_strjoin("OLDPWD=", old_cwd);
-	if (change_envp(str, info))
-	{
-		free(str);
-		return ;
-	}
+	change_envp(str, info);
 	free(str);
 	str = getcwd(NULL, 0);
 	new_pwd = ft_strjoin("PWD=", str);
@@ -37,18 +33,16 @@ void	builtin_cd(t_list *list, t_info *info)
 	char	**command;
 
 	command = list_to_strs(list);
-	if (!command || !command[1])
-	{
-		free_strs(command);
-		error_return("builtin_cd, no valid directory income", 1);
-	}
+	if (!command)
+		system_error("malloc error", NULL, 1);
+	if (!command[1])
+		print_error(command[0], "cd without directory invalid", NULL, NO);
 	else
 	{
 		old_cwd = getcwd(NULL, 0);
 		if (chdir(command[1]) == -1)
-		{
-			error_return("builtin_cd, chdir fail", 1);
-		}
+			print_error(command[0], "no such file or directory", \
+						command[1], YES);
 		else
 			cd_change_envp(old_cwd, info);
 		free(old_cwd);

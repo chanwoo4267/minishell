@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 18:40:11 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/21 17:56:12 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/23 06:16:45 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ static char	*merge_command_path(char *command, char *path, size_t path_len)
 
 	command_len = ft_strlen(command);
 	cmd = malloc(sizeof(char) * (command_len + path_len + 2));
-	if (cmd == NULL)
-		error_exit("merge_command_path, malloc error", 1);
+	if (!cmd)
+		system_error("merge_command_path", "malloc error", 1);
 	ft_memcpy(cmd, path, path_len);
 	cmd[path_len] = '/';
 	ft_memcpy(cmd + path_len + 1, command, command_len);
@@ -81,20 +81,14 @@ void	execute_command(t_list *command, t_info *info)
 
 	pid = fork();
 	if (pid < 0)
-	{
-		error_return("execute_command, fork error", 1);
-		return ;
-	}
+		system_error("execute_command", "fork error", 1);
 	else if (pid == 0)
 	{
 		info->issubshell = YES;
 		execute_command_subshell(command, info->envp);
 	}
 	if (waitpid(pid, &status, 0) < 0)
-	{
-		error_return("execute_command, waitpid error", 1);
-		return ;
-	}
+		system_error("execute_command", "waitpid error", 1);
 	if (WIFEXITED(status))
 		g_status.global_exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
@@ -110,24 +104,22 @@ void	execute_command_subshell(t_list *command_list, char **envp)
 	char	*path;
 	char	*cmd;
 
-	path = NULL;
-	cmd = NULL;
 	argv = list_to_strs(command_list);
+	if (!argv)
+		system_error("execute_command_subshell", "malloc error", 1);
 	sig_fork();
-	if (argv)
+	env = envp;
+	if (ft_strchr(argv[0], '/'))
+		cmd = argv[0];
+	else
 	{
-		env = envp;
-		if (ft_strchr(argv[0], '/'))
-			cmd = argv[0];
-		else
-		{
-			path = get_env_path(env);
-			if (path)
-				cmd = get_cmd_from_path(argv[0], path);
-		}
+		path = get_env_path(env);
+		cmd = get_cmd_from_path(argv[0], path);
+		if (!path || !cmd)
+			system_error(argv[0], ": command not found", 1);
 	}
-	if (!argv || !path || !cmd || execve(cmd, argv, envp) < 0)
-		error_return("execute_command_subshell, execve or cmd path error", 1);
+	if (execve(cmd, argv, envp) < 0)
+		system_error(argv[0], ": cannot execute command", 1);
 	free_strs(argv);
 	if (cmd)
 		free(cmd);

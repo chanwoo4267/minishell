@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 16:29:21 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/21 20:42:01 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/23 06:28:51 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	execute(t_commandlist *commandlist, t_info *info)
 
 	command_count = get_commands_count(commandlist);
 	if (command_count > 16 && check_heredoc_count(commandlist) > 16)
-		error_exit("minishell: maximum here-document count exceeded", 2);
+		system_error("maximum here-document count exceeded", NULL, 2);
 	if (command_count == 0)
 		return (0);
 	redirect_heredoc(commandlist, command_count);
@@ -94,17 +94,17 @@ int	reset_redirection(t_info *info)
 	if (info->fd[0] != STDIN_FILENO)
 	{
 		if (dup2(info->fd[0], STDIN_FILENO) != STDIN_FILENO)
-			print_error("reset_redirection", "dup2 error for STDIN");
+			system_error("reset_redirection", "dup2 error", 1);
 	}
 	if (info->fd[1] != STDOUT_FILENO)
 	{
 		if (dup2(info->fd[1], STDOUT_FILENO) != STDOUT_FILENO)
-			print_error("reset_redirection", "dup2 error for STDOUT");
+			system_error("reset_redirection", "dup2 error", 1);
 	}
 	if (info->fd[2] != STDERR_FILENO)
 	{
 		if (dup2(info->fd[2], STDERR_FILENO) != STDERR_FILENO)
-			print_error("reset_redirection", "dup2 error for STDERR");
+			system_error("reset_redirection", "dup2 error", 1);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 15:38:32 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/21 20:27:02 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/23 06:29:37 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <string.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <errno.h>
@@ -42,6 +43,18 @@ typedef enum e_type
 	REDIR_HEREDOC,
 	COMMAND,
 }	t_type;
+
+typedef enum e_builtin
+{
+	NOT_BUILTIN,
+	BUILTIN_ECHO,
+	BUILTIN_CD,
+	BUILTIN_EXIT,
+	BUILTIN_PWD,
+	BUILTIN_EXPORT,
+	BUILTIN_UNSET,
+	BUILTIN_ENV,
+}	t_builtin;
 
 /* issubshell must be set NO when initializing main function */
 typedef struct s_info
@@ -82,15 +95,12 @@ int				reset_redirection(t_info *info);
 
 /* execute_utils.c */
 char			**list_to_strs(t_list *command);
-void			print_error(char *location, char *message);
 void			print_message(char *message);
 int				get_commands_count(t_commandlist *commandlist);
 void			free_strs(char **strs);
-void			error_return(char *message, int error_code);
-void			error_exit(char *message, int error_code);
 
 /* envp_utils.c */
-int				change_envp(char *new, t_info *info);
+void			change_envp(char *new, t_info *info);
 void			add_envp(char *new, t_info *info);
 void			delete_envp(char *del, t_info *info);
 
@@ -131,12 +141,26 @@ void			sig_fork(void);
 void			sig_process(int sig);
 void			init_signal(void);
 
+/* error.c */
+void			print_error(char *command, char *input, \
+							char *message, int err_status);
+void			system_error(char *str1, char *str2, int error_code);
+
 /* parsing */
-t_commandlist	*parsing(char *str);
+t_commandlist	*parsing(char *str, char **envp);
 t_token			*new_token(char *command, t_type type);
+t_list			*redirect_out(char **str, int i, char **envp);
+t_list			*redirect_in(char **str, int i, char **envp);
+t_list			*convert_envp(char *str, char **envp, t_type type);
+int				count_pipe(char *str);
+int				check_whitespace(char c);
+int				count_pipe(char *str);
 char			*ft_strjoin_char(char *s1, char s2);
 char			*exception_line(char *line);
 void			ascii_change(char **str);
+void			remove_special_char(char **str);
+void			free_parsing_str(char *str, char **split_str);
+void			free_list(t_commandlist *lst);
 
 /*** function list end ***/
 

@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:07:50 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/21 21:31:57 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/23 06:26:08 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ void	redirect_file(char *filename, t_type type)
 		standard_fd = STDOUT_FILENO;
 	}
 	if (fd < 0)
-		print_error("redirect_file", "open error");
+		print_error(filename, NULL, NULL, YES);
 	else if (fd != standard_fd)
 	{
 		if (dup2(fd, standard_fd) != standard_fd)
-			print_error("redirect_file", "dup2 error");
+			system_error("redirect_file", "dup2 error", 1);
 		close(fd);
 	}
 }
@@ -51,10 +51,7 @@ void	redirection(t_list	*redirection)
 			token->type == REDIR_APPEND)
 			redirect_file(token->content, token->type);
 		else
-		{
-			print_error("redirection", "token type error");
-			break ;
-		}
+			system_error("invalid token type", token->content, 1);
 		list = list->next;
 	}
 }
@@ -73,7 +70,7 @@ char	*get_heredoc_filename(int *fd)
 		if (num)
 			free(num);
 		if (!filename)
-			print_error("get_heredoc_filename", "ft_strjoin error");
+			system_error("get_heredoc_filename", "malloc error", 1);
 		if (access(filename, F_OK) != 0)
 		{
 			*fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);

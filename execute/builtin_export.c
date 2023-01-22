@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:11:51 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/21 15:59:56 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/23 05:43:53 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ static void	print_export_envp(t_info *info)
 		{
 			temp = ft_substr(info->envp[i], 0, equal_loc - info->envp[i] + 1);
 			printf("%s\"%s\"\n", temp, equal_loc + 1);
-			free(temp);
+			if (temp)
+				free(temp);
 		}
 		i++;
 	}
@@ -68,8 +69,8 @@ static void	export_all_inputs(char **command, t_info *info)
 		equal_loc = ft_strchr(command[i], '=');
 		if (equal_loc == command[i] || ft_isdigit(command[i][0]))
 		{
-			error_return("builtin_export, invalid argument to export", 1);
-			return ;
+			errno = 22;
+			print_error(command[0], command[i], "not a valid identifier", YES);
 		}
 		else
 			export_change_envp(command[i], info);
@@ -82,10 +83,7 @@ void	builtin_export(t_list *list, t_info *info)
 
 	command = list_to_strs(list);
 	if (!command)
-	{
-		error_return("builtin_export, list_to_strs error", 1);
-		return ;
-	}
+		system_error("malloc error", NULL, 1);
 	if (!command[1])
 		print_export_envp(info);
 	else
@@ -99,7 +97,4 @@ void	builtin_export(t_list *list, t_info *info)
 	인자에서 =이 있을경우 환경변수로 등록, 동일한 이름의 환경변수를 찾아 change_envp 호출
 	동일한 이름이 없을경우 while문을 빠져나와 add_envp 호출, 새로운 환경변수 리스트를 만듬
 	인자이 =가 없을 경우 바로 add_envp를 호출하여 새로운 환경변수 리스트를 만듬
-
-	! 사실상 환경변수 리스트 envp는 쉘변수 + 환경변수 이므로, 내부 미니쉘을 호출할 때
-	! 쉘 변수도 같이 넘어가는 걸 방지하는 추가 과정이 필요함
 */

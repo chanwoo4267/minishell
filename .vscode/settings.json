@@ -5,6 +5,8 @@
         "readline.h": "c",
         "history.h": "c",
         "minishell.h": "c",
-        "system_error": "c"
+        "system_error": "c",
+        "__errc": "c",
+        "ios": "c"
     }
 }

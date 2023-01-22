@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 16:40:05 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/21 15:41:03 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/23 06:29:43 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,14 @@ static void	free_deprecated_envp(char **envp)
 	}
 }
 
-int	change_envp(char *new, t_info *info)
+void	change_envp(char *new, t_info *info)
 {
 	int		i;
 	char	*equal_loc;
 
 	equal_loc = ft_strchr(new, '=');
 	if (!equal_loc)
-	{
-		error_return("change_envp, no equal symbol", 1);
-		return (1);
-	}
+		return ;
 	i = 0;
 	while (info->envp[i])
 	{
@@ -49,7 +46,6 @@ int	change_envp(char *new, t_info *info)
 		}
 		i++;
 	}
-	return (0);
 }
 
 void	add_envp(char *new, t_info *info)
@@ -62,7 +58,7 @@ void	add_envp(char *new, t_info *info)
 		i++;
 	new_envp = malloc(sizeof(char *) * (i + 2));
 	if (!new_envp)
-		error_exit("add_envp, malloc error", 1);
+		system_error("malloc error", NULL, 1);
 	i = 0;
 	while (info->envp[i])
 	{
@@ -88,7 +84,7 @@ void	delete_envp(char *del, t_info *info)
 		i++;
 	new_envp = malloc(sizeof(char *) * i);
 	if (!new_envp)
-		error_exit("delete_envp, malloc error", 1);
+		system_error("malloc error", NULL, 1);
 	i = 0;
 	while (info->envp[++i])
 	{
@@ -102,3 +98,7 @@ void	delete_envp(char *del, t_info *info)
 	free_deprecated_envp(info->envp);
 	info->envp = new_envp;
 }
+
+/*
+	환경변수를 추가, 삭제, 해제, 변경 해주는 함수들
+*/

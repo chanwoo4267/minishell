@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 15:26:04 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/21 21:31:52 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/23 06:31:23 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static char	**set_envp(char **envp)
 static void	init_info(t_info *info, char **envp)
 {
 	if (!envp)
-		error_exit("cannot receive envp", 1);
+		system_error("init_info", "cannot receive envp", 1);
 	info->envp = set_envp(envp);
 	info->fd[0] = dup(STDIN_FILENO);
 	info->fd[1] = dup(STDOUT_FILENO);
@@ -94,13 +94,14 @@ static void	remove_heredoc_tempfiles(void)
 	int		i;
 
 	i = 0;
-	while (++i <= 16)
+	while (++i <= 32)
 	{
 		itoa = ft_itoa(i);
 		str = ft_strjoin(".heredoc_tmp", itoa);
 		if (!itoa || !str)
-			error_exit("remove_heredoc_tempfiles, malloc error", 2);
-		unlink(str);
+			system_error("remove_heredoc_tempfiles", "malloc error", 1);
+		if (access(str, F_OK) == 0)
+			unlink(str);
 		free(itoa);
 		free(str);
 	}
@@ -114,23 +115,23 @@ static void	terminal_loop(t_info *info)
 	while (1)
 	{
 		if (signal(SIGINT, sig_readline) == SIG_ERR)
-			error_exit("terminal_loop, signal error", 1);
+			system_error(NULL, NULL, 1);
 		input = readline("minishell$ ");
 		add_history(input);
 		if (!input)
 			exit(0);
-		commands = parsing(input);
+		commands = parsing(input, info->envp);
 		if (commands)
 		{
 			if (signal(SIGINT, sig_process) == SIG_ERR)
-				error_exit("terminal_loop, signal error", 1);
+				system_error(NULL, NULL, 1);
 			execute(commands, info);
+			free_commands(commands);
+			remove_heredoc_tempfiles();
 		}
 		else
-			error_return("parsing error", 1);
+			print_error("syntax error", NULL, NULL, NO);
 		free(input);
-		free_commands(commands);
-		remove_heredoc_tempfiles();
 	}
 }
 

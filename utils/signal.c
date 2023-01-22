@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 16:35:59 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/21 17:20:36 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/23 06:03:24 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	sig_readline(int sig)
 void	sig_fork(void)
 {
 	if (signal(SIGINT, SIG_DFL) == SIG_ERR)
-		error_exit("signal handler error", 1);
+		system_error("sigfork", "signal error", 1);
 	if (signal(SIGQUIT, SIG_DFL) == SIG_ERR)
-		error_exit("signal handler error", 1);
+		system_error("sigfork", "signal error", 1);
 }
 
 void	sig_process(int sig)
@@ -43,12 +43,12 @@ void	init_signal(void)
 	struct termios	s_term;
 
 	if (tcgetattr(STDIN_FILENO, &s_term) == -1)
-		error_exit("signal init error", 1);
+		system_error("init_signal", "tcgetattr error", 1);
 	s_term.c_lflag &= ~(ECHOCTL);
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &s_term) == -1)
-		error_exit("signal init error", 1);
+		system_error("init_signal", "tcsetattr error", 1);
 	if (signal(SIGINT, sig_readline) == SIG_ERR)
-		error_exit("signal handler error", 1);
+		system_error("init_signal", "signal error", 1);
 	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
-		error_exit("signal handler error", 1);
+		system_error("init_signal", "signal error", 1);
 }

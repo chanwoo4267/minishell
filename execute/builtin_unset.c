@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:52:49 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/21 15:41:00 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/23 05:55:12 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,31 @@ void	builtin_unset(t_list *list, t_info *info)
 
 	command = list_to_strs(list);
 	if (!command)
-	{
-		error_return("builtin_unset, list to strs error", 1);
-		return ;
-	}
+		system_error("malloc error", NULL, 1);
 	if (command[1])
 	{
 		i = 1;
 		while (command[i])
 		{
-			if (!ft_strchr(command[i], '='))
+			if (!ft_strchr(command[i], '=') && !ft_strchr(command[i], '\'') && \
+				!ft_strchr(command[i], '\"') && !ft_strchr(command[i], '$'))
 				delete_envp(command[i], info);
+			else
+			{
+				errno = 22;
+				print_error(command[0], command[i], \
+							"not a valid identifier", YES);
+			}
 			i++;
 		}
 	}
 	free_strs(command);
 }
+
+/*
+	unset은 환경 변수를 제거하는 built-in function, 여러 인자를 동시에 받을 수 있음
+	따라서, while문을 돌면서 각 인자를 delete_envp 함수를 통해 제거
+	이때, 원래는 환경변수 이름이 들어오는 인자에 모든 메타문자가 포함될 수 없는데
+	subject에서 메타문자는 명시된 것 의외에 따로 해석할 필요 없다고 했으므로, 
+	= ' " $ 가 들어오면 예외처리
+*/

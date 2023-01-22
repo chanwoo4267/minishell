@@ -24,14 +24,16 @@ EXEC_OBJS = $(EXEC_SRCS:.c=.o)
 
 PARS_FILE = ascii_change.c \
 			exception_line.c \
+			parse_redirect.c \
 			parsing_utils.c \
 			parsing.c
 PARS_SRCS = $(addprefix parsing/, $(PARS_FILE))
 PARS_OBJS = $(PARS_SRCS:.c=.o)
 
-SIGN_FILE = signal.c
-SIGN_SRCS = $(addprefix signal/, $(SIGN_FILE))
-SIGN_OBJS = $(SIGN_SRCS:.c=.o)
+UTIL_FILE = signal.c \
+			error.c
+UTIL_SRCS = $(addprefix utils/, $(UTIL_FILE))
+UTIL_OBJS = $(UTIL_SRCS:.c=.o)
 
 MAIN_SRCS = minishell.c
 MAIN_OBJS = minishell.o
@@ -41,7 +43,7 @@ INCLUDES = -I$(READ_HDRS)
 READ_DIR = ./readline/lib/
 READ_HDRS	= ./readline/include/
 
-OBJS = $(PARS_OBJS) $(EXEC_OBJS) $(SIGN_OBJS) $(MAIN_OBJS)
+OBJS = $(PARS_OBJS) $(EXEC_OBJS) $(UTIL_OBJS) $(MAIN_OBJS)
 
 all : $(NAME)
 

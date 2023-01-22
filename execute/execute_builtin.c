@@ -6,23 +6,11 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 12:40:22 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/21 15:41:07 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/23 06:08:03 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-typedef enum e_builtin
-{
-	NOT_BUILTIN,
-	BUILTIN_ECHO,
-	BUILTIN_CD,
-	BUILTIN_EXIT,
-	BUILTIN_PWD,
-	BUILTIN_EXPORT,
-	BUILTIN_UNSET,
-	BUILTIN_ENV,
-}	t_builtin;
 
 static int	identify_builtin(char *str)
 {
@@ -69,3 +57,7 @@ int	execute_builtin(t_list *command, t_info *info)
 		builtin_exit(command);
 	return (YES);
 }
+
+/*
+	built-in function 종류에 따른 함수 호출
+*/
