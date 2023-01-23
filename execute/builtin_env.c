@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:52:55 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/23 05:38:14 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/24 01:23:02 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ void	builtin_env(t_list *list, t_info *info)
 	if (!command)
 		system_error("malloc error", NULL, 1);
 	if (command[1])
-		print_error(command[0], command[1], \
-					"pwd with option or argument", NO);
+		print_error(command[0], command[1], "too many argument", NO);
 	else
 	{
 		i = -1;

@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 16:40:05 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/23 06:29:43 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/24 01:55:39 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	delete_envp(char *del, t_info *info)
 	new_envp = malloc(sizeof(char *) * i);
 	if (!new_envp)
 		system_error("malloc error", NULL, 1);
-	i = 0;
+	i = -1;
 	while (info->envp[++i])
 	{
 		if (ft_strncmp(del, info->envp[i], ft_strlen(del)) == 0 && \
@@ -94,7 +94,7 @@ void	delete_envp(char *del, t_info *info)
 		new_envp[j] = ft_strdup(info->envp[i]);
 		j++;
 	}
-	new_envp[i] = NULL;
+	new_envp[j] = NULL;
 	free_deprecated_envp(info->envp);
 	info->envp = new_envp;
 }

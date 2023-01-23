@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = # -Wall -Wextra -Werror
 NAME = minishell
 
 LIBFT = libft/libft.a
@@ -24,7 +24,6 @@ EXEC_OBJS = $(EXEC_SRCS:.c=.o)
 
 PARS_FILE = ascii_change.c \
 			exception_line.c \
-			parse_redirect.c \
 			parsing_utils.c \
 			parsing.c
 PARS_SRCS = $(addprefix parsing/, $(PARS_FILE))

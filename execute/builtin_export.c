@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:11:51 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/23 05:43:53 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/24 01:39:57 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,18 @@ static void	print_export_envp(t_info *info)
 	i = 0;
 	while (info->envp[i])
 	{
-		printf("declare -x ");
 		equal_loc = ft_strchr(info->envp[i], '=');
 		if (!equal_loc)
-			printf("%s\n", info->envp[i]);
+			printf("declare -x %s\n", info->envp[i]);
+		else if (equal_loc - 1 == info->envp[i] && info->envp[i][0] == '_')
+		{
+			i++;
+			continue ;
+		}
 		else
 		{
 			temp = ft_substr(info->envp[i], 0, equal_loc - info->envp[i] + 1);
-			printf("%s\"%s\"\n", temp, equal_loc + 1);
+			printf("declare -x %s\"%s\"\n", temp, equal_loc + 1);
 			if (temp)
 				free(temp);
 		}

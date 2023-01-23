@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 16:37:09 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/23 05:56:55 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/24 01:20:18 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ void	builtin_cd(t_list *list, t_info *info)
 	{
 		old_cwd = getcwd(NULL, 0);
 		if (chdir(command[1]) == -1)
-			print_error(command[0], "no such file or directory", \
-						command[1], YES);
+			print_error(command[0], command[1], NULL, YES);
 		else
 			cd_change_envp(old_cwd, info);
 		free(old_cwd);

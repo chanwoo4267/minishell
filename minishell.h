@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 15:38:32 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/23 06:29:37 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/24 01:12:35 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,12 @@ void			ascii_change(char **str);
 void			remove_special_char(char **str);
 void			free_parsing_str(char *str, char **split_str);
 void			free_list(t_commandlist *lst);
+void			parsing_dollar(char *str, t_list **lst, char **envp);
+char			*envp_to_str(char *str, char **envp, int j);
+void			dollar_change(char **str, char **envp);
+int				find_dollar(char *str);
+char			*dollar_split(char *str, char **envp);
+char			*ft_strjoin_empty(char const *s1, char const *s2);
 
 /*** function list end ***/
 
