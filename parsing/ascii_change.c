@@ -6,7 +6,7 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 19:21:05 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/21 19:51:35 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/23 16:05:39 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void	double_quote(char *str)
 				str[j] = str[j + 1];
 				j++;
 			}
+			i--;
 		}
 		i++;
 	}
@@ -39,6 +40,8 @@ static void	single_quote(char *str)
 	int	j;
 
 	i = 0;
+	if (str[1] == '$')
+		str[0] = -11;
 	while (str[i])
 	{
 		if (str[i] == '\'')
@@ -49,6 +52,7 @@ static void	single_quote(char *str)
 				str[j] = str[j + 1];
 				j++;
 			}
+			i--;
 		}
 		i++;
 	}
@@ -57,8 +61,6 @@ static void	single_quote(char *str)
 static void	del_quote(char **str)
 {
 	int	i;
-	int	j;
-	int	k;
 
 	i = 0;
 	while (str[i])
@@ -75,7 +77,6 @@ void	ascii_change(char **str)
 {
 	int	i;
 	int	j;
-	int	k;
 
 	i = 0;
 	while (str[i])

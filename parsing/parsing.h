@@ -6,7 +6,7 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:49:44 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/21 21:17:18 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/23 16:20:36 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ typedef struct s_global
 {
 	int		global_exit_status;
 }	t_global;
-/*** struct list end ***/
 
 t_global	g_status;
 
@@ -72,5 +71,8 @@ void			ascii_change(char **str);
 void			remove_special_char(char **str);
 void			free_parsing_str(char *str, char **split_str);
 void			free_list(t_commandlist *lst);
+void			parsing_dollar(char *str, t_list *lst, char **envp);
+char			*envp_to_str(char *str, char **envp, int j);
+
 
 #endif

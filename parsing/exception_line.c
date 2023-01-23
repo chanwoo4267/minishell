@@ -6,7 +6,7 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 17:16:53 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/21 21:18:27 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/23 15:11:37 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ static char	*get_pipe(char *str, char *line, int quote, int *pipe)
 	line++;
 	if (*line != ' ')
 		str = ft_strjoin_char(str, ' ');
+	*pipe = 1;
 	return (str);
 }
 
@@ -116,6 +117,8 @@ char	*exception_line(char *line)
 			str = get_pipe(str, line, quote, &pipe);
 		else
 			str = none_pipe(str, line, quote, &pipe);
+		if (!str)
+			return (NULL);
 		line++;
 	}
 	if (quote)

@@ -6,7 +6,7 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 19:02:14 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/21 21:17:17 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/23 15:26:58 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	count_pipe(char *str)
 	int	cnt;
 	int	i;
 
-	cnt = 0;
+	cnt = 1;
 	i = 0;
 	while (str[i])
 	{
