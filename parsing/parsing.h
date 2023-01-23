@@ -6,7 +6,7 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:49:44 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/23 16:20:36 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/23 20:19:49 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ t_global	g_status;
 
 t_commandlist	*parsing(char *str, char **envp);
 t_token			*new_token(char *command, t_type type);
-t_list			*redirect_out(char **str, int i, char **envp);
-t_list			*redirect_in(char **str, int i, char **envp);
+t_list			*redirect_out(char **str, int i, char **envp, int d);
+t_list			*redirect_in(char **str, int i, char **envp, int d);
 t_list			*convert_envp(char *str, char **envp, t_type type);
 int				count_pipe(char *str);
 int				check_whitespace(char c);
@@ -71,8 +71,10 @@ void			ascii_change(char **str);
 void			remove_special_char(char **str);
 void			free_parsing_str(char *str, char **split_str);
 void			free_list(t_commandlist *lst);
-void			parsing_dollar(char *str, t_list *lst, char **envp);
+void			parsing_dollar(char *str, t_list **lst, char **envp);
 char			*envp_to_str(char *str, char **envp, int j);
-
+void	dollar_change(char **str, char **envp);
+int	find_dollar(char *str);
+char	*dollar_split(char *str, char **envp);
 
 #endif
