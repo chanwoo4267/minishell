@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_dollar.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:12:57 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/23 21:06:28 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/23 23:22:00 by sehjung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ char	*dollar_split(char *str, char **envp)
 	
 	i = 0;
 	j = 0;
+	temp = NULL;
 	split_str = ft_split(str, '$');
 	if (str[0] != '$')
 	{
@@ -63,8 +64,6 @@ char	*dollar_split(char *str, char **envp)
 	}
 	else
 		free(str);
-	if (!temp)
-		temp = ft_strdup("");
 	while (split_str[i])
 	{
 		j = 0;
@@ -72,7 +71,10 @@ char	*dollar_split(char *str, char **envp)
 		{
 			if (ft_strncmp(split_str[i], envp[j], ft_strlen(split_str[i])) == 0)
 			{
-				temp = ft_strjoin(temp, envp_to_str(split_str[i], envp, j));
+				if (!temp)
+					temp = ft_strdup(envp_to_str(split_str[i], envp, j));
+				else
+					temp = ft_strjoin(temp, envp_to_str(split_str[i], envp, j));
 				break;
 			}
 			j++;
