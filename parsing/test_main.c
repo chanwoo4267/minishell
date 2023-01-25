@@ -6,7 +6,7 @@
 /*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 18:48:08 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/25 15:39:27 by sehjung          ###   ########.fr       */
+/*   Updated: 2023/01/25 19:34:58 by sehjung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int main(int argc, char **argv, char **envp)
 	t_list *c_lst;
 	t_list *r_lst;
 
+	g_status.global_exit_status = 77; // $? 임의로 넣기
 	while (1)
 	{
 		str = readline("$>");

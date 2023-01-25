@@ -6,7 +6,7 @@
 /*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 17:46:51 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/25 15:33:12 by sehjung          ###   ########.fr       */
+/*   Updated: 2023/01/25 23:40:53 by sehjung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static t_commandlist	*init_parsing(char **str, t_commandlist *lst, char **envp)
 		else if (str[i][0] == '|')
 			j++;
 		else if (find_dollar(str[i]))
-			ft_lstadd_back(&lst[j].command, ft_lstnew(new_token(dollar_split(str[i], envp), COMMAND)));
+			ft_lstadd_back(&lst[j].command, ft_lstnew(new_token(convert_dollar(str[i], envp), COMMAND)));
 		else
 			ft_lstadd_back(&lst[j].command, ft_lstnew(new_token(str[i], COMMAND)));
 		i++;
@@ -62,7 +62,7 @@ t_commandlist	*parsing(char *line, char **envp)
 		return (NULL);
 	split_str = ft_split(str, ' ');
 	ascii_change(split_str);
-	lst = malloc(sizeof(t_commandlist) * (count_pipe(str) + 1));
+	lst = ft_calloc((count_pipe(str) + 1), sizeof(t_commandlist));
 	if (!lst)
 		return (NULL);
 	init_list(lst, count_pipe(str) + 1);

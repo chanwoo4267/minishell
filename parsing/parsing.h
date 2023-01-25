@@ -6,7 +6,7 @@
 /*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:49:44 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/23 23:29:34 by sehjung          ###   ########.fr       */
+/*   Updated: 2023/01/25 23:43:59 by sehjung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ t_commandlist	*parsing(char *str, char **envp);
 t_token			*new_token(char *command, t_type type);
 t_list			*redirect_out(char **str, int i, char **envp);
 t_list			*redirect_in(char **str, int i, char **envp);
-t_list			*convert_envp(char *str, char **envp, t_type type);
 int				count_pipe(char *str);
 int				check_whitespace(char c);
 int				count_pipe(char *str);
@@ -75,8 +74,7 @@ void			parsing_dollar(char *str, t_list **lst, char **envp);
 char			*envp_to_str(char *str, char **envp, int j);
 void	dollar_change(char **str, char **envp);
 int	find_dollar(char *str);
-char	*dollar_split(char *str, char **envp);
 char	*ft_strjoin_empty(char const *s1, char const *s2);
-
+char	*convert_dollar(char *str, char **envp);
 
 #endif
