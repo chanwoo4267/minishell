@@ -6,13 +6,13 @@
 /*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 17:46:51 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/23 23:28:52 by sehjung          ###   ########.fr       */
+/*   Updated: 2023/01/25 15:33:12 by sehjung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-static t_commandlist	*init_list(char **str, t_commandlist *lst, char **envp)
+static t_commandlist	*init_parsing(char **str, t_commandlist *lst, char **envp)
 {
 	int	i;
 	int	j;
@@ -36,6 +36,19 @@ static t_commandlist	*init_list(char **str, t_commandlist *lst, char **envp)
 	return (lst);
 }
 
+void	init_list(t_commandlist *lst, int cnt)
+{
+	int	i;
+
+	i = 0;
+	if (i < cnt)
+	{
+		lst[i].command = NULL;
+		lst[i].redirection = NULL;
+		i++;
+	}
+}
+
 t_commandlist	*parsing(char *line, char **envp)
 {
 	char			*str;
@@ -52,7 +65,8 @@ t_commandlist	*parsing(char *line, char **envp)
 	lst = malloc(sizeof(t_commandlist) * (count_pipe(str) + 1));
 	if (!lst)
 		return (NULL);
-	init_list(split_str, lst, envp);
-	//free_parsing_str(str, split_str);
+	init_list(lst, count_pipe(str) + 1);
+	init_parsing(split_str, lst, envp);
+	//free_parsing_str(str, split_str); // malloc된 문자열들 free, 다른 함수에서도 체크해야함
 	return (lst);
 }

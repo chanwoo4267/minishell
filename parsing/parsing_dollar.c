@@ -6,7 +6,7 @@
 /*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:12:57 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/23 23:22:00 by sehjung          ###   ########.fr       */
+/*   Updated: 2023/01/25 15:34:36 by sehjung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	find_dollar(char *str)
 	int	i;
 
 	i = 0;
-	while(str)
+	while(str[i])
 	{
 		if (str[i] == '$')
 			return (1);
