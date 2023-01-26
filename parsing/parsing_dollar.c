@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_dollar.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:12:57 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/26 00:05:50 by sehjung          ###   ########.fr       */
+/*   Updated: 2023/01/26 15:13:57 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,5 @@ char	*convert_dollar(char *str, char **envp)
 	}
 	if (dollar == 1)
 		temp = convert_envp(d_temp, temp, envp);
-	if (!temp)
-		return (ft_strdup(""));
 	return (temp);
 }

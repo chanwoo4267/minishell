@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirect.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 20:12:35 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/25 23:55:22 by sehjung          ###   ########.fr       */
+/*   Updated: 2023/01/26 15:20:21 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ t_list	*redirect_in(char **str, int i, char **envp)
 	t_list	*temp;
 	int		d;
 
-	d = find_dollar(str[i + 1]);
-	if (!str[i + 1])
+	if (str[i + 1] == NULL)
 		return (NULL);
+	d = find_dollar(str[i + 1]);
 	if (str[i][0] == '<')
 	{
 		if (str[i][1] == '<' && ft_strlen(str[i]) == 2)
@@ -31,6 +31,8 @@ t_list	*redirect_in(char **str, int i, char **envp)
 			else
 				temp = ft_lstnew(new_token(str[++i], REDIR_IN));
 		}
+		else
+			return (NULL);
 	}
 	return (temp);
 }
@@ -40,9 +42,9 @@ t_list	*redirect_out(char **str, int i, char **envp)
 	t_list	*temp;
 	int		d;
 
-	d = find_dollar(str[i + 1]);
-	if (!str[i + 1])
+	if (str[i + 1] == NULL)
 		return (NULL);
+	d = find_dollar(str[i + 1]);
 	if (str[i][0] == '>')
 	{
 		if (str[i][1] == '>' && ft_strlen(str[i]) == 2)
@@ -59,6 +61,8 @@ t_list	*redirect_out(char **str, int i, char **envp)
 			else
 				temp = ft_lstnew(new_token(str[++i], REDIR_OUT));
 		}
+		else
+			return (NULL);
 	}
 	return (temp);
 }
