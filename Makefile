@@ -27,7 +27,7 @@ PARS_FILE = ascii_change.c \
 			dollar_utils.c \
 			exception_line.c \
 			parse_redirect.c \
-			parsing_dollar.c \
+			convert_dollar.c \
 			parsing_utils.c \
 			parsing.c
 PARS_SRCS = $(addprefix parsing/, $(PARS_FILE))
