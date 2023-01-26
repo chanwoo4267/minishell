@@ -6,7 +6,7 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 17:16:53 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/23 15:11:37 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/26 17:03:44 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static char	*redirect_space(char *str, char *line, char c)
 	return (str);
 }
 
-static char	*get_pipe(char *str, char *line, int quote, int *pipe)
+static char	*get_pipe(char *str, char *line, int *pipe)
 {
 	if (*pipe == 1)
 		return (NULL);
@@ -101,6 +101,37 @@ static char	*none_pipe(char *str, char *line, int quote, int *pipe)
 	return (str);
 }
 
+int	syntax_check(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == '>')
+		{
+			if (line[i + 1] == '<' || line[i + 1] == '|' || line[i + 1] == '\0')
+				return (1);
+			else if (line[i + 2] && (line[i + 2] == '<' || line[i + 2] == '>' || line[i + 2] == '|'))
+				return (1);
+		}
+		else if (line[i] == '<')
+		{
+			if (line[i + 1] == '>' || line[i + 1] == '|' || line[i + 1] == '\0')
+				return (1);
+			else if (line[i + 2] && (line[i + 2] == '<' || line[i + 2] == '>' || line[i + 2] == '|'))
+				return (1);
+		}
+		else if (line [i] == '|')
+		{
+			if (line[i + 1] == '>' || line[i + 1] == '<' || line[i + 1] == '|')
+				return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 char	*exception_line(char *line)
 {
 	int		quote;
@@ -110,11 +141,13 @@ char	*exception_line(char *line)
 	quote = 0;
 	pipe = 0;
 	str = NULL;
+	if (syntax_check(line))
+		return (NULL);
 	while (*line)
 	{
 		quote = set_quote(*line, quote);
 		if (quote == 0 && *line == '|')
-			str = get_pipe(str, line, quote, &pipe);
+			str = get_pipe(str, line, &pipe);
 		else
 			str = none_pipe(str, line, quote, &pipe);
 		if (!str)

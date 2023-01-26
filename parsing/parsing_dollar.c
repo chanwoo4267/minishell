@@ -6,35 +6,11 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 16:12:57 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/26 15:13:57 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/26 21:01:30 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-void	exit_status(char **split_str)
-{
-	int	i;
-	int	j;
-	char	*temp;
-	char	*temp2;
-
-	i = 0;
-	j = 0;
-	temp = NULL;
-	while (split_str[i])
-	{
-		if (split_str[i][0] == '?')
-		{
-			temp = ft_strdup(ft_itoa(g_status.global_exit_status));
-			temp = ft_strjoin(temp, &split_str[i][1]);
-			temp2 = split_str[i];
-			split_str[i] = temp;
-			free(temp2);
-			}
-		i++;
-	}
-}
 
 char	*convert_envp(char *d_temp, char *temp, char **envp)
 {
@@ -58,22 +34,47 @@ char	*convert_envp(char *d_temp, char *temp, char **envp)
 	free(d_temp);
 	d_temp = ft_strdup("");
 	return (temp);
-	//free(d_temp);
 }
 
-char	*convert_dollar(char *str, char **envp)
+char	*exit_status(char *str, char *temp, char *d_temp,int *check)
 {
-	int		dollar;
+	int	i;
+
+	i = 0;
+	if (ft_strlen(str) < 1)
+		return (temp);
+	else if (str[i] == '$' && str[i + 1] == '?')
+	{
+		if (temp == NULL)
+			temp = ft_strdup(ft_itoa(g_status.global_exit_status));
+		else
+			temp = ft_strjoin(temp, ft_itoa(g_status.global_exit_status));
+		free(d_temp);
+		d_temp = NULL;
+		*check = 1;
+		return (temp);
+	}
+	return (temp);
+}
+
+char	*convert_dollar(char *str, char **envp, int dollar, int check)
+{
 	char	*temp;
 	char	*d_temp;
-
-	dollar = 0;
+	
 	temp = NULL;
 	d_temp = NULL;
 	while (*str)
 	{
 		if (*str == '$' || dollar == 1)
 		{
+			temp = exit_status(str, temp, d_temp, &check);
+			if (check == 1)
+			{
+				str += 2;
+				check = 0;
+				continue;
+			}
 			if (dollar == 1 && (*str == ' ' || *str == '$'))
 			{
 				temp = convert_envp(d_temp, temp, envp);

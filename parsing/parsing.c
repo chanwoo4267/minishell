@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 17:46:51 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/25 23:40:53 by sehjung          ###   ########.fr       */
+/*   Updated: 2023/01/26 19:32:03 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static t_commandlist	*init_parsing(char **str, t_commandlist *lst, char **envp)
 		else if (str[i][0] == '|')
 			j++;
 		else if (find_dollar(str[i]))
-			ft_lstadd_back(&lst[j].command, ft_lstnew(new_token(convert_dollar(str[i], envp), COMMAND)));
+			ft_lstadd_back(&lst[j].command, ft_lstnew(new_token(convert_dollar(str[i], envp, 0, 0), COMMAND)));
 		else
 			ft_lstadd_back(&lst[j].command, ft_lstnew(new_token(str[i], COMMAND)));
 		i++;
@@ -67,6 +67,6 @@ t_commandlist	*parsing(char *line, char **envp)
 		return (NULL);
 	init_list(lst, count_pipe(str) + 1);
 	init_parsing(split_str, lst, envp);
-	//free_parsing_str(str, split_str); // malloc된 문자열들 free, 다른 함수에서도 체크해야함
+	//free_parsing_str(str, split_str); malloc된 문자열들 free, 다른 함수에서도 체크해야함
 	return (lst);
 }

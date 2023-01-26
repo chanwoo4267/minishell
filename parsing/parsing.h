@@ -6,7 +6,7 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:49:44 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/26 14:57:56 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/26 19:31:59 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ void			free_parsing_str(char *str, char **split_str);
 void			free_list(t_commandlist *lst);
 void			parsing_dollar(char *str, t_list **lst, char **envp);
 char			*envp_to_str(char *str, char **envp, int j);
-void	dollar_change(char **str, char **envp);
-int	find_dollar(char *str);
-char	*ft_strjoin_empty(char const *s1, char const *s2);
-char	*convert_dollar(char *str, char **envp);
+void			dollar_change(char **str, char **envp);
+int				find_dollar(char *str);
+char			*ft_strjoin_empty(char const *s1, char const *s2);
+char			*convert_dollar(char *str, char **envp, int dollar, int check);
 
 #endif
