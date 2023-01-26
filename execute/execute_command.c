@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 18:40:11 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/26 21:20:55 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/26 21:47:33 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,8 +127,10 @@ void	execute_command_subshell(t_list *command_list, char **envp)
 		if (!path || !cmd)
 			system_error(argv[0], ": command not found", 127);
 	}
+	if (chdir(cmd) == -1 && access(cmd, F_OK) != 0)
+		system_error(argv[0], ": No such file or directory", 127);
 	if (execve(cmd, argv, envp) < 0)
-		system_error(argv[0], ": cannot execute command", 1);
+		system_error(argv[0], ": cannot execute command", 127);
 	free_strs(argv);
 	if (cmd)
 		free(cmd);

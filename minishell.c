@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 15:26:04 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/26 20:54:41 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/26 21:38:10 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,10 @@ static void	terminal_loop(t_info *info)
 				remove_heredoc_tempfiles();
 			}
 			else
+			{
 				print_error("syntax error", NULL, NULL, NO);
+				g_status.global_exit_status = 258;
+			}
 		}
 		free(input);
 	}

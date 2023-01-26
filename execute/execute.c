@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 16:29:21 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/26 20:15:33 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/26 21:53:44 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,12 @@ int	execute(t_commandlist *commandlist, t_info *info)
 */
 int	execute_subshell(t_commandlist commandlist, t_info *info)
 {
+	int	result;
+
+	result = SUCCESS;
 	if (commandlist.redirection)
-		redirection(commandlist.redirection);
-	if (commandlist.command)
+		result = redirection(commandlist.redirection);
+	if (commandlist.command && result == SUCCESS)
 	{
 		if (execute_builtin(commandlist.command, info) == NO)
 			execute_command(commandlist.command, info);

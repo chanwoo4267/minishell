@@ -6,13 +6,13 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:07:50 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/26 15:07:02 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/26 21:52:42 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	redirect_file(char *filename, t_type type)
+int	redirect_file(char *filename, t_type type)
 {
 	int	fd;
 	int	standard_fd;
@@ -29,16 +29,20 @@ void	redirect_file(char *filename, t_type type)
 		standard_fd = STDOUT_FILENO;
 	}
 	if (fd < 0)
+	{
 		print_error(filename, NULL, NULL, YES);
+		return (FAIL);
+	}
 	else if (fd != standard_fd)
 	{
 		if (dup2(fd, standard_fd) != standard_fd)
 			system_error("redirect_file", "dup2 error", 1);
 		close(fd);
 	}
+	return (SUCCESS);
 }
 
-void	redirection(t_list	*redirection)
+int	redirection(t_list	*redirection)
 {
 	t_token	*token;
 	t_list	*list;
@@ -49,9 +53,13 @@ void	redirection(t_list	*redirection)
 		token = (t_token *)list->content;
 		if (token->type == REDIR_IN || token->type == REDIR_OUT || \
 			token->type == REDIR_APPEND)
-			redirect_file(token->content, token->type);
+		{
+			if (redirect_file(token->content, token->type) == FAIL)
+				return (FAIL);
+		}
 		else
 			system_error("invalid token type ", token->content, 1);
 		list = list->next;
 	}
+	return (SUCCESS);
 }
