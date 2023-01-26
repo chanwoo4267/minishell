@@ -34,7 +34,8 @@ PARS_SRCS = $(addprefix parsing/, $(PARS_FILE))
 PARS_OBJS = $(PARS_SRCS:.c=.o)
 
 UTIL_FILE = signal.c \
-			error.c
+			error.c \
+			free.c
 UTIL_SRCS = $(addprefix utils/, $(UTIL_FILE))
 UTIL_OBJS = $(UTIL_SRCS:.c=.o)
 

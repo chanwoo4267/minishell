@@ -6,26 +6,38 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 16:40:05 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/26 19:27:12 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/26 20:25:00 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	free_deprecated_envp(char **envp)
+char	**set_envp(char **envp)
 {
-	int	i;
+	char	**new_envp;
+	int		i;
+	int		count;
 
-	if (envp)
+	i = -1;
+	count = 0;
+	while (envp[++i])
 	{
-		i = 0;
-		while (envp[i])
-		{
-			free(envp[i]);
-			i++;
-		}
-		free(envp);
+		if (ft_strchr(envp[i], '='))
+			count++;
 	}
+	new_envp = malloc(sizeof(char *) * (count + 1));
+	i = -1;
+	count = 0;
+	while (envp[++i])
+	{
+		if (ft_strchr(envp[i], '='))
+		{
+			new_envp[count] = ft_strdup(envp[i]);
+			count++;
+		}
+	}
+	new_envp[count] = NULL;
+	return (new_envp);
 }
 
 void	change_envp(char *new, t_info *info)
@@ -68,7 +80,7 @@ void	add_envp(char *new, t_info *info)
 	new_envp[i] = ft_strdup(new);
 	i++;
 	new_envp[i] = NULL;
-	free_deprecated_envp(info->envp);
+	free_strs(info->envp);
 	info->envp = new_envp;
 }
 
@@ -97,7 +109,7 @@ void	delete_envp(char *del, t_info *info)
 		new_envp[j++] = ft_strdup(info->envp[i]);
 	}
 	new_envp[j] = NULL;
-	free_deprecated_envp(info->envp);
+	free_strs(info->envp);
 	info->envp = new_envp;
 }
 

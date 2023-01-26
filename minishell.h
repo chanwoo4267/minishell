@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 15:38:32 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/26 16:24:02 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/26 20:22:01 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,10 @@ int				reset_redirection(t_info *info);
 
 /* execute_utils.c */
 char			**list_to_strs(t_list *command);
-void			print_message(char *message);
 int				get_commands_count(t_commandlist *commandlist);
-void			free_strs(char **strs);
 
 /* envp_utils.c */
+char			**set_envp(char **envp);
 void			change_envp(char *new, t_info *info);
 void			add_envp(char *new, t_info *info);
 void			delete_envp(char *del, t_info *info);
@@ -152,6 +151,11 @@ void			init_signal(void);
 void			print_error(char *command, char *input, \
 							char *message, int err_status);
 void			system_error(char *str1, char *str2, int error_code);
+
+/* free.c */
+void			free_strs(char **strs);
+void			free_lists(t_list *list);
+void			free_commands(t_commandlist *commandlist);
 
 /* parsing */
 t_commandlist	*parsing(char *str, char **envp);

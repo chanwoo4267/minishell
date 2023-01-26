@@ -6,41 +6,11 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 15:26:04 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/26 17:14:14 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/26 20:21:39 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static char	**set_envp(char **envp)
-{
-	char	**new_envp;
-	int		i;
-	int		count;
-
-	i = 0;
-	count = 0;
-	while (envp[i])
-	{
-		if (ft_strchr(envp[i], '='))
-			count++;
-		i++;
-	}
-	new_envp = malloc(sizeof(char *) * (count + 1));
-	i = 0;
-	count = 0;
-	while (envp[i])
-	{
-		if (ft_strchr(envp[i], '='))
-		{
-			new_envp[count] = ft_strdup(envp[i]);
-			count++;
-		}
-		i++;
-	}
-	new_envp[i] = NULL;
-	return (new_envp);
-}
 
 static void	init_info(t_info *info, char **envp)
 {
@@ -52,39 +22,6 @@ static void	init_info(t_info *info, char **envp)
 	info->fd[2] = dup(STDERR_FILENO);
 	info->issubshell = NO;
 	g_status.global_exit_status = 0;
-}
-
-static void	free_lists(t_list *list)
-{
-	t_list	*ptr;
-	t_list	*remover;
-
-	ptr = list;
-	while (ptr)
-	{
-		remover = ptr;
-		ptr = ptr->next;
-		if (remover->content)
-			free(remover->content);
-		if (remover)
-			free(remover);
-	}
-}
-
-static void	free_commands(t_commandlist *commandlist)
-{
-	int	i;
-
-	if (!commandlist)
-		return ;
-	i = 0;
-	while (commandlist[i].command)
-	{
-		free_lists(commandlist[i].command);
-		free_lists(commandlist[i].redirection);
-		i++;
-	}
-	free(commandlist);
 }
 
 static void	remove_heredoc_tempfiles(void)
@@ -135,10 +72,12 @@ static void	terminal_loop(t_info *info)
 	}
 }
 
+/*
 void	test(void)
 {
 	system("leaks minishell");
 }
+*/
 
 int	main(int argc, char **argv, char **envp)
 {

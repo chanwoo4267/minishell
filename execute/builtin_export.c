@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:11:51 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/26 19:49:41 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/26 20:12:30 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,33 @@ static void	print_export_envp(t_info *info)
 	}
 }
 
+static int	check_duplicate_envp(char *c, t_info *info)
+{
+	int	i;
+
+	i = -1;
+	while (info->envp[++i])
+	{
+		if (ft_strncmp(c, info->envp[i], ft_strlen(c)) == 0 && \
+			info->envp[i][ft_strlen(c)] == '=')
+			return (YES);
+		else if (ft_strncmp(c, info->envp[i], ft_strlen(c)) == 0 && \
+				ft_strncmp(c, info->envp[i], ft_strlen(info->envp[i])) == 0)
+			return (YES);
+	}
+	return (NO);
+}
+
 static void	export_change_envp(char *c, t_info *info)
 {
 	char	*equal_loc;
 	int		i;
 
-	i = 0;
+	i = -1;
 	equal_loc = ft_strchr(c, '=');
 	if (equal_loc)
 	{
-		while (info->envp[i])
+		while (info->envp[++i])
 		{
 			if ((ft_strncmp(c, info->envp[i], equal_loc - c) == 0 \
 			&& ft_strncmp(c, info->envp[i], ft_strlen(info->envp[i])) == 0) \
@@ -60,9 +77,11 @@ static void	export_change_envp(char *c, t_info *info)
 				change_envp(c, info);
 				return ;
 			}
-			i++;
 		}
 	}
+	else
+		if (check_duplicate_envp(c, info) == YES)
+			return ;
 	add_envp(c, info);
 }
 
