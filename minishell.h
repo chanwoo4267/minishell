@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 15:38:32 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/26 20:22:01 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/26 20:41:05 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,9 +141,9 @@ void			builtin_unset(t_list *list, t_info *info);
 void			builtin_env(t_list *list, t_info *info);
 
 /* signal.c */
+void			safe_signal(int sig, void *function);
 void			sig_readline(int sig);
 void			sig_fork(int mode);
-void			sig_reset(void);
 void			sig_process(int sig);
 void			init_signal(void);
 

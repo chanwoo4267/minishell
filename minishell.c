@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 15:26:04 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/26 20:21:39 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/26 20:54:41 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,18 @@ static void	remove_heredoc_tempfiles(void)
 	}
 }
 
+static int	input_only_spaces(char *input)
+{
+	while (*input)
+	{
+		if ((*input >= 9 && *input <= 13) || (*input == ' '))
+			input++;
+		else
+			return (NO);
+	}
+	return (YES);
+}
+
 static void	terminal_loop(t_info *info)
 {
 	t_commandlist	*commands;
@@ -51,23 +63,24 @@ static void	terminal_loop(t_info *info)
 
 	while (1)
 	{
-		if (signal(SIGINT, sig_readline) == SIG_ERR)
-			system_error("terminal_loop", "signal error", 1);
+		safe_signal(SIGINT, sig_readline);
 		input = readline("minishell$ ");
 		add_history(input);
 		if (!input)
 			system_error(NULL, "exit", 0);
-		commands = parsing(input, info->envp);
-		if (commands)
+		else if (input_only_spaces(input) == NO)
 		{
-			if (signal(SIGINT, sig_process) == SIG_ERR)
-				system_error("terminal_loop", "signal error", 1);
-			execute(commands, info);
-			free_commands(commands);
-			remove_heredoc_tempfiles();
+			commands = parsing(input, info->envp);
+			if (commands)
+			{
+				safe_signal(SIGINT, sig_process);
+				execute(commands, info);
+				free_commands(commands);
+				remove_heredoc_tempfiles();
+			}
+			else
+				print_error("syntax error", NULL, NULL, NO);
 		}
-		else
-			print_error("syntax error", NULL, NULL, NO);
 		free(input);
 	}
 }

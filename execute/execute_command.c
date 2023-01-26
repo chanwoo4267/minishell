@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 18:40:11 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/26 16:50:55 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/26 21:20:55 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,16 +87,21 @@ void	execute_command(t_list *command, t_info *info)
 		info->issubshell = YES;
 		execute_command_subshell(command, info->envp);
 	}
-	if (signal(SIGINT, SIG_IGN) == SIG_ERR)
-		system_error("execute_command", "signal error", 1);
+	safe_signal(SIGINT, SIG_IGN);
 	if (waitpid(pid, &status, 0) < 0)
 		system_error("execute_command", "waitpid error", 1);
-	if (signal(SIGINT, sig_process) == SIG_ERR)
-		system_error("execute_command", "signal error", 1);
+	safe_signal(SIGINT, sig_process);
 	if (WIFEXITED(status))
 		g_status.global_exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
-		g_status.global_exit_status = WTERMSIG(status);
+	{
+		if (WTERMSIG(status) == 2)
+			g_status.global_exit_status = 130;
+		else if (WTERMSIG(status) == 3)
+			g_status.global_exit_status = 131;
+		else
+			g_status.global_exit_status = WTERMSIG(status);
+	}
 	else
 		system_error("execute_command", "exit failure error", 1);
 }
@@ -120,7 +125,7 @@ void	execute_command_subshell(t_list *command_list, char **envp)
 		path = get_env_path(env);
 		cmd = get_cmd_from_path(argv[0], path);
 		if (!path || !cmd)
-			system_error(argv[0], ": command not found", 1);
+			system_error(argv[0], ": command not found", 127);
 	}
 	if (execve(cmd, argv, envp) < 0)
 		system_error(argv[0], ": cannot execute command", 1);

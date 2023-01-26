@@ -24,8 +24,8 @@ EXEC_SRCS = $(addprefix execute/, $(EXEC_FILE))
 EXEC_OBJS = $(EXEC_SRCS:.c=.o)
 
 PARS_FILE = ascii_change.c \
-			exception_line.c \
 			dollar_utils.c \
+			exception_line.c \
 			parse_redirect.c \
 			parsing_dollar.c \
 			parsing_utils.c \
