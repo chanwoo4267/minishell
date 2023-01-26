@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 12:57:13 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/23 06:19:53 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/26 16:58:15 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ static int	wait_piped_pids(pid_t *pids, int cmd_count)
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
 		return (WTERMSIG(status));
+	else
+		system_error("wait_piped_pids", "exit failure error", 1);
 	return (EXIT_FAILURE);
 }
 

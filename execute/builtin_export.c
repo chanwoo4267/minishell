@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:11:51 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/24 01:39:57 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/26 16:50:17 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ static void	export_all_inputs(char **command, t_info *info)
 	while (command[++i])
 	{
 		equal_loc = ft_strchr(command[i], '=');
-		if (equal_loc == command[i] || ft_isdigit(command[i][0]))
+		if (equal_loc == command[i] || ft_isdigit(command[i][0]) || \
+			ft_strchr(command[i], '$') != NULL)
 		{
 			errno = 22;
 			print_error(command[0], command[i], "not a valid identifier", YES);
@@ -87,7 +88,7 @@ void	builtin_export(t_list *list, t_info *info)
 
 	command = list_to_strs(list);
 	if (!command)
-		system_error("malloc error", NULL, 1);
+		system_error("builtin_export", "malloc error", 1);
 	if (!command[1])
 		print_export_envp(info);
 	else

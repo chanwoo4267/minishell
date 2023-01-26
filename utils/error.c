@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 04:46:22 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/23 06:21:48 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/26 17:09:50 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	print_error(char *command, char *input, char *message, int err_status)
 
 void	system_error(char *str1, char *str2, int error_code)
 {
-	if (str1 || str2)
+	if (str1)
 	{
 		ft_putstr_fd("minishell: ", STDERR_FILENO);
 		if (str1)
@@ -51,6 +51,10 @@ void	system_error(char *str1, char *str2, int error_code)
 		if (str2)
 			ft_putstr_fd(str2, STDERR_FILENO);
 		ft_putchar_fd('\n', STDERR_FILENO);
+	}
+	else if (!str1 && str2)
+	{
+		printf("%s\n", str2);
 	}
 	exit(error_code);
 }

@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 16:40:05 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/24 01:55:39 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/26 16:50:44 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	add_envp(char *new, t_info *info)
 		i++;
 	new_envp = malloc(sizeof(char *) * (i + 2));
 	if (!new_envp)
-		system_error("malloc error", NULL, 1);
+		system_error("add_envp", "malloc error", 1);
 	i = 0;
 	while (info->envp[i])
 	{
@@ -84,7 +84,7 @@ void	delete_envp(char *del, t_info *info)
 		i++;
 	new_envp = malloc(sizeof(char *) * i);
 	if (!new_envp)
-		system_error("malloc error", NULL, 1);
+		system_error("delete_envp", "malloc error", 1);
 	i = -1;
 	while (info->envp[++i])
 	{

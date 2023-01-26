@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 16:35:59 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/23 06:03:24 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/26 16:24:31 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,23 @@ void	sig_readline(int sig)
 	g_status.global_exit_status = sig;
 }
 
-void	sig_fork(void)
+void	sig_fork(int mode)
 {
 	if (signal(SIGINT, SIG_DFL) == SIG_ERR)
 		system_error("sigfork", "signal error", 1);
-	if (signal(SIGQUIT, SIG_DFL) == SIG_ERR)
-		system_error("sigfork", "signal error", 1);
+	if (mode == SUBSHELL)
+	{
+		if (signal(SIGQUIT, SIG_DFL) == SIG_ERR)
+			system_error("sigfork", "signal error", 1);
+	}
+}
+
+void	sig_reset(void)
+{
+	if (signal(SIGINT, sig_process) == SIG_ERR)
+		system_error("sig_reset", "signal error", 1);
+	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
+		system_error("sig_reset", "signal error", 1);
 }
 
 void	sig_process(int sig)

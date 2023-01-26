@@ -1,4 +1,4 @@
-CC = cc
+CC = cc -g
 CFLAGS = # -Wall -Wextra -Werror
 NAME = minishell
 
@@ -18,12 +18,16 @@ EXEC_FILE = execute.c \
 			builtin_export.c \
 			builtin_pwd.c \
 			builtin_unset.c \
-			envp_utils.c
+			envp_utils.c \
+			execute_heredoc.c
 EXEC_SRCS = $(addprefix execute/, $(EXEC_FILE))
 EXEC_OBJS = $(EXEC_SRCS:.c=.o)
 
 PARS_FILE = ascii_change.c \
 			exception_line.c \
+			dollar_utils.c \
+			parse_redirect.c \
+			parsing_dollar.c \
 			parsing_utils.c \
 			parsing.c
 PARS_SRCS = $(addprefix parsing/, $(PARS_FILE))
@@ -66,7 +70,7 @@ fclean : clean
 re : fclean all
 
 rl :
-	git clone git://git.savannah.gnu.org/readline.git rlsrc
+	git clone https://git.savannah.gnu.org/git/readline.git rlsrc
 	cd rlsrc && ./configure --prefix="${PWD}/readline"
 	$(MAKE) --directory=rlsrc
 	$(MAKE) --directory=rlsrc install

@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:11:07 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/23 05:41:36 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/26 16:50:11 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	builtin_exit(t_list *list)
 
 	command = list_to_strs(list);
 	if (!command)
-		system_error("malloc error", NULL, 1);
+		system_error("builtin_exit", "malloc error", 1);
 	else if (!command[1])
 		exit(g_status.global_exit_status);
 	else if (command[2])

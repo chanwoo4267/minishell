@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 16:37:09 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/24 01:20:18 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/26 16:49:56 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	builtin_cd(t_list *list, t_info *info)
 
 	command = list_to_strs(list);
 	if (!command)
-		system_error("malloc error", NULL, 1);
+		system_error("builtin_cd", "malloc error", 1);
 	if (!command[1])
 		print_error(command[0], "cd without directory invalid", NULL, NO);
 	else

@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:35:54 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/23 05:15:14 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/26 16:49:55 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	builtin_echo(t_list *list)
 
 	command = list_to_strs(list);
 	if (!command)
-		system_error("malloc error", NULL, 1);
+		system_error("builtin_echo", "malloc error", 1);
 	else
 	{
 		if (!command[1])

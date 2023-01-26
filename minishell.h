@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 15:38:32 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/24 01:12:35 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/26 16:24:02 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # define SUCCESS 1
 # define NO 0
 # define YES 1
+# define SUBSHELL 0
+# define HEREDOC 1
 /*** define list end ***/
 
 /*** struct list start ***/
@@ -42,6 +44,8 @@ typedef enum e_type
 	REDIR_APPEND,
 	REDIR_HEREDOC,
 	COMMAND,
+	PIPE,
+	DOLLAR_SIGN
 }	t_type;
 
 typedef enum e_builtin
@@ -109,8 +113,10 @@ void			execute_command(t_list *command, t_info *info);
 void			execute_command_subshell(t_list *command_list, char **envp);
 
 /* execute_redir.c */
-void			redirect_heredoc(t_commandlist *commandlist, int cmd_count);
 void			redirection(t_list *redirection);
+
+/* execute_heredoc.c */
+int				redirect_heredoc(t_commandlist *commandlist, int cmd_count);
 
 /* execute_builtin.c */
 int				execute_builtin(t_list *command, t_info *info);
@@ -137,7 +143,8 @@ void			builtin_env(t_list *list, t_info *info);
 
 /* signal.c */
 void			sig_readline(int sig);
-void			sig_fork(void);
+void			sig_fork(int mode);
+void			sig_reset(void);
 void			sig_process(int sig);
 void			init_signal(void);
 
@@ -151,7 +158,6 @@ t_commandlist	*parsing(char *str, char **envp);
 t_token			*new_token(char *command, t_type type);
 t_list			*redirect_out(char **str, int i, char **envp);
 t_list			*redirect_in(char **str, int i, char **envp);
-t_list			*convert_envp(char *str, char **envp, t_type type);
 int				count_pipe(char *str);
 int				check_whitespace(char c);
 int				count_pipe(char *str);
@@ -165,8 +171,8 @@ void			parsing_dollar(char *str, t_list **lst, char **envp);
 char			*envp_to_str(char *str, char **envp, int j);
 void			dollar_change(char **str, char **envp);
 int				find_dollar(char *str);
-char			*dollar_split(char *str, char **envp);
 char			*ft_strjoin_empty(char const *s1, char const *s2);
+char			*convert_dollar(char *str, char **envp);
 
 /*** function list end ***/
 

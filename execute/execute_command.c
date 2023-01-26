@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 18:40:11 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/23 06:16:45 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/26 16:50:55 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,18 @@ void	execute_command(t_list *command, t_info *info)
 		info->issubshell = YES;
 		execute_command_subshell(command, info->envp);
 	}
+	if (signal(SIGINT, SIG_IGN) == SIG_ERR)
+		system_error("execute_command", "signal error", 1);
 	if (waitpid(pid, &status, 0) < 0)
 		system_error("execute_command", "waitpid error", 1);
+	if (signal(SIGINT, sig_process) == SIG_ERR)
+		system_error("execute_command", "signal error", 1);
 	if (WIFEXITED(status))
 		g_status.global_exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 		g_status.global_exit_status = WTERMSIG(status);
 	else
-		g_status.global_exit_status = EXIT_FAILURE;
+		system_error("execute_command", "exit failure error", 1);
 }
 
 void	execute_command_subshell(t_list *command_list, char **envp)
@@ -107,7 +111,7 @@ void	execute_command_subshell(t_list *command_list, char **envp)
 	argv = list_to_strs(command_list);
 	if (!argv)
 		system_error("execute_command_subshell", "malloc error", 1);
-	sig_fork();
+	sig_fork(SUBSHELL);
 	env = envp;
 	if (ft_strchr(argv[0], '/'))
 		cmd = argv[0];

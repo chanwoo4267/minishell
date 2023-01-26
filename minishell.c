@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 15:26:04 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/23 06:31:23 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/26 17:14:14 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,16 +115,16 @@ static void	terminal_loop(t_info *info)
 	while (1)
 	{
 		if (signal(SIGINT, sig_readline) == SIG_ERR)
-			system_error(NULL, NULL, 1);
+			system_error("terminal_loop", "signal error", 1);
 		input = readline("minishell$ ");
 		add_history(input);
 		if (!input)
-			exit(0);
+			system_error(NULL, "exit", 0);
 		commands = parsing(input, info->envp);
 		if (commands)
 		{
 			if (signal(SIGINT, sig_process) == SIG_ERR)
-				system_error(NULL, NULL, 1);
+				system_error("terminal_loop", "signal error", 1);
 			execute(commands, info);
 			free_commands(commands);
 			remove_heredoc_tempfiles();

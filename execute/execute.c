@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 16:29:21 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/23 06:28:51 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/26 14:45:01 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,16 @@ static int	check_heredoc_count(t_commandlist *commandlist)
 int	execute(t_commandlist *commandlist, t_info *info)
 {
 	int	command_count;
+	int	result;
 
 	command_count = get_commands_count(commandlist);
 	if (command_count > 16 && check_heredoc_count(commandlist) > 16)
 		system_error("maximum here-document count exceeded", NULL, 2);
 	if (command_count == 0)
 		return (0);
-	redirect_heredoc(commandlist, command_count);
+	result = redirect_heredoc(commandlist, command_count);
+	if (result == FAIL)
+		return (0);
 	if (command_count == 1)
 		execute_subshell(commandlist[0], info);
 	else

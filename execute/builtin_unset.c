@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:52:49 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/24 01:54:29 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/26 16:50:30 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	builtin_unset(t_list *list, t_info *info)
 
 	command = list_to_strs(list);
 	if (!command)
-		system_error("malloc error", NULL, 1);
+		system_error("builtin_unset", "malloc error", 1);
 	if (command[1])
 	{
 		i = 1;
