@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 16:40:05 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/26 16:50:44 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/26 19:27:12 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,12 @@ void	delete_envp(char *del, t_info *info)
 	while (info->envp[++i])
 	{
 		if (ft_strncmp(del, info->envp[i], ft_strlen(del)) == 0 && \
+			ft_strncmp(del, info->envp[i], ft_strlen(info->envp[i])) == 0)
+			continue ;
+		if (ft_strncmp(del, info->envp[i], ft_strlen(del)) == 0 && \
 			info->envp[i][ft_strlen(del)] == '=')
 			continue ;
-		new_envp[j] = ft_strdup(info->envp[i]);
-		j++;
+		new_envp[j++] = ft_strdup(info->envp[i]);
 	}
 	new_envp[j] = NULL;
 	free_deprecated_envp(info->envp);

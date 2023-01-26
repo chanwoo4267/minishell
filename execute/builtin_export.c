@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:11:51 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/26 16:50:17 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/26 19:49:41 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,26 +40,30 @@ static void	print_export_envp(t_info *info)
 	}
 }
 
-static void	export_change_envp(char *command, t_info *info)
+static void	export_change_envp(char *c, t_info *info)
 {
 	char	*equal_loc;
 	int		i;
 
 	i = 0;
-	equal_loc = ft_strchr(command, '=');
+	equal_loc = ft_strchr(c, '=');
 	if (equal_loc)
 	{
 		while (info->envp[i])
 		{
-			if (ft_strncmp(command, info->envp[i], equal_loc - command) == 0)
+			if ((ft_strncmp(c, info->envp[i], equal_loc - c) == 0 \
+			&& ft_strncmp(c, info->envp[i], ft_strlen(info->envp[i])) == 0) \
+			|| (ft_strncmp(c, info->envp[i], equal_loc - c) == 0 && \
+				ft_strncmp(c, info->envp[i], ft_strchr(info->envp[i], '=') \
+				- info->envp[i]) == 0))
 			{
-				change_envp(command, info);
+				change_envp(c, info);
 				return ;
 			}
 			i++;
 		}
 	}
-	add_envp(command, info);
+	add_envp(c, info);
 }
 
 static void	export_all_inputs(char **command, t_info *info)
@@ -72,7 +76,8 @@ static void	export_all_inputs(char **command, t_info *info)
 	{
 		equal_loc = ft_strchr(command[i], '=');
 		if (equal_loc == command[i] || ft_isdigit(command[i][0]) || \
-			ft_strchr(command[i], '$') != NULL)
+			ft_strchr(command[i], '$') || ft_strchr(command[i], '\'') || \
+			ft_strchr(command[i], '\"'))
 		{
 			errno = 22;
 			print_error(command[0], command[i], "not a valid identifier", YES);

@@ -63,6 +63,7 @@ clean :
 	rm -rf rlsrc
 
 fclean : clean
+	make fclean -C $(LIBFT_DIR)
 	rm -f $(NAME)
 	rm -rf readline
 	rm -f rl
