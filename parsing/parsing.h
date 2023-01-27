@@ -6,7 +6,7 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:49:44 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/26 22:06:19 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/27 15:37:55 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_dollar
 	int		check;
 	char	*temp;
 	char	*d_temp;
+	char	*str;
 }	t_dollar;
 
 typedef struct s_info
