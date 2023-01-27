@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 20:18:23 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/26 20:21:17 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/27 19:44:51 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,19 @@ void	free_strs(char **strs)
 void	free_lists(t_list *list)
 {
 	t_list	*ptr;
-	t_list	*remover;
+	t_token	*token;
 
 	ptr = list;
 	while (ptr)
 	{
-		remover = ptr;
+		token = ptr->content;
 		ptr = ptr->next;
-		if (remover->content)
-			free(remover->content);
-		if (remover)
-			free(remover);
+		if (token)
+		{
+			if (token->content)
+				free(token->content);
+			free(token);
+		}
 	}
 }
 
@@ -52,10 +54,12 @@ void	free_commands(t_commandlist *commandlist)
 	if (!commandlist)
 		return ;
 	i = 0;
-	while (commandlist[i].command)
+	while (commandlist[i].command || commandlist[i].redirection)
 	{
-		free_lists(commandlist[i].command);
-		free_lists(commandlist[i].redirection);
+		if (commandlist[i].command)
+			free_lists(commandlist[i].command);
+		if (commandlist[i].redirection)
+			free_lists(commandlist[i].redirection);
 		i++;
 	}
 	free(commandlist);

@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 12:57:13 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/26 16:58:15 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/27 19:04:15 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ static void	build_pipeline(int cmd_count, pid_t **pids, int ***pipes)
 	}
 }
 
-int	execute_pipe(t_commandlist *commandlist, t_info *info, int cmd_count)
+void	execute_pipe(t_commandlist *commandlist, t_info *info, int cmd_count)
 {
 	pid_t	*pids;
 	int		**pipes;
@@ -144,5 +144,4 @@ int	execute_pipe(t_commandlist *commandlist, t_info *info, int cmd_count)
 	free(pipes);
 	g_status.global_exit_status = wait_piped_pids(pids, cmd_count);
 	free(pids);
-	return (0);
 }

@@ -6,39 +6,13 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 15:06:19 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/26 16:52:32 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/27 19:20:44 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char	*get_heredoc_filename(int *fd)
-{
-	char	*filename;
-	char	*num;
-	int		i;
-
-	i = 0;
-	while (++i)
-	{
-		num = ft_itoa(i);
-		filename = ft_strjoin(".heredoc_tmp", num);
-		if (num)
-			free(num);
-		if (!filename)
-			system_error("get_heredoc_filename", "malloc error", 1);
-		if (access(filename, F_OK) != 0)
-		{
-			*fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			if (*fd >= 0)
-				return (filename);
-		}
-		free(filename);
-	}
-	return (NULL);
-}
-
-void	heredoc_to_redirin(t_token *token, int *fds, int index)
+static void	heredoc_to_redirin(t_token *token, int *fds, int index)
 {
 	char	*filename;
 
@@ -50,12 +24,33 @@ void	heredoc_to_redirin(t_token *token, int *fds, int index)
 	token->type = REDIR_IN;
 }
 
-int	fork_redirection(int heredoc_count, int *fds, char **delims)
+static void	heredoc_readline(char *delim, int fd)
+{
+	char	*line;
+
+	sig_fork(HEREDOC);
+	line = readline("> ");
+	while (line)
+	{
+		if (ft_strncmp(delim, line, ft_strlen(delim)) == 0 && \
+				ft_strncmp(delim, line, ft_strlen(line)) == 0)
+		{
+			free(line);
+			break ;
+		}
+		write(fd, line, ft_strlen(line));
+		write(fd, "\n", 1);
+		free(line);
+		line = readline("> ");
+	}
+	exit(0);
+}
+
+static int	fork_redirection(int heredoc_count, int *fds, char **delims)
 {
 	int		i;
 	int		pid;
 	int		status;
-	char	*line;
 
 	i = -1;
 	while (++i < heredoc_count)
@@ -64,24 +59,7 @@ int	fork_redirection(int heredoc_count, int *fds, char **delims)
 		if (pid < 0)
 			system_error("fork_redirection", "fork error", 1);
 		else if (pid == 0)
-		{
-			sig_fork(HEREDOC);
-			line = readline("> ");
-			while (line)
-			{
-				if (ft_strncmp(delims[i], line, ft_strlen(delims[i])) == 0 && \
-					ft_strncmp(delims[i], line, ft_strlen(line)) == 0)
-				{
-					free(line);
-					break ;
-				}
-				write(fds[i], line, ft_strlen(line));
-				write(fds[i], "\n", 1);
-				free(line);
-				line = readline("> ");
-			}
-			exit(0);
-		}
+			heredoc_readline(delims[i], fds[i]);
 		if (waitpid(pid, &status, 0) < 0)
 			system_error("fork_redirection", "waitpid error", 1);
 		if (WIFEXITED(status))
@@ -97,7 +75,7 @@ int	fork_redirection(int heredoc_count, int *fds, char **delims)
 	return (SUCCESS);
 }
 
-int	change_token_and_open(t_commandlist *commandlist, int cmd_count, \
+static int	change_token_and_open(t_commandlist *commandlist, int cmd_count, \
 							int heredoc_count, char **delims)
 {
 	int		*fds;
@@ -136,6 +114,7 @@ int	redirect_heredoc(t_commandlist *commandlist, int cmd_count)
 
 	count = 0;
 	i = -1;
+	delims = NULL;
 	while (++i < cmd_count)
 	{
 		lst = commandlist[i].redirection;

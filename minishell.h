@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 15:38:32 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/27 17:57:47 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/27 19:51:30 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,14 @@ t_global	g_status;
 /* execute.c */
 int				execute(t_commandlist *commandlist, t_info *info);
 int				execute_subshell(t_commandlist commandlist, t_info *info);
-int				execute_pipe(t_commandlist *commandlist, \
-							t_info *info, int cmd_count);
 int				reset_redirection(t_info *info);
 
 /* execute_utils.c */
 char			**list_to_strs(t_list *command);
 int				get_commands_count(t_commandlist *commandlist);
+char			*get_heredoc_filename(int *fd);
+void			set_exit_status_signal(int status);
+int				input_only_spaces(char *input);
 
 /* envp_utils.c */
 char			**set_envp(char **envp);
@@ -130,7 +131,7 @@ int				redirect_heredoc(t_commandlist *commandlist, int cmd_count);
 int				execute_builtin(t_list *command, t_info *info);
 
 /* execute_pipe.c */
-int				execute_pipe(t_commandlist *commandlist, \
+void			execute_pipe(t_commandlist *commandlist, \
 							t_info *info, int cmd_count);
 
 /* execute_test.c */

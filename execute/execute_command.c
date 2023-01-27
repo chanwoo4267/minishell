@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 18:40:11 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/26 21:47:33 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/27 19:14:58 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,19 +91,7 @@ void	execute_command(t_list *command, t_info *info)
 	if (waitpid(pid, &status, 0) < 0)
 		system_error("execute_command", "waitpid error", 1);
 	safe_signal(SIGINT, sig_process);
-	if (WIFEXITED(status))
-		g_status.global_exit_status = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-	{
-		if (WTERMSIG(status) == 2)
-			g_status.global_exit_status = 130;
-		else if (WTERMSIG(status) == 3)
-			g_status.global_exit_status = 131;
-		else
-			g_status.global_exit_status = WTERMSIG(status);
-	}
-	else
-		system_error("execute_command", "exit failure error", 1);
+	set_exit_status_signal(status);
 }
 
 void	execute_command_subshell(t_list *command_list, char **envp)
@@ -132,6 +120,5 @@ void	execute_command_subshell(t_list *command_list, char **envp)
 	if (execve(cmd, argv, envp) < 0)
 		system_error(argv[0], ": cannot execute command", 127);
 	free_strs(argv);
-	if (cmd)
-		free(cmd);
+	free(cmd);
 }

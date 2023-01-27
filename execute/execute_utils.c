@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:38:29 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/26 20:18:46 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/27 19:51:20 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,59 @@ char	**list_to_strs(t_list *command)
 	}
 	strs[i] = NULL;
 	return (strs);
+}
+
+char	*get_heredoc_filename(int *fd)
+{
+	char	*filename;
+	char	*num;
+	int		i;
+
+	i = 0;
+	while (++i)
+	{
+		num = ft_itoa(i);
+		filename = ft_strjoin(".heredoc_tmp", num);
+		if (num)
+			free(num);
+		if (!filename)
+			system_error("get_heredoc_filename", "malloc error", 1);
+		if (access(filename, F_OK) != 0)
+		{
+			*fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			if (*fd >= 0)
+				return (filename);
+		}
+		free(filename);
+	}
+	return (NULL);
+}
+
+void	set_exit_status_signal(int status)
+{
+	if (WIFEXITED(status))
+		g_status.global_exit_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == 2)
+			g_status.global_exit_status = 130;
+		else if (WTERMSIG(status) == 3)
+			g_status.global_exit_status = 131;
+		else
+			g_status.global_exit_status = WTERMSIG(status);
+	}
+	else
+		system_error("execute_command", "exit failure error", 1);
+}
+
+int	input_only_spaces(char *input)
+{
+	while (*input)
+	{
+		if ((*input >= 9 && *input <= 13) || (*input == ' '))
+			input++;
+		else
+			return (NO);
+	}
+	return (YES);
 }

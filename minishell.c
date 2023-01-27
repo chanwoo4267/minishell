@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 15:26:04 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/26 21:38:10 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/27 19:53:53 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,27 @@ static void	remove_heredoc_tempfiles(void)
 	}
 }
 
-static int	input_only_spaces(char *input)
+static void	terminal_parse_n_execute(char *input, t_info *info)
 {
-	while (*input)
+	t_commandlist	*commands;
+
+	commands = parsing(input, info->envp);
+	if (commands)
 	{
-		if ((*input >= 9 && *input <= 13) || (*input == ' '))
-			input++;
-		else
-			return (NO);
+		safe_signal(SIGINT, sig_process);
+		execute(commands, info);
+		free_commands(commands);
+		remove_heredoc_tempfiles();
 	}
-	return (YES);
+	else
+	{
+		print_error("syntax error", NULL, NULL, NO);
+		g_status.global_exit_status = 258;
+	}
 }
 
 static void	terminal_loop(t_info *info)
 {
-	t_commandlist	*commands;
 	char			*input;
 
 	while (1)
@@ -70,40 +76,27 @@ static void	terminal_loop(t_info *info)
 			system_error(NULL, "exit", 0);
 		else if (input_only_spaces(input) == NO)
 		{
-			commands = parsing(input, info->envp);
-			if (commands)
-			{
-				safe_signal(SIGINT, sig_process);
-				execute(commands, info);
-				free_commands(commands);
-				remove_heredoc_tempfiles();
-			}
-			else
-			{
-				print_error("syntax error", NULL, NULL, NO);
-				g_status.global_exit_status = 258;
-			}
+			terminal_parse_n_execute(input, info);
 		}
 		free(input);
 	}
 }
 
-/*
 void	test(void)
 {
 	system("leaks minishell");
 }
-*/
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_info	info;
 
-	//atexit(test);
+	atexit(test);
 	(void)argc;
 	(void)argv;
 	init_info(&info, envp);
 	init_signal();
 	terminal_loop(&info);
+	free_strs(info.envp);
 	return (0);
 }

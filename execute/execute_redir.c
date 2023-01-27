@@ -6,37 +6,64 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:07:50 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/26 21:52:42 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/27 19:20:18 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	redirect_file(char *filename, t_type type)
+static int	execute_redirect_in(char *filename)
 {
 	int	fd;
-	int	standard_fd;
 
-	fd = -1;
-	standard_fd = type;
-	if (type == REDIR_IN)
-		fd = open(filename, O_RDONLY);
-	else if (type == REDIR_OUT)
-		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else if (type == REDIR_APPEND)
-	{
-		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		standard_fd = STDOUT_FILENO;
-	}
+	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 	{
 		print_error(filename, NULL, NULL, YES);
 		return (FAIL);
 	}
-	else if (fd != standard_fd)
+	else if (fd != STDIN_FILENO)
 	{
-		if (dup2(fd, standard_fd) != standard_fd)
-			system_error("redirect_file", "dup2 error", 1);
+		if (dup2(fd, STDIN_FILENO) != STDIN_FILENO)
+			system_error("execute_redirect_in", "dup2 error", 1);
+		close(fd);
+	}
+	return (SUCCESS);
+}
+
+static int	execute_redirect_out(char *filename)
+{
+	int	fd;
+
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd < 0)
+	{
+		print_error(filename, NULL, NULL, YES);
+		return (FAIL);
+	}
+	else if (fd != STDOUT_FILENO)
+	{
+		if (dup2(fd, STDOUT_FILENO) != STDOUT_FILENO)
+			system_error("execute_redirect_out", "dup2 error", 1);
+		close(fd);
+	}
+	return (SUCCESS);
+}
+
+static int	execute_redirect_append(char *filename)
+{
+	int	fd;
+
+	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (fd < 0)
+	{
+		print_error(filename, NULL, NULL, YES);
+		return (FAIL);
+	}
+	else if (fd != STDOUT_FILENO)
+	{
+		if (dup2(fd, STDOUT_FILENO) != STDOUT_FILENO)
+			system_error("execute_redirect_append", "dup2 error", 1);
 		close(fd);
 	}
 	return (SUCCESS);
@@ -51,14 +78,15 @@ int	redirection(t_list	*redirection)
 	while (list)
 	{
 		token = (t_token *)list->content;
-		if (token->type == REDIR_IN || token->type == REDIR_OUT || \
-			token->type == REDIR_APPEND)
-		{
-			if (redirect_file(token->content, token->type) == FAIL)
-				return (FAIL);
-		}
-		else
-			system_error("invalid token type ", token->content, 1);
+		if (token->type == REDIR_IN && \
+			execute_redirect_in(token->content) == FAIL)
+			return (FAIL);
+		else if (token->type == REDIR_OUT && \
+			execute_redirect_out(token->content) == FAIL)
+			return (FAIL);
+		else if (token->type == REDIR_APPEND && \
+			execute_redirect_append(token->content) == FAIL)
+			return (FAIL);
 		list = list->next;
 	}
 	return (SUCCESS);
