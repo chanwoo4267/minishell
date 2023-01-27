@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 20:18:23 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/27 20:00:58 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/27 20:31:39 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,20 @@ void	free_commands(t_commandlist *commandlist)
 		i++;
 	}
 	free(commandlist);
+}
+
+void	free_redirection_utils(int *fds, char **delims, int heredoc_count)
+{
+	int	i;
+
+	i = 0;
+	while (i < heredoc_count)
+	{
+		close(fds[i]);
+		if (delims[i])
+			free(delims[i]);
+		i++;
+	}
+	free(fds);
+	free(delims);
 }

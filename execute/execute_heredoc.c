@@ -6,22 +6,23 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 15:06:19 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/27 20:10:33 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/27 20:44:35 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	heredoc_to_redirin(t_token *token, int *fds, int index)
+static void	heredoc_to_redirin(t_list *lst, int *fds, int index)
 {
 	char	*filename;
 
 	filename = get_heredoc_filename(&fds[index]);
 	if (!filename)
 		system_error("heredoc_to_redirin", "heredoc tmp exceeded maximum", 1);
-	free(token->content);
-	token->content = filename;
-	token->type = REDIR_IN;
+	free(((t_token *)lst->content)->content);
+	((t_token *)lst->content)->content = ft_strdup(filename);
+	free(filename);
+	((t_token *)lst->content)->type = REDIR_IN;
 }
 
 static void	heredoc_readline(char *delim, int fd)
@@ -69,9 +70,8 @@ static int	fork_redirection(int heredoc_count, int *fds, char **delims)
 			g_status.global_exit_status = WTERMSIG(status);
 			return (FAIL);
 		}
-		else
-			system_error("fork_redirection", "exit failure error", 1);
 	}
+	free_redirection_utils(fds, delims, heredoc_count);
 	return (SUCCESS);
 }
 
@@ -97,7 +97,7 @@ static int	change_token_and_open(t_commandlist *commandlist, int cmd_count, \
 			if (((t_token *)lst->content)->type == REDIR_HEREDOC)
 			{
 				delims[idx] = ft_strdup(((t_token *)lst->content)->content);
-				heredoc_to_redirin((t_token *)lst->content, fds, idx++);
+				heredoc_to_redirin(lst, fds, idx++);
 			}
 			lst = lst->next;
 		}

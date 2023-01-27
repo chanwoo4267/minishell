@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 15:38:32 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/27 19:51:30 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/27 20:32:00 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,8 @@ void			system_error(char *str1, char *str2, int error_code);
 void			free_strs(char **strs);
 void			free_lists(t_list *list);
 void			free_commands(t_commandlist *commandlist);
+void			free_redirection_utils(int *fds, char **delims, \
+										int heredoc_count);
 
 /* ascii_change.c */
 void			ascii_change(char **str);
