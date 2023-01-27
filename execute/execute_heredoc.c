@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 15:06:19 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/27 19:20:44 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/27 20:10:33 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,5 +125,7 @@ int	redirect_heredoc(t_commandlist *commandlist, int cmd_count)
 			lst = lst->next;
 		}
 	}
+	if (count == 0)
+		return (SUCCESS);
 	return (change_token_and_open(commandlist, cmd_count, count, delims));
 }

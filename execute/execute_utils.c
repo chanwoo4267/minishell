@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:38:29 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/27 19:51:20 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/27 20:08:59 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	**list_to_strs(t_list *command)
 	ptr = command;
 	while (++i < count)
 	{
-		strs[i] = ((t_token *)ptr->content)->content;
+		strs[i] = ft_strdup(((t_token *)ptr->content)->content);
 		ptr = ptr->next;
 	}
 	strs[i] = NULL;
