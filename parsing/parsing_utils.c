@@ -6,22 +6,11 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 19:02:14 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/26 15:11:24 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/27 17:21:43 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-void	free_parsing_str(char *str, char **split_str)
-{
-	int	i;
-
-	i = 0;
-	while (split_str[i])
-		free(split_str[i++]);
-	free(split_str);
-	free(str);
-}
 
 int	count_pipe(char *str)
 {

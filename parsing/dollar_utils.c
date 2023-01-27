@@ -6,11 +6,64 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 23:41:26 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/26 17:06:27 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/27 17:37:39 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+char	*free_dollar(t_dollar *lst, char *ret)
+{
+	if (lst->temp)
+	{
+		ret = ft_strdup(lst->temp);
+		free(lst->temp);
+	}
+	if (lst->d_temp)
+		free(lst->d_temp);
+	return (ret);
+}
+
+t_dollar	*convert_envp(t_dollar *lst, char **envp)
+{
+	int	i;
+
+	i = 0;
+	lst->d_temp++;
+	while (envp[i])
+	{
+		if (ft_strncmp(lst->d_temp, envp[i], ft_strlen(lst->d_temp)) == 0
+			&& envp[i][ft_strlen(lst->d_temp)] == '=')
+		{
+			if (!lst->temp)
+				lst->temp = ft_strdup(envp_to_str(lst->d_temp, envp, i));
+			else
+				lst->temp = ft_strjoin(lst->temp,
+						envp_to_str(lst->d_temp, envp, i));
+			break ;
+		}
+		i++;
+	}
+	lst->d_temp--;
+	free(lst->d_temp);
+	lst->d_temp = NULL;
+	return (lst);
+}
+
+t_dollar	*init_dollar(char *str)
+{
+	t_dollar	*lst;
+
+	lst = malloc(sizeof(t_dollar));
+	if (!lst)
+		return (NULL);
+	lst->dollar = 0;
+	lst->check = 0;
+	lst->str = str;
+	lst->temp = NULL;
+	lst->d_temp = NULL;
+	return (lst);
+}
 
 char	*envp_to_str(char *str, char **envp, int i)
 {

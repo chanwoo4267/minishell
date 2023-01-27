@@ -6,13 +6,37 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 17:46:51 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/26 21:38:47 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/27 17:51:23 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-static t_commandlist	*init_parsing(char **str, t_commandlist *lst, char **envp)
+static void	init_list(t_commandlist *lst, int cnt)
+{
+	int	i;
+
+	i = 0;
+	if (i < cnt)
+	{
+		lst[i].command = NULL;
+		lst[i].redirection = NULL;
+		i++;
+	}
+}
+
+static void	free_parsing_str(char *str, char **split_str)
+{
+	int	i;
+
+	i = 0;
+	while (split_str[i])
+		free(split_str[i++]);
+	free(split_str);
+	free(str);
+}
+
+t_commandlist	*init_parsing(char **str, t_commandlist *lst, char **envp)
 {
 	int	i;
 	int	j;
@@ -28,25 +52,14 @@ static t_commandlist	*init_parsing(char **str, t_commandlist *lst, char **envp)
 		else if (str[i][0] == '|')
 			j++;
 		else if (find_dollar(str[i]))
-			ft_lstadd_back(&lst[j].command, ft_lstnew(new_token(convert_dollar(str[i], envp), COMMAND)));
+			ft_lstadd_back(&lst[j].command,
+				ft_lstnew(new_token(convert_dollar(str[i], envp), COMMAND)));
 		else
-			ft_lstadd_back(&lst[j].command, ft_lstnew(new_token(str[i], COMMAND)));
+			ft_lstadd_back(&lst[j].command,
+				ft_lstnew(new_token(str[i], COMMAND)));
 		i++;
 	}
 	return (lst);
-}
-
-void	init_list(t_commandlist *lst, int cnt)
-{
-	int	i;
-
-	i = 0;
-	if (i < cnt)
-	{
-		lst[i].command = NULL;
-		lst[i].redirection = NULL;
-		i++;
-	}
 }
 
 t_commandlist	*parsing(char *line, char **envp)
@@ -67,6 +80,6 @@ t_commandlist	*parsing(char *line, char **envp)
 		return (NULL);
 	init_list(lst, count_pipe(str) + 1);
 	init_parsing(split_str, lst, envp);
-	//free_parsing_str(str, split_str); malloc된 문자열들 free, 다른 함수에서도 체크해야함
+	free_parsing_str(str, split_str);
 	return (lst);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 15:38:32 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/26 21:50:57 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/27 17:57:47 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,15 @@ typedef enum e_builtin
 	BUILTIN_UNSET,
 	BUILTIN_ENV,
 }	t_builtin;
+
+typedef struct s_dollar
+{
+	int		dollar;
+	int		check;
+	char	*temp;
+	char	*d_temp;
+	char	*str;
+}	t_dollar;
 
 /* issubshell must be set NO when initializing main function */
 typedef struct s_info
@@ -157,26 +166,37 @@ void			free_strs(char **strs);
 void			free_lists(t_list *list);
 void			free_commands(t_commandlist *commandlist);
 
-/* parsing */
-t_commandlist	*parsing(char *str, char **envp);
-t_token			*new_token(char *command, t_type type);
-t_list			*redirect_out(char **str, int i, char **envp);
+/* ascii_change.c */
+void			ascii_change(char **str);
+
+/* convert_dollar.c */
+char			*convert_dollar(char *str, char **envp);
+
+/* dollar_utils.c */
+char			*free_dollar(t_dollar *lst, char *ret);
+t_dollar		*convert_envp(t_dollar *lst, char **envp);
+t_dollar		*init_dollar(char *str);
+char			*envp_to_str(char *str, char **envp, int i);
+int				find_dollar(char *str);
+
+/*  exception_line.c */
+char			*exception_line(char *line);
+
+/* exception_utils.c */
+int				syntax_pipe(char *line);
+int				syntax_redirect(char *line);
+
+/* parsing_redrect.c */
 t_list			*redirect_in(char **str, int i, char **envp);
+t_list			*redirect_out(char **str, int i, char **envp);
+
+/* parsing_utils.c */
 int				count_pipe(char *str);
 int				check_whitespace(char c);
-int				count_pipe(char *str);
 char			*ft_strjoin_char(char *s1, char s2);
-char			*exception_line(char *line);
-void			ascii_change(char **str);
-void			remove_special_char(char **str);
-void			free_parsing_str(char *str, char **split_str);
-void			free_list(t_commandlist *lst);
-void			parsing_dollar(char *str, t_list **lst, char **envp);
-char			*envp_to_str(char *str, char **envp, int j);
-void			dollar_change(char **str, char **envp);
-int				find_dollar(char *str);
-char			*ft_strjoin_empty(char const *s1, char const *s2);
-char			*convert_dollar(char *str, char **envp);
+t_token			*new_token(char *command, t_type type);
+t_commandlist	*init_parsing(char **str, t_commandlist *lst, char **envp);
+t_commandlist	*parsing(char *line, char **envp);
 
 /*** function list end ***/
 
