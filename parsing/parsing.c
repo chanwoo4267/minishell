@@ -6,11 +6,11 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 17:46:51 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/27 17:51:23 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/27 18:07:39 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../minishell.h"
 
 static void	init_list(t_commandlist *lst, int cnt)
 {

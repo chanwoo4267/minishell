@@ -6,11 +6,11 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 19:02:14 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/27 17:21:43 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/27 18:07:35 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../minishell.h"
 
 int	count_pipe(char *str)
 {

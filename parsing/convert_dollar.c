@@ -6,11 +6,11 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 21:27:16 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/27 17:44:07 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/27 18:09:42 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../minishell.h"
 
 static t_dollar	*just_dollar(t_dollar *lst, char **envp, int i)
 {
@@ -112,6 +112,7 @@ char	*convert_dollar(char *str, char **envp)
 	t_dollar	*lst;
 	char		*ret;
 
+	ret = NULL;
 	lst = init_dollar(str);
 	lst = circuit_str(lst, envp);
 	if (lst->dollar == 1)

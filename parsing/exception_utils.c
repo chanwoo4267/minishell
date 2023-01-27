@@ -6,11 +6,11 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 17:39:27 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/27 17:41:38 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/27 18:07:27 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../minishell.h"
 
 int	syntax_pipe(char *line)
 {

@@ -6,11 +6,11 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 23:41:26 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/27 17:37:39 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/27 18:07:23 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../minishell.h"
 
 char	*free_dollar(t_dollar *lst, char *ret)
 {

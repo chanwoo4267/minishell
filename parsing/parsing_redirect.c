@@ -6,11 +6,11 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 20:12:35 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/27 17:49:28 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/27 18:07:31 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../minishell.h"
 
 static t_list	*init_append(char **str, char **envp, int i, int d)
 {

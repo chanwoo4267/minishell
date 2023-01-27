@@ -6,11 +6,11 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 17:16:53 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/27 17:41:32 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/27 18:07:25 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../minishell.h"
 
 static int	set_quote(char c, int quote)
 {

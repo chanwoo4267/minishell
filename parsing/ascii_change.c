@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ascii_change.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 19:21:05 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/23 23:18:28 by sehjung          ###   ########.fr       */
+/*   Updated: 2023/01/27 18:07:15 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../minishell.h"
 
 static void	double_quote(char *str)
 {
