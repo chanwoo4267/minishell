@@ -6,7 +6,7 @@
 /*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 17:46:51 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/28 14:25:29 by sehjung          ###   ########.fr       */
+/*   Updated: 2023/01/28 15:42:17 by sehjung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static void	init_list(t_commandlist *lst, int cnt)
 {
 	int	i;
-
 	i = 0;
 	if (i < cnt)
 	{
@@ -28,7 +27,6 @@ static void	init_list(t_commandlist *lst, int cnt)
 static void	free_parsing_str(char *str, char **split_str)
 {
 	int	i;
-
 	i = 0;
 	while (split_str[i])
 		free(split_str[i++]);
@@ -40,7 +38,6 @@ t_commandlist	*init_parsing(char **str, t_commandlist *lst, char **envp)
 {
 	int	i;
 	int	j;
-	char	*temp;
 
 	i = 0;
 	j = 0;
@@ -53,11 +50,8 @@ t_commandlist	*init_parsing(char **str, t_commandlist *lst, char **envp)
 		else if (str[i][0] == '|')
 			j++;
 		else if (find_dollar(str[i]))
-		{
-			temp = convert_dollar(str[i], envp);
-			ft_lstadd_back(&lst[j].command, ft_lstnew(new_token(temp, COMMAND)));
-			free(temp);
-		}
+			ft_lstadd_back(&lst[j].command,
+				ft_lstnew(new_token(convert_dollar(str[i], envp), COMMAND)));
 		else
 			ft_lstadd_back(&lst[j].command,
 				ft_lstnew(new_token(str[i], COMMAND)));
@@ -71,7 +65,6 @@ t_commandlist	*parsing(char *line, char **envp)
 	char			*str;
 	char			**split_str;
 	t_commandlist	*lst;
-
 	if (line[0] == '\0')
 		return (NULL);
 	str = exception_line(line);
