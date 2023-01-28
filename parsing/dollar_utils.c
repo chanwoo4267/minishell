@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 23:41:26 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/27 18:07:23 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/28 14:20:57 by sehjung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ char	*free_dollar(t_dollar *lst, char *ret)
 t_dollar	*convert_envp(t_dollar *lst, char **envp)
 {
 	int	i;
+	char	*f_temp;
 
 	i = 0;
+	f_temp = lst->d_temp;
 	lst->d_temp++;
 	while (envp[i])
 	{
@@ -38,15 +40,20 @@ t_dollar	*convert_envp(t_dollar *lst, char **envp)
 			if (!lst->temp)
 				lst->temp = ft_strdup(envp_to_str(lst->d_temp, envp, i));
 			else
-				lst->temp = ft_strjoin(lst->temp,
-						envp_to_str(lst->d_temp, envp, i));
-			break ;
+			{
+				lst->d_temp = envp_to_str(lst->d_temp, envp, i);
+				free(f_temp);
+				f_temp = lst->temp;
+				lst->temp = ft_strjoin(lst->temp, lst->d_temp);
+				free(f_temp);
+				f_temp = NULL;
+				break ;
+			}
 		}
 		i++;
 	}
-	lst->d_temp--;
-	free(lst->d_temp);
-	lst->d_temp = NULL;
+	if (f_temp)
+		free(f_temp);
 	return (lst);
 }
 

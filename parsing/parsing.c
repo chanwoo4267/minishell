@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 17:46:51 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/27 18:07:39 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/28 14:25:29 by sehjung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_commandlist	*init_parsing(char **str, t_commandlist *lst, char **envp)
 {
 	int	i;
 	int	j;
+	char	*temp;
 
 	i = 0;
 	j = 0;
@@ -52,8 +53,11 @@ t_commandlist	*init_parsing(char **str, t_commandlist *lst, char **envp)
 		else if (str[i][0] == '|')
 			j++;
 		else if (find_dollar(str[i]))
-			ft_lstadd_back(&lst[j].command,
-				ft_lstnew(new_token(convert_dollar(str[i], envp), COMMAND)));
+		{
+			temp = convert_dollar(str[i], envp);
+			ft_lstadd_back(&lst[j].command, ft_lstnew(new_token(temp, COMMAND)));
+			free(temp);
+		}
 		else
 			ft_lstadd_back(&lst[j].command,
 				ft_lstnew(new_token(str[i], COMMAND)));
