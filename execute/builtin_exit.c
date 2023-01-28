@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:11:07 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/26 16:50:11 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/28 12:15:37 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	builtin_exit(t_list *list)
 	if (!ft_isnumeric(command[1]))
 	{
 		errno = 22;
-		print_error(command[0], command[1], "numeric argument required", YES);
+		print_error(command[0], command[1], "numeric argument required", NO);
 		exit(255);
 	}
 	g_status.global_exit_status = ft_atoi(command[1]);
