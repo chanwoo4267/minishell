@@ -6,7 +6,7 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 17:16:53 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/27 18:07:25 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/29 15:29:40 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,9 @@ char	*exception_line(char *line)
 		line++;
 	}
 	if (quote)
+	{
+		free(str);
 		return (NULL);
+	}
 	return (str);
 }

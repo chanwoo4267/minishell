@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 23:41:26 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/28 15:43:12 by sehjung          ###   ########.fr       */
+/*   Updated: 2023/01/29 15:20:10 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,22 @@ char	*free_dollar(t_dollar *lst, char *ret)
 t_dollar	*convert_envp(t_dollar *lst, char **envp)
 {
 	int	i;
+	char	*temp;
 
 	i = 0;
+	temp = NULL;
 	lst->d_temp++;
 	while (envp[i])
 	{
 		if (ft_strncmp(lst->d_temp, envp[i], ft_strlen(lst->d_temp)) == 0
 			&& envp[i][ft_strlen(lst->d_temp)] == '=')
 		{
+			temp = envp_to_str(lst->d_temp, envp, i);
 			if (!lst->temp)
-				lst->temp = ft_strdup(envp_to_str(lst->d_temp, envp, i));
+				lst->temp = ft_strdup(temp);
 			else
-				lst->temp = ft_strjoin(lst->temp,
-						envp_to_str(lst->d_temp, envp, i));
+				lst = join_and_free(lst, temp);
+			free(temp);
 			break ;
 		}
 		i++;

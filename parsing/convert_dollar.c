@@ -6,7 +6,7 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 21:27:16 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/27 18:09:42 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/29 15:29:42 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,11 @@ static t_dollar	*just_dollar(t_dollar *lst, char **envp, int i)
 
 static t_dollar	*exit_status(t_dollar *lst, char **envp)
 {
-	int	i;
-
+	int		i;
+	char	*temp;
+	
 	i = 0;
+	temp = NULL;
 	lst->check = 0;
 	if (ft_strlen(lst->str) < 1)
 		return (lst);
@@ -52,10 +54,13 @@ static t_dollar	*exit_status(t_dollar *lst, char **envp)
 		if (lst->d_temp != NULL)
 			lst = convert_envp(lst, envp);
 		if (lst->temp == NULL)
-			lst->temp = ft_strdup(ft_itoa(g_status.global_exit_status));
+			lst->temp = ft_itoa(g_status.global_exit_status);
 		else
-			lst->temp = ft_strjoin(lst->temp,
-					ft_itoa(g_status.global_exit_status));
+		{
+			temp = ft_itoa(g_status.global_exit_status);
+			lst = join_and_free(lst, temp);
+			free(temp);
+		}
 		free(lst->d_temp);
 		lst->d_temp = NULL;
 		lst->check = 1;

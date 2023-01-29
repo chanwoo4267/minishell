@@ -28,6 +28,7 @@ PARS_FILE = ascii_change.c \
 			dollar_utils.c \
 			exception_line.c \
 			exception_utils.c \
+			free_dollar.c \
 			parsing_redirect.c \
 			parsing_utils.c \
 			parsing.c

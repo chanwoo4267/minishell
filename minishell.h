@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 15:38:32 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/27 20:32:00 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/29 15:20:32 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,9 @@ char			*ft_strjoin_char(char *s1, char s2);
 t_token			*new_token(char *command, t_type type);
 t_commandlist	*init_parsing(char **str, t_commandlist *lst, char **envp);
 t_commandlist	*parsing(char *line, char **envp);
+
+/* free_dollar.c */
+t_dollar		*join_and_free(t_dollar *lst, char *str);
 
 /*** function list end ***/
 
