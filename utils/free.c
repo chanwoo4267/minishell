@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 20:18:23 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/27 20:31:39 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/29 18:29:59 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	free_lists(t_list *list)
 		ptr = ptr->next;
 		if (remover->content)
 		{
-			free(((t_token*)remover->content)->content);
+			free(((t_token *)remover->content)->content);
 			free(remover->content);
 		}
 		if (remover)

@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 15:26:04 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/28 12:55:36 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/29 16:43:58 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_info	info;
 
-	//atexit(test);
+	atexit(test);
 	(void)argc;
 	(void)argv;
 	init_info(&info, envp);
