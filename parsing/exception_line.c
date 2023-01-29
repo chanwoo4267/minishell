@@ -6,7 +6,7 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 17:16:53 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/29 15:29:40 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/29 16:28:32 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,10 @@ static char	*get_pipe(char *str, char *line, int *pipe)
 static char	*none_pipe(char *str, char *line, int quote, int *pipe)
 {
 	if ((*line == ';' || *line == '\\') && quote == 0)
+	{
+		free(str);
 		return (NULL);
+	}
 	else if (*line == ' ' && quote != 0)
 		str = ft_strjoin_char(str, -10);
 	else if (check_whitespace(*line) && quote == 0)

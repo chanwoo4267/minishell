@@ -6,7 +6,7 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 19:21:05 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/29 15:33:06 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/29 17:07:15 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ static void	single_quote(char *str)
 	i = 0;
 	while (str[i])
 	{
+		if (str[i] == '$')
+			str[i] = -11;
 		if (str[i] == '\'')
 		{
 			j = i;

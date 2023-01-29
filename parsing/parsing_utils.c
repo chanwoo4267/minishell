@@ -6,7 +6,7 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 19:02:14 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/27 18:07:35 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/29 17:53:52 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,19 @@ char	*ft_strjoin_char(char *s1, char s2)
 	return (ret);
 }
 
+void	delete_minus(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == -11)
+			str[i] = '$';
+		i++;
+	}
+}
+
 t_token	*new_token(char *command, t_type type)
 {
 	t_token	*new_token;
@@ -64,6 +77,7 @@ t_token	*new_token(char *command, t_type type)
 	if (command == NULL)
 		return (NULL);
 	new_token = malloc(sizeof(t_token));
+	delete_minus(command);
 	new_token->content = ft_strdup(command);
 	new_token->type = type;
 	return (new_token);
