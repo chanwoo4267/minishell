@@ -6,7 +6,7 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 21:27:16 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/29 15:29:42 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/29 15:54:25 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,15 @@ static t_dollar	*exit_status(t_dollar *lst, char **envp)
 static t_dollar	*end_dollar(char **envp, t_dollar *lst)
 {
 	lst = convert_envp(lst, envp);
-	if (*lst->str == ' ')
+	if (*lst->str == '$')
+	{	
+		lst->d_temp = ft_strjoin_char(lst->d_temp, *lst->str);
+	}
+	else
 	{
 		lst->dollar = 0;
 		lst->temp = ft_strjoin_char(lst->temp, *lst->str);
-	}
-	else
-		lst->d_temp = ft_strjoin_char(lst->d_temp, *lst->str);
+	}	
 	lst->str++;
 	return (lst);
 }
@@ -97,7 +99,7 @@ static t_dollar	*circuit_str(t_dollar *lst, char **envp)
 				continue ;
 			else if (lst->check == 2)
 				break ;
-			if (lst->dollar == 1 && (*lst->str == ' ' || *lst->str == '$'))
+			if (lst->dollar == 1 && !(ft_isalnum(*lst->str)))
 			{
 				lst = end_dollar(envp, lst);
 				continue ;
