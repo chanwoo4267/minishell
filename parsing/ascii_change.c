@@ -6,18 +6,18 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 19:21:05 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/29 19:35:40 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/29 21:51:00 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	double_quote(char *str)
+static int	double_quote(char *str, int i)
 {
-	int	i;
 	int	j;
+	int	check;
 
-	i = 0;
+	check = 0;
 	while (str[i])
 	{
 		if (str[i] == '\"')
@@ -28,18 +28,22 @@ static void	double_quote(char *str)
 				str[j] = str[j + 1];
 				j++;
 			}
+			if (check)
+				break ;
+			check++;
 			i--;
 		}
 		i++;
 	}
+	return (i);
 }
 
-static void	single_quote(char *str)
+static int	single_quote(char *str, int i)
 {
-	int	i;
 	int	j;
+	int	check;
 
-	i = 0;
+	check = 0;
 	while (str[i])
 	{
 		if (str[i] == '$')
@@ -52,10 +56,14 @@ static void	single_quote(char *str)
 				str[j] = str[j + 1];
 				j++;
 			}
+			if (check)
+				break ;
+			check++;
 			i--;
 		}
 		i++;
 	}
+	return (i);
 }
 
 static void	del_quote(char **str)
@@ -71,13 +79,13 @@ static void	del_quote(char **str)
 		{
 			if (str[i][j] == '\'')
 			{
-				single_quote(str[i]);
-				break ;
+				j = single_quote(str[i], j);
+				continue ;
 			}
 			else if (str[i][j] == '\"')
 			{
-				double_quote(str[i]);
-				break ;
+				j = double_quote(str[i], j);
+				continue ;
 			}
 			j++;
 		}

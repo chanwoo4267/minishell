@@ -6,7 +6,7 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 17:46:51 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/29 17:54:16 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/29 21:52:10 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void	init_list(t_commandlist *lst, int cnt)
 {
 	int	i;
+
 	i = 0;
 	if (i < cnt)
 	{
@@ -27,6 +28,7 @@ static void	init_list(t_commandlist *lst, int cnt)
 static void	free_parsing_str(char *str, char **split_str)
 {
 	int	i;
+
 	i = 0;
 	while (split_str[i])
 		free(split_str[i++]);
@@ -34,16 +36,20 @@ static void	free_parsing_str(char *str, char **split_str)
 	free(str);
 }
 
-t_commandlist	*init_parsing(char **str, t_commandlist *lst, char **envp)
+char	*free_temp(char *temp)
 {
-	int	i;
-	int	j;
+	free(temp);
+	return (NULL);
+}
+
+t_commandlist	*lst_parse(char **str, t_commandlist *lst, char **envp, int j)
+{
+	int		i;
 	char	*temp;
 
-	i = 0;
-	j = 0;
 	temp = NULL;
-	while (str[i])
+	i = -1;
+	while (str[++i])
 	{
 		if (str[i][0] == '>')
 			ft_lstadd_back(&lst[j].redirection, redirect_out(str, i++, envp));
@@ -54,14 +60,13 @@ t_commandlist	*init_parsing(char **str, t_commandlist *lst, char **envp)
 		else if (find_dollar(str[i]))
 		{
 			temp = convert_dollar(str[i], envp);
-			ft_lstadd_back(&lst[j].command, ft_lstnew(new_token(temp, COMMAND)));
-			free(temp);
-			temp = NULL;
+			ft_lstadd_back(&lst[j].command,
+				ft_lstnew(new_token(temp, COMMAND)));
+			temp = free_temp(temp);
 		}
 		else
 			ft_lstadd_back(&lst[j].command,
 				ft_lstnew(new_token(str[i], COMMAND)));
-		i++;
 	}
 	return (lst);
 }
@@ -71,9 +76,10 @@ t_commandlist	*parsing(char *line, char **envp)
 	char			*str;
 	char			**split_str;
 	t_commandlist	*lst;
+
 	if (line[0] == '\0')
 		return (NULL);
-	str = exception_line(line);
+	str = exception_line(line, 0, 0);
 	if (!str)
 		return (NULL);
 	split_str = ft_split(str, ' ');
@@ -82,7 +88,7 @@ t_commandlist	*parsing(char *line, char **envp)
 	if (!lst)
 		return (NULL);
 	init_list(lst, count_pipe(str) + 1);
-	init_parsing(split_str, lst, envp);
+	lst_parse(split_str, lst, envp, 0);
 	free_parsing_str(str, split_str);
 	return (lst);
 }

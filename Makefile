@@ -26,9 +26,9 @@ EXEC_OBJS = $(EXEC_SRCS:.c=.o)
 PARS_FILE = ascii_change.c \
 			convert_dollar.c \
 			dollar_utils.c \
+			dollar_utils2.c \
 			exception_line.c \
 			exception_utils.c \
-			free_dollar.c \
 			parsing_redirect.c \
 			parsing_utils.c \
 			parsing.c

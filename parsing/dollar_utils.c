@@ -6,7 +6,7 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 23:41:26 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/29 15:20:10 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/29 19:58:23 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*free_dollar(t_dollar *lst, char *ret)
 
 t_dollar	*convert_envp(t_dollar *lst, char **envp)
 {
-	int	i;
+	int		i;
 	char	*temp;
 
 	i = 0;
@@ -56,6 +56,7 @@ t_dollar	*convert_envp(t_dollar *lst, char **envp)
 t_dollar	*init_dollar(char *str)
 {
 	t_dollar	*lst;
+
 	lst = malloc(sizeof(t_dollar));
 	if (!lst)
 		return (NULL);
@@ -72,6 +73,7 @@ char	*envp_to_str(char *str, char **envp, int i)
 	int		mystrlen;
 	int		envlen;
 	char	*temp;
+
 	mystrlen = ft_strlen(str);
 	envlen = ft_strlen(envp[i]) - mystrlen;
 	temp = ft_substr(envp[i], mystrlen + 1, envlen - 1);
@@ -81,6 +83,7 @@ char	*envp_to_str(char *str, char **envp, int i)
 int	find_dollar(char *str)
 {
 	int	i;
+
 	i = 0;
 	while (str[i])
 	{

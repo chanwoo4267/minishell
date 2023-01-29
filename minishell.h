@@ -6,7 +6,7 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 15:38:32 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/29 17:54:05 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/29 21:54:20 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,8 +182,12 @@ t_dollar		*init_dollar(char *str);
 char			*envp_to_str(char *str, char **envp, int i);
 int				find_dollar(char *str);
 
+/* dollar_utils2.c */
+t_dollar		*join_and_free(t_dollar *lst, char *str);
+t_dollar	*set_dollar_exit(t_dollar *lst);
+
 /*  exception_line.c */
-char			*exception_line(char *line);
+char			*exception_line(char *line, int quote, int pipe);
 
 /* exception_utils.c */
 int				syntax_pipe(char *line);
@@ -198,12 +202,9 @@ int				count_pipe(char *str);
 int				check_whitespace(char c);
 char			*ft_strjoin_char(char *s1, char s2);
 t_token			*new_token(char *command, t_type type);
-t_commandlist	*init_parsing(char **str, t_commandlist *lst, char **envp);
+t_commandlist	*lst_parse(char **str, t_commandlist *lst, char **envp, int j);
 t_commandlist	*parsing(char *line, char **envp);
 void	delete_minus(char *str);
-
-/* free_dollar.c */
-t_dollar		*join_and_free(t_dollar *lst, char *str);
 
 /*** function list end ***/
 

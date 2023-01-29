@@ -6,7 +6,7 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 21:27:16 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/29 15:54:25 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/29 21:53:17 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static t_dollar	*exit_status(t_dollar *lst, char **envp)
 {
 	int		i;
 	char	*temp;
-	
+
 	i = 0;
 	temp = NULL;
 	lst->check = 0;
@@ -61,11 +61,7 @@ static t_dollar	*exit_status(t_dollar *lst, char **envp)
 			lst = join_and_free(lst, temp);
 			free(temp);
 		}
-		free(lst->d_temp);
-		lst->d_temp = NULL;
-		lst->check = 1;
-		lst->dollar = 0;
-		lst->str += 2;
+		lst = set_dollar_exit(lst);
 		return (lst);
 	}
 	return (lst);
