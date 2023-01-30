@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exception_line.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 17:16:53 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/30 13:19:04 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/30 17:54:10 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ static char	*none_pipe(char *str, char *line, int quote, int *pipe)
 	}
 	else if ((*line == '>' || *line == '<') && quote == 0)
 		str = redirect_space(str, line, *line);
+	else if (quote != 0 && redirect_quote(*line))
+		str = ft_strjoin_char(str, redirect_quote(*line));
 	else
 	{
 		str = ft_strjoin_char(str, *line);
@@ -113,8 +115,6 @@ char	*exception_line(char *line, int quote, int pipe)
 	char	*str;
 
 	str = NULL;
-	if (syntax_redirect(line) || syntax_pipe(line))
-		return (NULL);
 	while (*line)
 	{
 		quote = set_quote(*line, quote);
@@ -131,5 +131,7 @@ char	*exception_line(char *line, int quote, int pipe)
 		free(str);
 		return (NULL);
 	}
+	if (syntax_redirect(str) || syntax_pipe(str))
+		return (NULL);
 	return (str);
 }

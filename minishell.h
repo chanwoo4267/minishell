@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 15:38:32 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/30 15:00:35 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/30 17:58:07 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,7 @@ char			*exception_line(char *line, int quote, int pipe);
 /* exception_utils.c */
 int				syntax_pipe(char *line);
 int				syntax_redirect(char *line);
+char			redirect_quote(char c);
 
 /* parsing_redrect.c */
 t_list			*redirect_in(char **str, int i, char **envp);
