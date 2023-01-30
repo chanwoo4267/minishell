@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:11:07 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/30 17:42:58 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/30 17:46:24 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	builtin_exit(t_list *list)
 	else if (command[2] != NULL)
 	{
 		print_error(command[0], "too many arguments", NULL, NO);
+		free_strs(command);
 		return ;
 	}
 	g_status.global_exit_status = ft_atoi(command[1]);
