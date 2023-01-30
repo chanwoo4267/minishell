@@ -6,7 +6,7 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 15:38:32 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/30 20:55:04 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/30 20:58:04 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ char			*get_heredoc_filename(int *fd);
 void			set_exit_status_signal(int status);
 int				input_only_spaces(char *input);
 int				syntax_redirect2(char *str);
-
 
 /* envp_utils.c */
 char			**set_envp(char **envp);
