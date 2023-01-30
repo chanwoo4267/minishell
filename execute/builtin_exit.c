@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:11:07 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/30 15:00:31 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/30 17:42:58 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	builtin_exit(t_list *list)
 	char	**command;
 
 	command = list_to_strs(list);
+	ft_putstr_fd("exit\n", STDERR_FILENO);
 	if (!command)
 		system_error("builtin_exit", "malloc error", 1);
 	else if (!command[1])
@@ -25,6 +26,11 @@ void	builtin_exit(t_list *list)
 	{
 		print_error(command[0], command[1], "numeric argument required", NO);
 		exit(255);
+	}
+	else if (command[2] != NULL)
+	{
+		print_error(command[0], "too many arguments", NULL, NO);
+		return ;
 	}
 	g_status.global_exit_status = ft_atoi(command[1]);
 	g_status.global_exit_status %= 256;
