@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 15:38:32 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/29 21:54:20 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/30 12:59:53 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@
 /*** define list end ***/
 
 /*** struct list start ***/
-/* REDIR_IN, REDIR_OUT 을 0,1로 설정해서 redirection에 이용함 */
 typedef enum e_type
 {
 	REDIR_IN,
@@ -69,7 +68,6 @@ typedef struct s_dollar
 	char	*str;
 }	t_dollar;
 
-/* issubshell must be set NO when initializing main function */
 typedef struct s_info
 {
 	char	**envp;
@@ -89,7 +87,6 @@ typedef struct s_commandlist
 	t_list	*redirection;
 }	t_commandlist;
 
-/* 가장 최근 프로세스의 종료 상태를 저장하기 위한 전역변수 */
 typedef struct s_global
 {
 	int		global_exit_status;
@@ -184,7 +181,7 @@ int				find_dollar(char *str);
 
 /* dollar_utils2.c */
 t_dollar		*join_and_free(t_dollar *lst, char *str);
-t_dollar	*set_dollar_exit(t_dollar *lst);
+t_dollar		*set_dollar_exit(t_dollar *lst);
 
 /*  exception_line.c */
 char			*exception_line(char *line, int quote, int pipe);
@@ -204,8 +201,7 @@ char			*ft_strjoin_char(char *s1, char s2);
 t_token			*new_token(char *command, t_type type);
 t_commandlist	*lst_parse(char **str, t_commandlist *lst, char **envp, int j);
 t_commandlist	*parsing(char *line, char **envp);
-void	delete_minus(char *str);
-
+void			delete_minus(char *str);
 /*** function list end ***/
 
 #endif

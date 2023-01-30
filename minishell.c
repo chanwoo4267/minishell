@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 15:26:04 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/29 16:43:58 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/30 13:23:40 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,16 +82,10 @@ static void	terminal_loop(t_info *info)
 	}
 }
 
-void	test(void)
-{
-	system("leaks minishell");
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_info	info;
 
-	atexit(test);
 	(void)argc;
 	(void)argv;
 	init_info(&info, envp);

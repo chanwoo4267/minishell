@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exception_line.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 17:16:53 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/29 19:57:18 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/30 13:19:04 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,11 @@ static char	*redirect_space(char *str, char *line, char c)
 static char	*get_pipe(char *str, char *line, int *pipe)
 {
 	if (*pipe == 1)
+	{
+		if (str)
+			free(str);
 		return (NULL);
+	}
 	line--;
 	if (*line != ' ')
 		str = ft_strjoin_char(str, ' ');
