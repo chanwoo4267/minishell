@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:11:07 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/30 17:46:24 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/30 20:15:26 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ void	builtin_exit(t_list *list)
 		exit(g_status.global_exit_status);
 	if (!ft_isnumeric(command[1]))
 	{
-		print_error(command[0], command[1], "numeric argument required", NO);
+		print_error(command[0], command[1], "numeric argument required");
 		exit(255);
 	}
 	else if (command[2] != NULL)
 	{
-		print_error(command[0], "too many arguments", NULL, NO);
+		print_error(command[0], "too many arguments", NULL);
 		free_strs(command);
 		return ;
 	}

@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:52:49 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/30 15:09:52 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/30 20:15:48 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	builtin_unset(t_list *list, t_info *info)
 			else
 			{
 				print_error(command[0], command[i], \
-							"not a valid identifier", NO);
+							"not a valid identifier");
 			}
 			i++;
 		}

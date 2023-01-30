@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:11:51 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/30 15:05:46 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/30 20:15:36 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static void	export_all_inputs(char **command, t_info *info)
 			ft_strchr(command[i], '\"'))
 		{
 			print_error(command[0], command[i], \
-						"not a valid identifier", NO);
+						"not a valid identifier");
 		}
 		else
 			export_change_envp(command[i], info);
