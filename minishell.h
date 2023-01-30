@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 15:38:32 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/30 12:59:53 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/30 15:00:35 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include <string.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <errno.h>
 # include <termios.h>
 
 /*** define list start ***/

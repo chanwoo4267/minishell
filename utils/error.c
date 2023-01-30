@@ -6,7 +6,7 @@
 /*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 04:46:22 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/26 17:09:50 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/30 15:03:42 by chanwopa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	print_error(char *command, char *input, char *message, int err_status)
 {
 	char	*errno_str;
 
-	errno_str = strerror(errno);
+	errno_str = strerror(err_status);
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	if (command)
 		ft_putstr_fd(command, STDERR_FILENO);
