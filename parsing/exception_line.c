@@ -6,7 +6,7 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 17:16:53 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/30 17:54:10 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/30 19:18:45 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ char	*exception_line(char *line, int quote, int pipe)
 	char	*str;
 
 	str = NULL;
+	if (syntax_redirect(line))
+		return (NULL);
 	while (*line)
 	{
 		quote = set_quote(*line, quote);
@@ -126,12 +128,10 @@ char	*exception_line(char *line, int quote, int pipe)
 			return (NULL);
 		line++;
 	}
-	if (quote)
+	if (syntax_redirect2(str) || syntax_pipe(str) || quote)
 	{
 		free(str);
 		return (NULL);
 	}
-	if (syntax_redirect(str) || syntax_pipe(str))
-		return (NULL);
 	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 15:38:32 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/30 17:58:07 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/30 19:18:09 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ int				get_commands_count(t_commandlist *commandlist);
 char			*get_heredoc_filename(int *fd);
 void			set_exit_status_signal(int status);
 int				input_only_spaces(char *input);
+int syntax_redirect2(char *str);
+
 
 /* envp_utils.c */
 char			**set_envp(char **envp);
@@ -186,7 +188,7 @@ t_dollar		*set_dollar_exit(t_dollar *lst);
 char			*exception_line(char *line, int quote, int pipe);
 
 /* exception_utils.c */
-int				syntax_pipe(char *line);
+int				syntax_pipe(char *str);
 int				syntax_redirect(char *line);
 char			redirect_quote(char c);
 
