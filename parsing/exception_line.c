@@ -6,7 +6,7 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 17:16:53 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/30 19:18:45 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/30 20:50:21 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,33 +35,6 @@ static int	set_quote(char c, int quote)
 	return (quote);
 }
 
-static char	*redirect_space(char *str, char *line, char c)
-{
-	if (c == '>')
-	{
-		line--;
-		if (*line != '>' && *line != ' ')
-			str = ft_strjoin_char(str, ' ');
-		line++;
-		str = ft_strjoin_char(str, '>');
-		line++;
-		if (*line != '>' && *line != ' ')
-			str = ft_strjoin_char(str, ' ');
-	}
-	else if (c == '<')
-	{
-		line--;
-		if (*line != '<' && *line != ' ')
-			str = ft_strjoin_char(str, ' ');
-		line++;
-		str = ft_strjoin_char(str, '<');
-		line++;
-		if (*line != '<' && *line != ' ')
-			str = ft_strjoin_char(str, ' ');
-	}
-	return (str);
-}
-
 static char	*get_pipe(char *str, char *line, int *pipe)
 {
 	if (*pipe == 1)
@@ -76,6 +49,12 @@ static char	*get_pipe(char *str, char *line, int *pipe)
 	line++;
 	str = ft_strjoin_char(str, '|');
 	line++;
+	if (*line == '\0')
+	{
+		if (str)
+			free(str);
+		return (NULL);
+	}
 	if (*line != ' ')
 		str = ft_strjoin_char(str, ' ');
 	*pipe = 1;

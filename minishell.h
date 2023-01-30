@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chanwopa <chanwopa@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 15:38:32 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/30 20:14:37 by chanwopa         ###   ########seoul.kr  */
+/*   Updated: 2023/01/30 20:55:04 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,8 +183,11 @@ int				find_dollar(char *str);
 t_dollar		*join_and_free(t_dollar *lst, char *str);
 t_dollar		*set_dollar_exit(t_dollar *lst);
 
-/*  exception_line.c */
+/* exception_line.c */
 char			*exception_line(char *line, int quote, int pipe);
+
+/* exception_redirect.c */
+char			*redirect_space(char *str, char *line, char c);
 
 /* exception_utils.c */
 int				syntax_pipe(char *str);

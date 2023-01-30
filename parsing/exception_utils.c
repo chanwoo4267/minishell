@@ -6,7 +6,7 @@
 /*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 17:39:27 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/30 19:19:42 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/01/30 20:56:21 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@ int	syntax_pipe(char *str)
 	{
 		if (str[i] == '|')
 		{
-			if (!str[i + 1])
+			if (!str[i + 2])
 				return (1);
-			else if (str[i + 2] == '>' || str[i + 2] == '<' || str[i + 2] == '|')
+			else if (str[i + 2] == '>' || str[i + 2] == '<'
+				|| str[i + 2] == '|')
 				return (1);
 		}
 		i++;
@@ -43,7 +44,7 @@ int	syntax_pipe(char *str)
 	return (0);
 }
 
-int syntax_redirect2(char *str)
+int	syntax_redirect2(char *str)
 {
 	int	i;
 
@@ -52,16 +53,18 @@ int syntax_redirect2(char *str)
 	{
 		if (str[i] == '>')
 		{
-			if (!str[i + 1])
+			if (!str[i + 2])
 				return (1);
-			else if (str[i + 2] == '>' || str[i + 2] == '<' || str[i + 2] == '|')
+			else if (str[i + 2] == '>' || str[i + 2] == '<'
+				|| str[i + 2] == '|')
 				return (1);
 		}
 		if (str[i] == '<')
 		{
-			if (!str[i + 1])
+			if (!str[i + 2])
 				return (1);
-			else if (str[i + 2] == '>' || str[i + 2] == '<' || str[i + 2] == '|')
+			else if (str[i + 2] == '>' || str[i + 2] == '<'
+				|| str[i + 2] == '|')
 				return (1);
 		}
 		i++;
