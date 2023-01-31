@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exception_line.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 17:16:53 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/30 20:50:21 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/02/01 00:02:23 by sehjung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	set_quote(char c, int quote)
+int	set_quote(char c, int quote)
 {
 	if (c == '\'')
 	{

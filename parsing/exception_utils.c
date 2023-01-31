@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exception_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 17:39:27 by sehjung           #+#    #+#             */
-/*   Updated: 2023/01/30 20:56:21 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/02/01 00:08:33 by sehjung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	syntax_pipe(char *str)
 	int	i;
 
 	i = 0;
+	if (str[0] == ' ' && str[1] == '|')
+		return (1);
 	while (str[i])
 	{
 		if (str[i] == '|')
@@ -75,18 +77,21 @@ int	syntax_redirect2(char *str)
 int	syntax_redirect(char *line)
 {
 	int	i;
+	int quote;
 
 	i = 0;
+	quote = 0;
 	if (line[0] == '|')
 		return (1);
 	while (line[i])
 	{
-		if (line[i] == '>')
+		quote = set_quote(line[i], quote);
+		if (line[i] == '>' && quote == 0)
 		{
 			if (line[i + 1] == '<' || line[i + 1] == '|' || line[i + 1] == '\0')
 				return (1);
 		}
-		else if (line[i] == '<')
+		else if (line[i] == '<' && quote == 0)
 		{
 			if (line[i + 1] == '>' || line[i + 1] == '|' || line[i + 1] == '\0')
 				return (1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 15:38:32 by chanwopa          #+#    #+#             */
-/*   Updated: 2023/01/30 20:58:04 by sehjung          ###   ########seoul.kr  */
+/*   Updated: 2023/02/01 00:02:21 by sehjung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,7 @@ t_dollar		*set_dollar_exit(t_dollar *lst);
 
 /* exception_line.c */
 char			*exception_line(char *line, int quote, int pipe);
+int				set_quote(char c, int quote);
 
 /* exception_redirect.c */
 char			*redirect_space(char *str, char *line, char c);
