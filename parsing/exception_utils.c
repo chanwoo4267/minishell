@@ -6,7 +6,7 @@
 /*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 17:39:27 by sehjung           #+#    #+#             */
-/*   Updated: 2023/02/01 00:08:33 by sehjung          ###   ########.fr       */
+/*   Updated: 2023/02/01 00:12:56 by sehjung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	syntax_redirect2(char *str)
 int	syntax_redirect(char *line)
 {
 	int	i;
-	int quote;
+	int	quote;
 
 	i = 0;
 	quote = 0;
