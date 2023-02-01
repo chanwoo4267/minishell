@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exception_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjung <sehjung@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sehjung <sehjung@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 17:39:27 by sehjung           #+#    #+#             */
-/*   Updated: 2023/02/01 00:12:56 by sehjung          ###   ########.fr       */
+/*   Updated: 2023/02/01 14:03:15 by sehjung          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	syntax_pipe(char *str)
 	int	i;
 
 	i = 0;
-	if (str[0] == ' ' && str[1] == '|')
+	if (check_whitespace(str[0]) && str[1] == '|')
 		return (1);
 	while (str[i])
 	{
