@@ -140,10 +140,10 @@ _For more examples, please refer to the [Documentation](https://www.gnu.org/sava
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/github_username/repo_name.svg?style=for-the-badge
-[contributors-url]: https://github.com/github_username/repo_name/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/github_username/repo_name.svg?style=for-the-badge
-[forks-url]: https://github.com/github_username/repo_name/network/members
+[contributors-shield]: https://img.shields.io/github/contributors/chanwoo4267/minishell.svg?style=for-the-badge
+[contributors-url]: https://github.com/chanwoo4267/minishell/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/chanwoo4267/minishell.svg?style=for-the-badge
+[forks-url]: https://github.com/chanwoo4267/minishell/network/members
 
 [C-shield]: https://img.shields.io/badge/C-35495E?style=for-the-badge&logo=c&logoColor=White
 [C-url]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2731.pdf
